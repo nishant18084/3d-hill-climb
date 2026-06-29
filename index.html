@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Hill Climb Game</title>
+    <style>
+        body { margin: 0; overflow: hidden; font-family: Arial, sans-serif; }
+        canvas { display: block; }
+        #controls {
+            position: absolute; bottom: 20px; width: 100%;
+            display: flex; justify-content: space-around; pointer-events: none;
+        }
+        .btn {
+            width: 80px; height: 80px; background: rgba(0,0,0,0.6);
+            color: white; border: 2px solid white; border-radius: 50%;
+            font-size: 16px; font-weight: bold; pointer-events: auto;
+            user-select: none; -webkit-user-select: none;
+        }
+        .btn:active { background: rgba(255,255,255,0.6); color: black; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <div id="controls">
+        <button id="brakeBtn" class="btn">BRAKE</button>
+        <button id="gasBtn" class="btn">GAS</button>
+    </div>
+
+    <script>
+        // 1. Setup Scene, Camera, and Renderer
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x87CEEB); // Sky Blue
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Lights
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(10, 20, 15).normalize();
+        scene.add(light);
+        scene.add(new THREE.AmbientLight(0x404040));
+
+        // 2. Create Hills (Terrain)
+        const terrainGeo = new THREE.PlaneGeometry(1000, 20, 200, 1);
+        // Waves banane ke liye vertices ko upar-niche karna
+        const pos = terrainGeo.attributes.position;
+        for (let i = 0; i < pos.count; i++) {
+            let x = pos.getX(i);
+            let y = Math.sin(x * 0.05) * 3 + Math.cos(x * 0.1) * 2; // Hill shape
+            pos.setY(i, y);
+        }
+        terrainGeo.computeVertexNormals();
+
+        const terrainMat = new THREE.MeshLambertMaterial({ color: 0x228B22, wireframe: false }); // Green Grass
+        const terrain = new THREE.Mesh(terrainGeo, terrainMat);
+        terrain.rotation.x = -Math.PI / 2; // Zameen ko seedha bichana
+        scene.add(terrain);
+
+        // 3. Create 3D Car (Simple Box & Wheels)
+        const car = new THREE.Group();
+        
+        // Car Body
+        const bodyGeo = new THREE.BoxGeometry(4, 1.5, 2);
+        const bodyMat = new THREE.MeshLambertMaterial({ color: 0xFF0000 }); // Red Car
+        const carBody = new THREE.Mesh(bodyGeo, bodyMat);
+        carBody.position.y = 0.75;
+        car.add(carBody);
+
+        // Wheels
+        const wheelGeo = new THREE.CylinderGeometry(0.6, 0.6, 0.5, 16);
+        const wheelMat = new THREE.MeshLambertMaterial({ color: 0x333333 });
+        
+        const wheel1 = new THREE.Mesh(wheelGeo, wheelMat);
+        wheel1.rotation.x = Math.PI / 2;
+        wheel1.position.set(-1.5, 0, 1);
+        car.add(wheel1);
+
+        const wheel2 = wheel1.clone();
+        wheel2.position.set(1.5, 0, 1);
+        car.add(wheel2);
+
+        const wheel3 = wheel1.clone();
+        wheel3.position.set(-1.5, 0, -1);
+        car.add(wheel3);
+
+        const wheel4 = wheel1.clone();
+        wheel4.position.set(1.5, 0, -1);
+        car.add(wheel4);
+
+        scene.add(car);
+
+        // 4. Game Variables & Physics Logic
+        let carX = -20;
+        let speed = 0;
+        const maxSpeed = 0.5;
+        const acceleration = 0.01;
+        const friction = 0.005;
+        
+        let isGas = false;
+        let isBrake = false;
+
+        // Mobile Buttons Event Listeners
+        document.getElementById('gasBtn').addEventListener('touchstart', () => isGas = true);
+        document.getElementById('gasBtn').addEventListener('touchend', () => isGas = false);
+        document.getElementById('brakeBtn').addEventListener('touchstart', () => isBrake = true);
+        document.getElementById('brakeBtn').addEventListener('touchend', () => isBrake = false);
+
+        // Get Hill Height at any X position
+        function getHillHeight(x) {
+            return Math.sin(x * 0.05) * 3 + Math.cos(x * 0.1) * 2;
+        }
+
+        // 5. Animation Loop (Game Run)
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Speed controls
+            if (isGas) {
+                speed = Math.min(speed + acceleration, maxSpeed);
+            } else if (isBrake) {
+                speed = Math.max(speed - acceleration, -maxSpeed/2);
+            } else {
+                // Apply friction when no button is pressed
+                if (speed > 0) speed = Math.max(0, speed - friction);
+                if (speed < 0) speed = Math.min(0, speed + friction);
+            }
+
+            // Move Car
+            carX += speed;
+            
+            // Set Car Position on Hills
+            let carY = getHillHeight(carX) + 0.6; // 0.6 wheel radius ke liye
+            car.position.set(carX, carY, 0);
+
+            // Car Rotation according to Hill Slope
+            let nextY = getHillHeight(carX + 0.1);
+            let angle = Math.atan2(nextY - (carY - 0.6), 0.1);
+            car.rotation.z = angle;
+
+            // Camera follows car
+            camera.position.set(car.position.x, car.position.y + 4, 15);
+            camera.lookAt(car.position.x + 2, car.position.y, 0);
+
+            renderer.render(scene, camera);
+        }
+
+        // Handle Window Resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
+</body>
+</html>
