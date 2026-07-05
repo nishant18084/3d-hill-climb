@@ -3,230 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playing Movie - Race Premium</title>
+    <title>Watch Online - RaceDrive</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #06060b 0%, #11111e 100%);
+            background-color: #08090d;
             color: #ffffff;
-            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden;
+            padding: 20px;
         }
 
-        .container {
+        .wrapper {
             width: 100%;
-            max-width: 950px;
+            max-width: 960px;
             margin-top: 10px;
         }
 
-        /* प्रीमियम बैक बटन */
-        .back-btn {
-            background: rgba(255, 255, 255, 0.07);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 12px 24px;
-            border-radius: 30px;
+        .back-home {
+            background: #12131c;
+            color: #fff;
+            border: 1px solid #232537;
+            padding: 10px 22px;
+            border-radius: 20px;
             cursor: pointer;
-            font-weight: 600;
-            margin-bottom: 25px;
-            transition: all 0.3s ease;
+            font-weight: bold;
             text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: inline-block;
+            margin-bottom: 25px;
+            transition: 0.2s;
         }
 
-        .back-btn:hover {
+        .back-home:hover {
             background: #e50914;
             border-color: #e50914;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(229, 9, 20, 0.4);
         }
 
-        /* थियेटर स्टाइल वीडियो बॉक्स */
-        .video-box {
-            width: 100%;
-            height: 530px;
-            background: #000;
-            border-radius: 16px;
-            overflow: hidden;
+        /* 🎬 थियेटर प्लेयर मोड */
+        .player-wrapper {
             position: relative;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(229, 9, 20, 0.25);
-            transition: box-shadow 0.5s ease;
-        }
-
-        .video-box:hover {
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 45px rgba(229, 9, 20, 0.45);
-        }
-
-        video {
             width: 100%;
-            height: 100%;
-            object-fit: contain;
-            outline: none;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+            border: 1px solid #1c1d2a;
         }
 
-        /* प्रीमियम मूवी इन्फो सेक्शन */
-        .movie-details {
-            margin-top: 25px;
-            background: rgba(20, 20, 35, 0.6);
-            padding: 25px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .movie-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #ffffff;
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
-        }
-
-        .meta-tags {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            margin-bottom: 15px;
-            font-size: 0.95rem;
-            color: #b3b3b3;
-        }
-
-        .tag-rating {
-            color: #ffb400;
-            font-weight: bold;
-            background: rgba(255, 180, 0, 0.1);
-            padding: 4px 10px;
-            border-radius: 6px;
-        }
-
-        .tag-quality {
-            background: #e50914;
-            color: white;
-            font-size: 0.75rem;
-            font-weight: 800;
-            padding: 3px 8px;
-            border-radius: 4px;
-            text-transform: uppercase;
-        }
-
-        .movie-description {
-            color: #cccccc;
-            line-height: 1.6;
-            font-size: 1rem;
-        }
-
-        /* स्टाइलिश एरर स्क्रीन */
-        .error-msg {
-            display: none;
+        .player-wrapper video, .player-wrapper iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, #1a1a2e 0%, #0b0b12 100%);
-            color: #ffffff;
-            text-align: center;
-            padding: 40px;
-            z-index: 10;
+            border: none;
+        }
+
+        /* इन्फो बॉक्स */
+        .details-box {
+            background: #12131c;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 25px;
+            border: 1px solid #1c1d2a;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .badges {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .badge {
+            background: #1c1d2a;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #ffb400;
+        }
+
+        /* 📥 MoviesDrive स्टाइल डाउनलोड पैक्स */
+        .download-box {
+            border-top: 1px solid #232537;
+            padding-top: 25px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
-        .error-icon {
-            font-size: 4rem;
-            animation: pulse 2s infinite;
+        .btn-dl {
+            background: #25a25a;
+            color: white;
+            text-align: center;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s;
+            display: block;
+            box-shadow: 0 4px 12px rgba(37,162,90,0.2);
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.8; }
+        .btn-dl:hover {
+            background: #1e8449;
+            transform: translateY(-2px);
         }
 
-        /* मोबाइल रिस्पॉन्सिव */
-        @media (max-width: 768px) {
-            .video-box { height: 320px; }
-            .movie-title { font-size: 1.5rem; }
-            body { padding: 10px; }
+        .btn-dl.alternate {
+            background: #232537;
+            color: #fff;
+            box-shadow: none;
+        }
+
+        .btn-dl.alternate:hover {
+            background: #2f324a;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <a href="index.html" class="back-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-            होम पेज
-        </a>
+    <div class="wrapper">
+        <a href="index.html" class="back-home">⬅ वापस होम पेज पर जाएं</a>
 
-        <div class="video-box">
-            <video id="main-player" controls controlsList="nodownload" autoplay></video>
-            
-            <div id="error-screen" class="error-msg" style="display: none;">
-                <div class="error-icon">🍿</div>
-                <h3 style="font-size: 1.4rem; color: #e50914;">वीडियो स्ट्रीम उपलब्ध नहीं है</h3>
-                <p style="color: #8c8c9e; max-width: 400px; font-size: 0.95rem;">यह मूवी फ़ाइल अभी सर्वर या GitHub पर अपलोड नहीं की गई है। कृपया अपनी रिपॉजिटरी में सही MP4 फाइल जोड़ें।</p>
-            </div>
-        </div>
+        <div class="player-wrapper" id="videoBox"></div>
 
-        <div class="movie-details">
-            <h2 class="movie-title" id="movie-name">लोड हो रहा है...</h2>
-            <div class="meta-tags">
-                <span class="tag-rating" id="movie-rating">⭐ --/10</span>
-                <span>2026</span>
-                <span class="tag-quality">Ultra HD</span>
-                <span>Hindi Dubbed</span>
+        <div class="details-box">
+            <h2 id="titleText">Loading...</h2>
+            <div class="badges">
+                <span class="badge">Ultra Fast Stream</span>
+                <span class="badge">Google Shared Alternative</span>
+                <span class="badge">1080p Max</span>
             </div>
-            <p class="movie-description">
-                रुकिए मत! अपने पॉपकॉर्न तैयार रखिए। हाई-डेफिनिशन साउंड और क्रिस्प वीडियो क्वालिटी के साथ बेहतरीन थिएट्रिकल एक्सपीरियंस का मज़ा लीजिए। अगर वीडियो लोड न हो, तो फ़ाइल पाथ ज़रूर चेक करें।
-            </p>
+
+            <div class="download-box">
+                <a href="#" id="dlServer1" target="_blank" class="btn-dl">📥 Download / Stream Link (Server 1)</a>
+                <a href="#" id="dlServer2" target="_blank" class="btn-dl alternate">🔗 Mirror Link (Server 2)</a>
+            </div>
         </div>
     </div>
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const videoUrl = urlParams.get('video');
-        const movieTitle = urlParams.get('title');
-        
-        const player = document.getElementById('main-player');
-        const errorScreen = document.getElementById('error-screen');
+        const titleText = decodeURIComponent(urlParams.get('title') || 'Race Hub Video');
 
-        if (videoUrl && movieTitle) {
-            player.src = videoUrl;
-            document.getElementById('movie-name').innerText = decodeURIComponent(movieTitle);
-            
-            // रैंडम रेटिंग दिखाने के लिए (दिखने में अच्छा लगे)
-            document.getElementById('movie-rating').innerText = `⭐ ${(8 + Math.random() * 1.8).toFixed(1)}/10`;
-            
-            // वीडियो न मिलने पर स्टाइलिश एरर दिखाएं
-            player.onerror = function() {
-                player.style.display = "none";
-                errorScreen.style.display = "flex";
-            };
+        document.getElementById('titleText').innerText = titleText;
+        const videoBox = document.getElementById('videoBox');
+
+        // अगर लिंक YouTube का है तो iframe, नहीं तो normal HTML5 video player
+        if (videoUrl.includes('youtube.com') || videoUrl.includes('embed')) {
+            videoBox.innerHTML = `<iframe src="${videoUrl}?autoplay=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
         } else {
-            document.getElementById('movie-name').innerText = "कोई मूवी नहीं मिली!";
-            player.style.display = "none";
-            errorScreen.style.display = "flex";
+            videoBox.innerHTML = `<video src="${videoUrl}" controls autoplay></video>`;
         }
-    </script>
 
+        document.getElementById('dlServer1').href = videoUrl;
+        document.getElementById('dlServer2').href = videoUrl;
+    </script>
 </body>
 </html>
