@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Race Movie & Cartoon Hub</title>
+    <title>Race Entertainment Hub</title>
     <style>
         * {
             margin: 0;
@@ -28,14 +28,16 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 70vh;
+            height: 80vh;
             text-align: center;
+            width: 100%;
+            max-width: 800px;
         }
 
         .welcome-title {
             font-size: 2.5rem;
             color: #ffffff;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
@@ -48,8 +50,8 @@
             background: #e50914;
             color: white;
             border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
+            padding: 15px 50px;
+            font-size: 1.3rem;
             font-weight: bold;
             border-radius: 30px;
             cursor: pointer;
@@ -63,40 +65,49 @@
             box-shadow: 0 0 30px rgba(229, 9, 20, 0.6);
         }
 
-        /* 🌟 दो ऑप्शन वाले बटन्स */
+        /* 🌟 8 प्रीमियम ऑप्शन ग्रिड */
         .options-container {
             display: none; /* शुरुआत में छुपा रहेगा */
-            gap: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            width: 100%;
             margin-top: 20px;
             animation: fadeIn 0.5s ease;
+        }
+
+        /* जब जावास्क्रिप्ट एक्टिवेट करेगी तब ग्रिड दिखेगा */
+        #optionsContainer {
+            display: none;
         }
 
         .opt-btn {
             background: #141423;
             color: white;
             border: 2px solid #2e2e4f;
-            padding: 15px 35px;
-            font-size: 1.1rem;
+            padding: 18px 10px;
+            font-size: 1rem;
             font-weight: 600;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            text-align: center;
         }
 
         .opt-btn:hover {
             border-color: #e50914;
             background: #e50914;
+            transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
         }
 
-        /* मेन कंटेंट (सर्च और मूवीज) शुरुआत में छुपा रहेगा */
+        /* मेन कंटेंट */
         .main-content {
             display: none;
             width: 100%;
             max-width: 1200px;
         }
 
-        /* प्रीमियम नेविगेशन बार */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -107,6 +118,20 @@
             border-bottom: 2px solid #1e1e2f;
         }
 
+        .home-back-btn {
+            background: #2e2e4f;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .home-back-btn:hover {
+            background: #e50914;
+        }
+
         h1 {
             color: #e50914;
             text-shadow: 0 0 10px rgba(229, 9, 20, 0.3);
@@ -114,12 +139,10 @@
             text-transform: uppercase;
         }
 
-        /* सर्च बार */
         .search-box {
             display: flex;
             align-items: center;
-            width: 40%;
-            max-width: 500px;
+            width: 35%;
         }
 
         .search-box input {
@@ -141,7 +164,6 @@
             cursor: pointer;
         }
 
-        /* मूवी ग्रिड */
         .movie-container {
             display: flex;
             flex-wrap: wrap;
@@ -192,7 +214,7 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
@@ -200,17 +222,24 @@
 <body>
 
     <div class="welcome-screen" id="welcomeScreen">
-        <h2 class="welcome-title">Welcome to <span>Race Hub</span></h2>
+        <h2 class="welcome-title">Welcome to <br><span>Race Hub Entertainment</span></h2>
         <button class="start-btn" id="startBtn" onclick="showOptions()">START</button>
 
         <div class="options-container" id="optionsContainer">
             <button class="opt-btn" onclick="filterCategory('movie')">🎬 Movies</button>
             <button class="opt-btn" onclick="filterCategory('cartoon')">👦 Motu Patlu</button>
+            <button class="opt-btn" onclick="filterCategory('webseries')">📺 Web Series</button>
+            <button class="opt-btn" onclick="filterCategory('anime')">🏮 Anime</button>
+            <button class="opt-btn" onclick="filterCategory('south')">🔥 South Dubbed</button>
+            <button class="opt-btn" onclick="filterCategory('hollywood')">🇺🇸 Hollywood</button>
+            <button class="opt-btn" onclick="filterCategory('comedy')">😂 Comedy Shows</button>
+            <button class="opt-btn" onclick="filterCategory('kids')">🧸 Kids Zone</button>
         </div>
     </div>
 
     <div class="main-content" id="mainContent">
         <div class="navbar">
+            <button class="home-back-btn" onclick="backToMenu()">⬅ मेनू बदलें</button>
             <h1 id="pageTitle">Race Movies</h1>
             <div class="search-box">
                 <input type="text" id="movieSearch" onkeyup="searchMovie()" placeholder="सर्च करें...">
@@ -222,42 +251,52 @@
     </div>
 
     <script>
-        // 🌟 आपका अपना मिक्स डेटाबेस (category के साथ)
+        // 🌟 आपका मिक्स डेटाबेस (category के साथ ताकि सही बटन पर सही वीडियो दिखे)
         const moviesDatabase = [
             { title: "Motu Patlu - Episode 1", poster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=500", videoUrl: "motu-patlu-1.mp4", rating: "9.0", category: "cartoon" },
             { title: "Motu Patlu - Episode 2", poster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=500", videoUrl: "motu-patlu-2.mp4", rating: "8.9", category: "cartoon" },
             { title: "Jana Nayagan (2026)", poster: "32945.jpg", videoUrl: "jana-nayagan.mp4", rating: "9.5", category: "movie" },
             { title: "Pushpa 2: The Rule", poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", videoUrl: "pushpa2.mp4", rating: "9.2", category: "movie" }
+            // 📝 आप इसी तरह 'category' बदलकर 'webseries', 'anime' आदि के वीडियो नीचे जोड़ सकते हैं।
         ];
 
         let currentCategory = "all";
 
-        // START बटन दबाने पर दो ऑप्शन दिखाना
         function showOptions() {
             document.getElementById('startBtn').style.display = 'none';
-            document.getElementById('optionsContainer').style.display = 'flex';
+            document.getElementById('optionsContainer').style.display = 'grid';
         }
 
-        // ऑप्शन सिलेक्ट करने पर कंटेंट लोड करना
         function filterCategory(category) {
             currentCategory = category;
             document.getElementById('welcomeScreen').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
             
-            if(category === 'cartoon') {
-                document.getElementById('pageTitle').innerText = "Motu Patlu Show";
-            } else {
-                document.getElementById('pageTitle').innerText = "Race Movies";
-            }
+            // टाइटल बदलना
+            const titles = {
+                movie: "Race Movies",
+                cartoon: "Motu Patlu Show",
+                webseries: "Premium Web Series",
+                anime: "Anime Hub",
+                south: "South Indian Blockbusters",
+                hollywood: "Hollywood Hits",
+                comedy: "Comedy Zone",
+                kids: "Kids Corner"
+            };
+            document.getElementById('pageTitle').innerText = titles[category] || "Race Hub";
 
             const filtered = moviesDatabase.filter(item => item.category === category);
             loadMovies(filtered);
         }
 
-        // कार्ड्स को स्क्रीन पर दिखाना (यह watch.html पर भेजेगा)
         function loadMovies(moviesToRender) {
             const container = document.getElementById('movieContainer');
             container.innerHTML = ""; 
+
+            if(moviesToRender.length === 0) {
+                container.innerHTML = "<h2 style='text-align:center; width:100%; margin-top:50px; color:#666;'>जल्द ही इस कैटेगरी में वीडियो जोड़े जाएंगे!</h2>";
+                return;
+            }
 
             moviesToRender.forEach(movie => {
                 const card = document.createElement('div');
@@ -277,6 +316,11 @@
 
         function goToPlayer(video, title) {
             window.location.href = `watch.html?video=${video}&title=${title}`;
+        }
+
+        function backToMenu() {
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('welcomeScreen').style.display = 'flex';
         }
 
         function searchMovie() {
