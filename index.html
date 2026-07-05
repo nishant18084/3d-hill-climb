@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Race Movie & Trailer Hub</title>
+    <title>Race Movie Hub</title>
     <style>
         * {
             margin: 0;
@@ -147,7 +147,7 @@
             font-weight: bold;
         }
 
-        /* वीडियो प्लेयर विंडो */
+        /* प्रीमियम लोकल वीडियो प्लेयर विंडो */
         #player-container {
             display: none;
             width: 100%;
@@ -163,13 +163,13 @@
         .video-box {
             width: 100%;
             height: 480px;
+            background: #000;
         }
 
-        iframe, video {
+        video {
             width: 100%;
             height: 100%;
-            border: none;
-            display: none;
+            object-fit: contain;
         }
     </style>
 </head>
@@ -191,30 +191,45 @@
 
     <div id="player-container">
         <div class="video-box">
-            <iframe id="iframe-player" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <video id="html5-player" controls autoplay></video>
+            <video id="html5-player" controls controlsList="nodownload" autoplay></video>
         </div>
     </div>
 
     <script>
-        // 🌟 आपका अपना बड़ा मूवी डेटाबेस (यहाँ आप जितनी चाहें फिल्में जोड़ सकते हैं)
+        // 🌟 आपका अपना मूवी डेटाबेस
+        // यहाँ 'videoUrl' में आपको अपनी खुद की अपलोड की हुई वीडियो फाइल का नाम या लिंक डालना है।
         const moviesDatabase = [
-            { title: "Jana Nayagan (2026)", poster: "32945.jpg", url: "https://www.youtube.com/watch?v=jAtFtrWIKdw", rating: "9.5" },
-            { title: "Pushpa 2: The Rule", poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", url: "https://www.youtube.com/watch?v=1kS9hC20mHQ", rating: "9.2" },
-            { title: "Kalki 2898 AD", poster: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500", url: "https://www.youtube.com/watch?v=kQDd1AhGIHk", rating: "8.9" },
-            { title: "Stree 2", poster: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=500", url: "https://www.youtube.com/watch?v=KVnheXw8_R4", rating: "8.7" },
-            { title: "Jawan", poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", url: "https://www.youtube.com/watch?v=MWOlnZSnXJo", rating: "8.5" },
-            { title: "Pathaan", poster: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500", url: "https://www.youtube.com/watch?v=vqu4zblH-DQ", rating: "8.2" },
-            { title: "Animal", poster: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=500", url: "https://www.youtube.com/watch?v=Dydmp0WAsKw", rating: "8.6" },
-            { title: "Tiger 3", poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", url: "https://www.youtube.com/watch?v=vMzm3SQQco0", rating: "7.8" },
-            { title: "Interstellar", poster: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500", url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", rating: "8.7" },
-            { title: "The Dark Knight", poster: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=500", url: "https://youtu.be/tgbNymZ7vqY", rating: "9.0" },
-            { title: "Inception", poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", url: "https://www.youtube.com/watch?v=kJQP7kiw5Fk", rating: "8.8" },
-            { title: "Salaar", poster: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500", url: "https://www.youtube.com/watch?v=H7Z8S-64l5M", rating: "8.4" },
-            { title: "Dunki", poster: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=500", url: "https://www.youtube.com/watch?v=U7XitL_ZMM4", rating: "8.0" },
-            { title: "Fighter", poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", url: "https://www.youtube.com/watch?v=6amIq_mP4xM", rating: "8.1" },
-            { title: "Shaitaan", poster: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500", url: "https://www.youtube.com/watch?v=gTshZidV0p4", rating: "8.3" }
-            // 📝 आप इसके नीचे जितनी चाहें उतनी फ़िल्में (1000 तक) खुद ऐसे ही लिख कर जोड़ सकते हैं।
+            { 
+                title: "Jana Nayagan (2026)", 
+                poster: "32945.jpg", 
+                videoUrl: "video1.mp4", // 👈 अपनी असली वीडियो फाइल का नाम यहाँ लिखें
+                rating: "9.5" 
+            },
+            { 
+                title: "Pushpa 2: The Rule", 
+                poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", 
+                videoUrl: "pushpa2.mp4", 
+                rating: "9.2" 
+            },
+            { 
+                title: "Kalki 2898 AD", 
+                poster: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500", 
+                videoUrl: "kalki.mp4", 
+                rating: "8.9" 
+            },
+            { 
+                title: "Stree 2", 
+                poster: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=500", 
+                videoUrl: "stree2.mp4", 
+                rating: "8.7" 
+            },
+            { 
+                title: "Jawan", 
+                poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", 
+                videoUrl: "jawan.mp4", 
+                rating: "8.5" 
+            }
+            // 📝 भविष्य में 1000 फिल्में पूरी करने के लिए ऐसे ही ब्लॉक्स नीचे बढ़ाते जाएं!
         ];
 
         // फिल्मों को पेज पर दिखाने का फंक्शन
@@ -225,7 +240,7 @@
             moviesToRender.forEach(movie => {
                 const card = document.createElement('div');
                 card.className = 'movie-card';
-                card.setAttribute('onclick', `playMedia('${movie.url}')`);
+                card.setAttribute('onclick', `playLocalMedia('${movie.videoUrl}')`);
                 
                 card.innerHTML = `
                     <img src="${movie.poster}" alt="${movie.title}">
@@ -238,49 +253,32 @@
             });
         }
 
-        // लोड करें
+        // पहली बार लोड करें
         loadMovies(moviesDatabase);
 
-        function playMedia(url) {
+        // लोकल वीडियो प्लेयर चलाने का फंक्शन
+        function playLocalMedia(videoFileUrl) {
             const container = document.getElementById('player-container');
-            const iframe = document.getElementById('iframe-player');
             const videoTag = document.getElementById('html5-player');
             
-            iframe.style.display = "none";
-            iframe.src = "";
-            videoTag.style.display = "none";
-            videoTag.src = "";
-            videoTag.pause();
-
-            if (url.includes("youtube.com") || url.includes("youtu.be")) {
-                let embedLink = url;
-                if (url.includes("watch?v=")) {
-                    let videoId = url.split("v=")[1].split("&")[0];
-                    embedLink = "https://www.youtube.com/embed/" + videoId;
-                } else if (url.includes("youtu.be/")) {
-                    let videoId = url.split("youtu.be/")[1].split("?")[0];
-                    embedLink = "https://www.youtube.com/embed/" + videoId;
-                }
-                iframe.src = embedLink;
-                iframe.style.display = "block";
-            } else {
-                videoTag.src = url;
-                videoTag.style.display = "block";
-            }
+            // प्लेयर को साफ़ करें
+            videoTag.src = videoFileUrl;
             
+            // प्लेयर दिखाएं और स्मूथ स्क्रॉल करें
             container.style.display = 'block';
             container.scrollIntoView({ behavior: 'smooth' });
+            
+            // वीडियो शुरू करें
+            videoTag.play();
         }
 
         function goHome() {
             const container = document.getElementById('player-container');
-            const iframe = document.getElementById('iframe-player');
             const videoTag = document.getElementById('html5-player');
             const searchInput = document.getElementById('movieSearch');
             
-            iframe.src = "";
-            videoTag.src = "";
             videoTag.pause();
+            videoTag.src = "";
             
             container.style.display = 'none';
             searchInput.value = "";
@@ -289,6 +287,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // लोकल सर्च फंक्शन
         function searchMovie() {
             let input = document.getElementById('movieSearch').value.toLowerCase();
             let filteredMovies = moviesDatabase.filter(movie => 
@@ -299,4 +298,4 @@
     </script>
 
 </body>
-</html>
+</html>WELCOME 
