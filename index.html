@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RaceDrive v3.0 - Triple Start Edition</title>
+    <title>RaceDrive v3.1</title>
     <style>
         * {
             margin: 0;
@@ -45,58 +44,6 @@
         .logo span {
             color: #ff0055;
             text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055;
-        }
-
-        /* 🌟 3 स्टार्ट बटन्स का हब */
-        .start-hub {
-            width: 90%;
-            max-width: 1200px;
-            margin: 30px auto;
-            background: #0a0b10;
-            border: 2px dashed #ff0055;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 0 15px rgba(255, 0, 85, 0.2);
-        }
-
-        .hub-title {
-            font-size: 1.4rem;
-            color: #fff;
-            margin-bottom: 20px;
-            text-shadow: 0 0 5px #00ffcc;
-        }
-
-        .start-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .mega-start-btn {
-            background: #000;
-            color: #00ffcc;
-            border: 2px solid #00ffcc;
-            padding: 15px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
-        }
-
-        .mega-start-btn:hover {
-            background: #ff0055;
-            color: #fff;
-            border-color: #ff0055;
-            box-shadow: 0 0 20px #ff0055;
-            transform: scale(1.02);
-        }
-
-        .mega-start-btn.active {
-            background: #ff0055;
-            color: #fff;
-            border-color: #fff;
-            box-shadow: 0 0 25px #ff0055;
         }
 
         /* 🍿 कंटेंट ज़ोन */
@@ -193,16 +140,7 @@
 
     <div class="header">
         <div class="logo">RACE<span>_DRIVE</span></div>
-        <div style="font-size: 0.9rem; color: #ff0055;">[ CORE V3.0 ONLINE ]</div>
-    </div>
-
-    <div class="start-hub">
-        <div class="hub-title">=== SELECT SYSTEM START MODE ===</div>
-        <div class="start-grid">
-            <button class="mega-start-btn" id="btn-all" onclick="filterStart('all')">[ START: SHOW ALL ]</button>
-            <button class="mega-start-btn" id="btn-movies" onclick="filterStart('movie')">[ START: MOVIES ONLY ]</button>
-            <button class="mega-start-btn" id="btn-cartoons" onclick="filterStart('cartoon')">[ START: MOTU PATLU ]</button>
-        </div>
+        <div style="font-size: 0.9rem; color: #00ffcc;">[ DIRECT DATABASE ]</div>
     </div>
 
     <div class="content-section">
@@ -218,32 +156,9 @@
             { title: "Pushpa 2: The Rule", poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", rating: "9.2", quality: "1080P WEB", category: "movie" }
         ];
 
-        function filterStart(mode) {
-            // सभी बटन से एक्टिव क्लास हटाना
-            document.getElementById('btn-all').classList.remove('active');
-            document.getElementById('btn-movies').classList.remove('active');
-            document.getElementById('btn-cartoons').classList.remove('active');
-
-            // क्लिक किए गए बटन को एक्टिव करना
-            if(mode === 'all') document.getElementById('btn-all').classList.add('active');
-            if(mode === 'movie') document.getElementById('btn-movies').classList.add('active');
-            if(mode === 'cartoon') document.getElementById('btn-cartoons').classList.add('active');
-
-            let filteredData = moviesDatabase;
-            if (mode !== 'all') {
-                filteredData = moviesDatabase.filter(item => item.category === mode);
-            }
-            displayContent(filteredData);
-        }
-
         function displayContent(data) {
             const mainContainer = document.getElementById('mainContainer');
             mainContainer.innerHTML = "";
-
-            if(data.length === 0) {
-                mainContainer.innerHTML = "<h3 style='grid-column: 1/-1; text-align:center; color:#ff0055;'>[ डेटा नोड खाली है ]</h3>";
-                return;
-            }
 
             data.forEach(item => {
                 const card = document.createElement('div');
@@ -271,8 +186,8 @@
             window.location.href = `watch.html?video=${video}&title=${title}`;
         }
 
-        // शुरुआत में सारा डेटा दिखाएं
-        filterStart('all');
+        // डायरेक्ट सारा डेटा दिखाएं
+        displayContent(moviesDatabase);
     </script>
 </body>
 </html>
