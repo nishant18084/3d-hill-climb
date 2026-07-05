@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Race Movie Hub</title>
+    <title>Race Movie & Cartoon Hub</title>
     <style>
         * {
             margin: 0;
@@ -22,12 +22,86 @@
             min-height: 100vh;
         }
 
+        /* 🌟 वेलकम और स्टार्ट सेक्शन */
+        .welcome-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 70vh;
+            text-align: center;
+        }
+
+        .welcome-title {
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .welcome-title span {
+            color: #e50914;
+        }
+
+        .start-btn {
+            background: #e50914;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(229, 9, 20, 0.4);
+            transition: 0.3s;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.05);
+            background: #b81d24;
+            box-shadow: 0 0 30px rgba(229, 9, 20, 0.6);
+        }
+
+        /* 🌟 दो ऑप्शन वाले बटन्स */
+        .options-container {
+            display: none; /* शुरुआत में छुपा रहेगा */
+            gap: 20px;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .opt-btn {
+            background: #141423;
+            color: white;
+            border: 2px solid #2e2e4f;
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .opt-btn:hover {
+            border-color: #e50914;
+            background: #e50914;
+            box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
+        }
+
+        /* मेन कंटेंट (सर्च और मूवीज) शुरुआत में छुपा रहेगा */
+        .main-content {
+            display: none;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* प्रीमियम नेविगेशन बार */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            max-width: 1200px;
             margin-bottom: 40px;
             padding: 15px 0;
             border-bottom: 2px solid #1e1e2f;
@@ -38,9 +112,9 @@
             text-shadow: 0 0 10px rgba(229, 9, 20, 0.3);
             font-size: 1.8rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
+        /* सर्च बार */
         .search-box {
             display: flex;
             align-items: center;
@@ -67,14 +141,13 @@
             cursor: pointer;
         }
 
+        /* मूवी ग्रिड */
         .movie-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 25px;
             margin-bottom: 40px;
-            width: 100%;
-            max-width: 1200px;
         }
 
         .movie-card {
@@ -116,31 +189,72 @@
         .movie-info .rating {
             color: #ffb400;
             font-size: 0.9rem;
-            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <div class="navbar">
-        <h1>Race Movies</h1>
-        <div class="search-box">
-            <input type="text" id="movieSearch" onkeyup="searchMovie()" placeholder="मूवी सर्च करें...">
-            <button>🔍</button>
+    <div class="welcome-screen" id="welcomeScreen">
+        <h2 class="welcome-title">Welcome to <span>Race Hub</span></h2>
+        <button class="start-btn" id="startBtn" onclick="showOptions()">START</button>
+
+        <div class="options-container" id="optionsContainer">
+            <button class="opt-btn" onclick="filterCategory('movie')">🎬 Movies</button>
+            <button class="opt-btn" onclick="filterCategory('cartoon')">👦 Motu Patlu</button>
         </div>
     </div>
 
-    <div class="movie-container" id="movieContainer"></div>
+    <div class="main-content" id="mainContent">
+        <div class="navbar">
+            <h1 id="pageTitle">Race Movies</h1>
+            <div class="search-box">
+                <input type="text" id="movieSearch" onkeyup="searchMovie()" placeholder="सर्च करें...">
+                <button>🔍</button>
+            </div>
+        </div>
+
+        <div class="movie-container" id="movieContainer"></div>
+    </div>
 
     <script>
+        // 🌟 आपका अपना मिक्स डेटाबेस (category के साथ)
         const moviesDatabase = [
-            { title: "Jana Nayagan (2026)", poster: "32945.jpg", videoUrl: "jana-nayagan.mp4", rating: "9.5" },
-            { title: "Pushpa 2: The Rule", poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", videoUrl: "pushpa2.mp4", rating: "9.2" },
-            { title: "Kalki 2898 AD", poster: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500", videoUrl: "kalki.mp4", rating: "8.9" },
-            { title: "Stree 2", poster: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=500", videoUrl: "stree2.mp4", rating: "8.7" },
-            { title: "Jawan", poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", videoUrl: "jawan.mp4", rating: "8.5" }
+            { title: "Motu Patlu - Episode 1", poster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=500", videoUrl: "motu-patlu-1.mp4", rating: "9.0", category: "cartoon" },
+            { title: "Motu Patlu - Episode 2", poster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=500", videoUrl: "motu-patlu-2.mp4", rating: "8.9", category: "cartoon" },
+            { title: "Jana Nayagan (2026)", poster: "32945.jpg", videoUrl: "jana-nayagan.mp4", rating: "9.5", category: "movie" },
+            { title: "Pushpa 2: The Rule", poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", videoUrl: "pushpa2.mp4", rating: "9.2", category: "movie" }
         ];
 
+        let currentCategory = "all";
+
+        // START बटन दबाने पर दो ऑप्शन दिखाना
+        function showOptions() {
+            document.getElementById('startBtn').style.display = 'none';
+            document.getElementById('optionsContainer').style.display = 'flex';
+        }
+
+        // ऑप्शन सिलेक्ट करने पर कंटेंट लोड करना
+        function filterCategory(category) {
+            currentCategory = category;
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+            
+            if(category === 'cartoon') {
+                document.getElementById('pageTitle').innerText = "Motu Patlu Show";
+            } else {
+                document.getElementById('pageTitle').innerText = "Race Movies";
+            }
+
+            const filtered = moviesDatabase.filter(item => item.category === category);
+            loadMovies(filtered);
+        }
+
+        // कार्ड्स को स्क्रीन पर दिखाना (यह watch.html पर भेजेगा)
         function loadMovies(moviesToRender) {
             const container = document.getElementById('movieContainer');
             container.innerHTML = ""; 
@@ -148,7 +262,6 @@
             moviesToRender.forEach(movie => {
                 const card = document.createElement('div');
                 card.className = 'movie-card';
-                // अब यह नए watch.html पेज पर रिडायरेक्ट करेगा मूवी के नाम और वीडियो लिंक के साथ
                 card.setAttribute('onclick', `goToPlayer('${movie.videoUrl}', '${encodeURIComponent(movie.title)}')`);
                 
                 card.innerHTML = `
@@ -162,9 +275,6 @@
             });
         }
 
-        loadMovies(moviesDatabase);
-
-        // नए पेज पर भेजने का फंक्शन
         function goToPlayer(video, title) {
             window.location.href = `watch.html?video=${video}&title=${title}`;
         }
@@ -172,11 +282,11 @@
         function searchMovie() {
             let input = document.getElementById('movieSearch').value.toLowerCase();
             let filteredMovies = moviesDatabase.filter(movie => 
-                movie.title.toLowerCase().includes(input)
+                movie.category === currentCategory && movie.title.toLowerCase().includes(input)
             );
             loadMovies(filteredMovies);
         }
     </script>
 
 </body>
-</html>welcome 
+</html>WELCOME 
