@@ -1,1 +1,278 @@
 
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RaceDrive v3.0 - Triple Start Edition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            background-color: #050508;
+            color: #00ffcc;
+            padding-bottom: 50px;
+            overflow-x: hidden;
+        }
+
+        /* ⚡ साइबरपंक हेडर */
+        .header {
+            width: 100%;
+            background: #0a0b10;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ff0055;
+            box-shadow: 0 0 15px #ff0055;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+        }
+
+        .logo span {
+            color: #ff0055;
+            text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055;
+        }
+
+        /* 🌟 3 स्टार्ट बटन्स का हब */
+        .start-hub {
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto;
+            background: #0a0b10;
+            border: 2px dashed #ff0055;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.2);
+        }
+
+        .hub-title {
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px #00ffcc;
+        }
+
+        .start-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .mega-start-btn {
+            background: #000;
+            color: #00ffcc;
+            border: 2px solid #00ffcc;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+        }
+
+        .mega-start-btn:hover {
+            background: #ff0055;
+            color: #fff;
+            border-color: #ff0055;
+            box-shadow: 0 0 20px #ff0055;
+            transform: scale(1.02);
+        }
+
+        .mega-start-btn.active {
+            background: #ff0055;
+            color: #fff;
+            border-color: #fff;
+            box-shadow: 0 0 25px #ff0055;
+        }
+
+        /* 🍿 कंटेंट ज़ोन */
+        .content-section {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #fff;
+            margin: 40px 0 20px 0;
+            text-shadow: 0 0 10px #ff0055;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 30px;
+        }
+
+        /* फ्यूचरिस्टिक मूवी कार्ड्स */
+        .movie-card {
+            background: #0a0b10;
+            border-radius: 0px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            border: 2px solid #00ffcc;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+        }
+
+        .movie-card:hover {
+            transform: scale(1.03);
+            border-color: #ff0055;
+            box-shadow: 0 0 20px #ff0055;
+        }
+
+        .poster-box {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            border-bottom: 2px solid #00ffcc;
+        }
+
+        .movie-card:hover .poster-box {
+            border-color: #ff0055;
+        }
+
+        .poster-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .tag-quality {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #ff0055;
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 4px 8px;
+            box-shadow: 0 0 8px #ff0055;
+        }
+
+        .movie-details {
+            padding: 15px;
+            background: #000;
+        }
+
+        .movie-details h3 {
+            font-size: 1rem;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 10px;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #00ffcc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">RACE<span>_DRIVE</span></div>
+        <div style="font-size: 0.9rem; color: #ff0055;">[ CORE V3.0 ONLINE ]</div>
+    </div>
+
+    <div class="start-hub">
+        <div class="hub-title">=== SELECT SYSTEM START MODE ===</div>
+        <div class="start-grid">
+            <button class="mega-start-btn" id="btn-all" onclick="filterStart('all')">[ START: SHOW ALL ]</button>
+            <button class="mega-start-btn" id="btn-movies" onclick="filterStart('movie')">[ START: MOVIES ONLY ]</button>
+            <button class="mega-start-btn" id="btn-cartoons" onclick="filterStart('cartoon')">[ START: MOTU PATLU ]</button>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <div class="section-title">// SYSTEM DATABASE CONTAINER</div>
+        <div class="grid-container" id="mainContainer"></div>
+    </div>
+
+    <script>
+        const moviesDatabase = [
+            { title: "Motu Patlu - Superheroes (Full)", poster: "https://img.youtube.com/vi/aRJw72rniss/0.jpg", videoUrl: "https://www.youtube.com/embed/aRJw72rniss", rating: "9.5", quality: "HD 720P", category: "cartoon" },
+            { title: "Motu Patlu - In Airplane (Full)", poster: "https://img.youtube.com/vi/4of37kzfX7w/0.jpg", videoUrl: "https://www.youtube.com/embed/4of37kzfX7w", rating: "9.2", quality: "HD 720P", category: "cartoon" },
+            { title: "Jana Nayagan (2026)", poster: "32945.jpg", videoUrl: "jana-nayagan.mp4", rating: "9.5", quality: "4K RIP", category: "movie" },
+            { title: "Pushpa 2: The Rule", poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", rating: "9.2", quality: "1080P WEB", category: "movie" }
+        ];
+
+        function filterStart(mode) {
+            // सभी बटन से एक्टिव क्लास हटाना
+            document.getElementById('btn-all').classList.remove('active');
+            document.getElementById('btn-movies').classList.remove('active');
+            document.getElementById('btn-cartoons').classList.remove('active');
+
+            // क्लिक किए गए बटन को एक्टिव करना
+            if(mode === 'all') document.getElementById('btn-all').classList.add('active');
+            if(mode === 'movie') document.getElementById('btn-movies').classList.add('active');
+            if(mode === 'cartoon') document.getElementById('btn-cartoons').classList.add('active');
+
+            let filteredData = moviesDatabase;
+            if (mode !== 'all') {
+                filteredData = moviesDatabase.filter(item => item.category === mode);
+            }
+            displayContent(filteredData);
+        }
+
+        function displayContent(data) {
+            const mainContainer = document.getElementById('mainContainer');
+            mainContainer.innerHTML = "";
+
+            if(data.length === 0) {
+                mainContainer.innerHTML = "<h3 style='grid-column: 1/-1; text-align:center; color:#ff0055;'>[ डेटा नोड खाली है ]</h3>";
+                return;
+            }
+
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'movie-card';
+                card.setAttribute('onclick', `goToPlayer('${item.videoUrl}', '${encodeURIComponent(item.title)}')`);
+                
+                card.innerHTML = `
+                    <div class="poster-box">
+                        <img src="${item.poster}" alt="${item.title}">
+                        <span class="tag-quality">${item.quality}</span>
+                    </div>
+                    <div class="movie-details">
+                        <h3>${item.title}</h3>
+                        <div class="meta-info">
+                            <span>⚡ TYPE: ${item.category.toUpperCase()}</span>
+                            <span>⭐ ${item.rating}</span>
+                        </div>
+                    </div>
+                `;
+                mainContainer.appendChild(card);
+            });
+        }
+
+        function goToPlayer(video, title) {
+            window.location.href = `watch.html?video=${video}&title=${title}`;
+        }
+
+        // शुरुआत में सारा डेटा दिखाएं
+        filterStart('all');
+    </script>
+</body>
+</html>
