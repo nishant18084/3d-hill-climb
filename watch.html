@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playing - Race Drive</title>
+    <title>Premium Player - Race Drive</title>
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
     <style>
         * {
             margin: 0;
@@ -13,122 +14,144 @@
         }
 
         body {
-            background-color: #0b0b12;
+            background-color: #08080f;
             color: #ffffff;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
         }
 
         .container {
             width: 100%;
             max-width: 900px;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .back-btn {
-            background: #161722;
+            background: #141522;
             color: #fff;
             border: 1px solid #232537;
             padding: 10px 20px;
-            border-radius: 4px;
+            border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
             transition: 0.2s;
             text-decoration: none;
             display: inline-block;
             margin-bottom: 20px;
+            font-size: 0.9rem;
         }
 
         .back-btn:hover {
             background: #e50914;
             border-color: #e50914;
+            box-shadow: 0 0 10px rgba(229, 9, 20, 0.5);
         }
 
+        /* 🎬 प्रीमियम थियेटर फ्रेम */
         .player-box {
-            position: relative;
             width: 100%;
-            padding-top: 56.25%; /* 16:9 Ratio */
             background: #000;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-            border: 1px solid #232537;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+            border: 1px solid #1e2035;
         }
 
-        .player-box video, .player-box iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
+        :root {
+            --plyr-color-main: #e50914;
         }
 
         .movie-info-section {
-            background: #161722;
-            padding: 20px;
-            border-radius: 8px;
+            background: #141522;
+            padding: 22px;
+            border-radius: 12px;
             margin-top: 20px;
-            border: 1px solid #232537;
+            border: 1px solid #1e2035;
         }
 
         h2 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             color: #fff;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            font-weight: 700;
         }
 
         .tags {
             display: flex;
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .tag {
-            background: #242535;
-            padding: 4px 10px;
+            background: #202236;
+            padding: 5px 12px;
             border-radius: 4px;
             font-size: 0.8rem;
             font-weight: bold;
             color: #ffb400;
         }
 
+        /* 📥 एडवांस्ड डाउनलोड ज़ोन */
         .download-container {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             margin-top: 20px;
             border-top: 1px solid #232537;
             padding-top: 20px;
+            text-align: center;
         }
 
+        /* 💎 3D ग्लास इफेक्ट बटन */
         .dl-btn {
-            background: #25a25a;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37),
+                        inset 0 2px 4px rgba(255, 255, 255, 0.1);
             color: white;
             text-align: center;
-            padding: 12px;
-            border-radius: 6px;
+            padding: 15px;
+            border-radius: 12px;
             font-weight: bold;
             text-decoration: none;
-            transition: 0.2s;
             display: block;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
+        /* ✨ होवर पर 3D ग्लो */
         .dl-btn:hover {
-            background: #1e8449;
-            transform: scale(1.01);
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+            border-color: #e50914;
+            box-shadow: 0 15px 30px rgba(229, 9, 20, 0.4),
+                        inset 0 2px 4px rgba(255, 255, 255, 0.3);
         }
 
-        .dl-btn.mirror {
-            background: #2e3142;
-            color: #fff;
+        .dl-btn:active {
+            transform: translateY(-1px);
         }
 
-        .dl-btn.mirror:hover {
-            background: #3e4259;
+        /* ⏳ टाइमर बॉक्स */
+        .timer-box {
+            display: none;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: bold;
+            color: #ffb400;
+            border: 1px dashed #e50914;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
@@ -137,39 +160,75 @@
     <div class="container">
         <a href="index.html" class="back-btn">⬅ होम पेज पर जाएं</a>
 
-        <div class="player-box" id="playerContainer"></div>
+        <div class="player-box">
+            <div id="playerContainer"></div>
+        </div>
 
         <div class="movie-info-section">
             <h2 id="movieTitle">Loading Title...</h2>
             <div class="tags">
-                <span class="tag">Full HD</span>
-                <span class="tag">Fast Stream</span>
+                <span class="tag">Ultra HD</span>
+                <span class="tag">Fast Server</span>
                 <span class="tag">Audio: Hindi</span>
             </div>
 
             <div class="download-container">
-                <a href="#" id="primaryDownload" target="_blank" class="dl-btn">📥 Download Link (Fast Server)</a>
-                <a href="#" id="mirrorDownload" target="_blank" class="dl-btn mirror">🔗 Watch Online / Mirror Link</a>
+                <div id="downloadTimer" class="timer-box">⏳ Generating Link... <span id="countdown">5</span> Seconds...</div>
+                <button id="startDownloadBtn" class="dl-btn">⚡ Get High-Speed Download Link</button>
             </div>
         </div>
     </div>
 
+    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        const videoUrl = urlParams.get('video');
+        const videoUrl = urlParams.get('video') || '';
         const movieTitle = decodeURIComponent(urlParams.get('title') || 'Race Hub Video');
 
         document.getElementById('movieTitle').innerText = movieTitle;
         const playerContainer = document.getElementById('playerContainer');
 
         if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be') || videoUrl.includes('embed')) {
-            playerContainer.innerHTML = `<iframe src="${videoUrl}?autoplay=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            let videoId = videoUrl.split('embed/')[1] || videoUrl.split('v=')[1];
+            if(videoId) { videoId = videoId.split('&')[0]; }
+            playerContainer.innerHTML = `<div class="plyr__video-embed" id="player"><iframe src="https://www.youtube.com/embed/${videoId}?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1" allowfullscreen allowtransparency allow="autoplay"></iframe></div>`;
         } else {
-            playerContainer.innerHTML = `<video src="${videoUrl}" controls autoplay></video>`;
+            playerContainer.innerHTML = `<video id="player" playsinline controls><source src="${videoUrl}" type="video/mp4" /></video>`;
         }
 
-        document.getElementById('primaryDownload').href = videoUrl;
-        document.getElementById('mirrorDownload').href = videoUrl;
+        const player = new Plyr('#player', {
+            controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
+            ratio: '16:9'
+        });
+
+        // ⚡ टाइमर और बटन हैंडलर
+        const btn = document.getElementById('startDownloadBtn');
+        btn.addEventListener('click', function() {
+            const timerBox = document.getElementById('downloadTimer');
+            const countdownSpan = document.getElementById('countdown');
+            
+            btn.style.display = 'none';
+            timerBox.style.display = 'block';
+            
+            let timeLeft = 5;
+            
+            const downloadInterval = setInterval(function() {
+                timeLeft--;
+                countdownSpan.innerText = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(downloadInterval);
+                    timerBox.innerHTML = "✅ Downloading Started...";
+                    
+                    setTimeout(function() {
+                        window.open(videoUrl, '_blank');
+                        timerBox.style.display = 'none';
+                        btn.style.display = 'block';
+                        btn.innerHTML = "📥 Download Again";
+                    }, 1000);
+                }
+            }, 1000);
+        });
     </script>
 </body>
 </html>
