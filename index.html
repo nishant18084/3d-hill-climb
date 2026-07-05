@@ -65,20 +65,14 @@
             box-shadow: 0 0 30px rgba(229, 9, 20, 0.6);
         }
 
-        /* 🌟 8 प्रीमियम ऑप्शन ग्रिड */
+        /* 🌟 ऑप्शंस ग्रिड */
         .options-container {
-            display: none; /* शुरुआत में छुपा रहेगा */
-            display: grid;
+            display: none;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 15px;
             width: 100%;
             margin-top: 20px;
             animation: fadeIn 0.5s ease;
-        }
-
-        /* जब जावास्क्रिप्ट एक्टिवेट करेगी तब ग्रिड दिखेगा */
-        #optionsContainer {
-            display: none;
         }
 
         .opt-btn {
@@ -251,13 +245,36 @@
     </div>
 
     <script>
-        // 🌟 आपका मिक्स डेटाबेस (category के साथ ताकि सही बटन पर सही वीडियो दिखे)
+        // 🌟 आपका मिक्स डेटाबेस जिसमें अब YouTube वाले मोटू पतलू एपिसोड्स लिंक हैं!
         const moviesDatabase = [
-            { title: "Motu Patlu - Episode 1", poster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=500", videoUrl: "motu-patlu-1.mp4", rating: "9.0", category: "cartoon" },
-            { title: "Motu Patlu - Episode 2", poster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=500", videoUrl: "motu-patlu-2.mp4", rating: "8.9", category: "cartoon" },
-            { title: "Jana Nayagan (2026)", poster: "32945.jpg", videoUrl: "jana-nayagan.mp4", rating: "9.5", category: "movie" },
-            { title: "Pushpa 2: The Rule", poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", videoUrl: "pushpa2.mp4", rating: "9.2", category: "movie" }
-            // 📝 आप इसी तरह 'category' बदलकर 'webseries', 'anime' आदि के वीडियो नीचे जोड़ सकते हैं।
+            { 
+                title: "Motu Patlu - Superheroes (Full Episode)", 
+                poster: "https://img.youtube.com/vi/aRJw72rniss/0.jpg", 
+                videoUrl: "https://www.youtube.com/embed/aRJw72rniss", 
+                rating: "9.5", 
+                category: "cartoon" 
+            },
+            { 
+                title: "Motu Patlu - In Airplane (Full Episode)", 
+                poster: "https://img.youtube.com/vi/4of37kzfX7w/0.jpg", 
+                videoUrl: "https://www.youtube.com/embed/4of37kzfX7w", 
+                rating: "9.2", 
+                category: "cartoon" 
+            },
+            { 
+                title: "Jana Nayagan (2026)", 
+                poster: "32945.jpg", 
+                videoUrl: "jana-nayagan.mp4", 
+                rating: "9.5", 
+                category: "movie" 
+            },
+            { 
+                title: "Pushpa 2: The Rule", 
+                poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", 
+                videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", 
+                rating: "9.2", 
+                category: "movie" 
+            }
         ];
 
         let currentCategory = "all";
@@ -272,10 +289,9 @@
             document.getElementById('welcomeScreen').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
             
-            // टाइटल बदलना
             const titles = {
                 movie: "Race Movies",
-                cartoon: "Motu Patlu Show",
+                cartoon: "Motu Patlu (YouTube Special)",
                 webseries: "Premium Web Series",
                 anime: "Anime Hub",
                 south: "South Indian Blockbusters",
@@ -333,4 +349,4 @@
     </script>
 
 </body>
-</html
+</html>
