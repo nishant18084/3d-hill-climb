@@ -22,108 +22,20 @@
             min-height: 100vh;
         }
 
-        /* 🌟 वेलकम और स्टार्ट सेक्शन */
-        .welcome-screen {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 80vh;
-            text-align: center;
-            width: 100%;
-            max-width: 800px;
-        }
-
-        .welcome-title {
-            font-size: 2.5rem;
-            color: #ffffff;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .welcome-title span {
-            color: #e50914;
-        }
-
-        .start-btn {
-            background: #e50914;
-            color: white;
-            border: none;
-            padding: 15px 50px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            border-radius: 30px;
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(229, 9, 20, 0.4);
-            transition: 0.3s;
-        }
-
-        .start-btn:hover {
-            transform: scale(1.05);
-            background: #b81d24;
-            box-shadow: 0 0 30px rgba(229, 9, 20, 0.6);
-        }
-
-        /* 🌟 ऑप्शंस ग्रिड */
-        .options-container {
-            display: none;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 15px;
-            width: 100%;
-            margin-top: 20px;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .opt-btn {
-            background: #141423;
-            color: white;
-            border: 2px solid #2e2e4f;
-            padding: 18px 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .opt-btn:hover {
-            border-color: #e50914;
-            background: #e50914;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
-        }
-
-        /* मेन कंटेंट */
         .main-content {
-            display: none;
             width: 100%;
             max-width: 1200px;
         }
 
+        /* प्रीमियम नेविगेशन बार */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             padding: 15px 0;
             border-bottom: 2px solid #1e1e2f;
-        }
-
-        .home-back-btn {
-            background: #2e2e4f;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .home-back-btn:hover {
-            background: #e50914;
         }
 
         h1 {
@@ -133,6 +45,7 @@
             text-transform: uppercase;
         }
 
+        /* सर्च बार */
         .search-box {
             display: flex;
             align-items: center;
@@ -158,12 +71,25 @@
             cursor: pointer;
         }
 
+        /* सेक्शन हेडिंग (जैसे: Motu Patlu, Movies) */
+        .section-title {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin: 20px 0 10px 0;
+            border-left: 4px solid #e50914;
+            padding-left: 10px;
+            width: 100%;
+            text-align: left;
+        }
+
+        /* मूवी ग्रिड */
         .movie-container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 25px;
             margin-bottom: 40px;
+            width: 100%;
         }
 
         .movie-card {
@@ -206,46 +132,28 @@
             color: #ffb400;
             font-size: 0.9rem;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
     </style>
 </head>
 <body>
 
-    <div class="welcome-screen" id="welcomeScreen">
-        <h2 class="welcome-title">Welcome to <br><span>Race Hub Entertainment</span></h2>
-        <button class="start-btn" id="startBtn" onclick="showOptions()">START</button>
-
-        <div class="options-container" id="optionsContainer">
-            <button class="opt-btn" onclick="filterCategory('movie')">🎬 Movies</button>
-            <button class="opt-btn" onclick="filterCategory('cartoon')">👦 Motu Patlu</button>
-            <button class="opt-btn" onclick="filterCategory('webseries')">📺 Web Series</button>
-            <button class="opt-btn" onclick="filterCategory('anime')">🏮 Anime</button>
-            <button class="opt-btn" onclick="filterCategory('south')">🔥 South Dubbed</button>
-            <button class="opt-btn" onclick="filterCategory('hollywood')">🇺🇸 Hollywood</button>
-            <button class="opt-btn" onclick="filterCategory('comedy')">😂 Comedy Shows</button>
-            <button class="opt-btn" onclick="filterCategory('kids')">🧸 Kids Zone</button>
-        </div>
-    </div>
-
-    <div class="main-content" id="mainContent">
+    <div class="main-content">
         <div class="navbar">
-            <button class="home-back-btn" onclick="backToMenu()">⬅ मेनू बदलें</button>
-            <h1 id="pageTitle">Race Movies</h1>
+            <h1>Race Entertainment Hub</h1>
             <div class="search-box">
                 <input type="text" id="movieSearch" onkeyup="searchMovie()" placeholder="सर्च करें...">
                 <button>🔍</button>
             </div>
         </div>
 
+        <div class="section-title">👦 Motu Patlu Special</div>
+        <div class="movie-container" id="cartoonContainer"></div>
+
+        <div class="section-title">🎬 Movies & Blockbusters</div>
         <div class="movie-container" id="movieContainer"></div>
     </div>
 
     <script>
-        // 🌟 आपका मिक्स डेटाबेस जिसमें अब YouTube वाले मोटू पतलू एपिसोड्स लिंक हैं!
+        // आपका मिक्स्ड डेटाबेस (यूट्यूब लिंक्स के साथ)
         const moviesDatabase = [
             { 
                 title: "Motu Patlu - Superheroes (Full Episode)", 
@@ -277,56 +185,32 @@
             }
         ];
 
-        let currentCategory = "all";
-
-        function showOptions() {
-            document.getElementById('startBtn').style.display = 'none';
-            document.getElementById('optionsContainer').style.display = 'grid';
-        }
-
-        function filterCategory(category) {
-            currentCategory = category;
-            document.getElementById('welcomeScreen').style.display = 'none';
-            document.getElementById('mainContent').style.display = 'block';
+        // साइट खुलते ही वीडियोज़ लोड करने का फंक्शन
+        function displayContent(data) {
+            const cartoonContainer = document.getElementById('cartoonContainer');
+            const movieContainer = document.getElementById('movieContainer');
             
-            const titles = {
-                movie: "Race Movies",
-                cartoon: "Motu Patlu (YouTube Special)",
-                webseries: "Premium Web Series",
-                anime: "Anime Hub",
-                south: "South Indian Blockbusters",
-                hollywood: "Hollywood Hits",
-                comedy: "Comedy Zone",
-                kids: "Kids Corner"
-            };
-            document.getElementById('pageTitle').innerText = titles[category] || "Race Hub";
+            cartoonContainer.innerHTML = "";
+            movieContainer.innerHTML = "";
 
-            const filtered = moviesDatabase.filter(item => item.category === category);
-            loadMovies(filtered);
-        }
-
-        function loadMovies(moviesToRender) {
-            const container = document.getElementById('movieContainer');
-            container.innerHTML = ""; 
-
-            if(moviesToRender.length === 0) {
-                container.innerHTML = "<h2 style='text-align:center; width:100%; margin-top:50px; color:#666;'>जल्द ही इस कैटेगरी में वीडियो जोड़े जाएंगे!</h2>";
-                return;
-            }
-
-            moviesToRender.forEach(movie => {
+            data.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'movie-card';
-                card.setAttribute('onclick', `goToPlayer('${movie.videoUrl}', '${encodeURIComponent(movie.title)}')`);
+                card.setAttribute('onclick', `goToPlayer('${item.videoUrl}', '${encodeURIComponent(item.title)}')`);
                 
                 card.innerHTML = `
-                    <img src="${movie.poster}" alt="${movie.title}">
+                    <img src="${item.poster}" alt="${item.title}">
                     <div class="movie-info">
-                        <h3>${movie.title}</h3>
-                        <span class="rating">⭐ ${movie.rating}/10</span>
+                        <h3>${item.title}</h3>
+                        <span class="rating">⭐ ${item.rating}/10</span>
                     </div>
                 `;
-                container.appendChild(card);
+
+                if (item.category === 'cartoon') {
+                    cartoonContainer.appendChild(card);
+                } else if (item.category === 'movie') {
+                    movieContainer.appendChild(card);
+                }
             });
         }
 
@@ -334,18 +218,17 @@
             window.location.href = `watch.html?video=${video}&title=${title}`;
         }
 
-        function backToMenu() {
-            document.getElementById('mainContent').style.display = 'none';
-            document.getElementById('welcomeScreen').style.display = 'flex';
-        }
-
+        // लाइव सर्च फंक्शन
         function searchMovie() {
             let input = document.getElementById('movieSearch').value.toLowerCase();
-            let filteredMovies = moviesDatabase.filter(movie => 
-                movie.category === currentCategory && movie.title.toLowerCase().includes(input)
+            let filtered = moviesDatabase.filter(movie => 
+                movie.title.toLowerCase().includes(input)
             );
-            loadMovies(filteredMovies);
+            displayContent(filtered);
         }
+
+        // पहली बार पेज लोड होने पर कंटेंट दिखाना
+        displayContent(moviesDatabase);
     </script>
 
 </body>
