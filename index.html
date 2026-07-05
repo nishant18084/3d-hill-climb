@@ -22,7 +22,6 @@
             min-height: 100vh;
         }
 
-        /* प्रीमियम नेविगेशन बार */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -34,27 +33,6 @@
             border-bottom: 2px solid #1e1e2f;
         }
 
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .home-btn {
-            background: #e50914;
-            color: white;
-            border: none;
-            padding: 8px 18px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-
-        .home-btn:hover {
-            background: #b81d24;
-        }
-
         h1 {
             color: #e50914;
             text-shadow: 0 0 10px rgba(229, 9, 20, 0.3);
@@ -63,7 +41,6 @@
             letter-spacing: 1px;
         }
 
-        /* सर्च बार */
         .search-box {
             display: flex;
             align-items: center;
@@ -81,10 +58,6 @@
             outline: none;
         }
 
-        .search-box input:focus {
-            border-color: #e50914;
-        }
-
         .search-box button {
             padding: 10px 20px;
             border: none;
@@ -94,7 +67,6 @@
             cursor: pointer;
         }
 
-        /* मूवी ग्रिड और पोस्टर्स */
         .movie-container {
             display: flex;
             flex-wrap: wrap;
@@ -146,41 +118,12 @@
             font-size: 0.9rem;
             font-weight: bold;
         }
-
-        /* प्रीमियम लोकल वीडियो प्लेयर विंडो */
-        #player-container {
-            display: none;
-            width: 100%;
-            max-width: 850px;
-            border-radius: 8px;
-            overflow: hidden;
-            background: #000;
-            border: 2px solid #e50914;
-            box-shadow: 0 0 25px rgba(229, 9, 20, 0.4);
-            margin-top: 20px;
-        }
-
-        .video-box {
-            width: 100%;
-            height: 480px;
-            background: #000;
-        }
-
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
     </style>
 </head>
 <body>
 
     <div class="navbar">
-        <div class="logo-section">
-            <button class="home-btn" onclick="goHome()">Home</button>
-            <h1>Race Movies</h1>
-        </div>
-        
+        <h1>Race Movies</h1>
         <div class="search-box">
             <input type="text" id="movieSearch" onkeyup="searchMovie()" placeholder="मूवी सर्च करें...">
             <button>🔍</button>
@@ -189,50 +132,15 @@
 
     <div class="movie-container" id="movieContainer"></div>
 
-    <div id="player-container">
-        <div class="video-box">
-            <video id="html5-player" controls controlsList="nodownload" autoplay></video>
-        </div>
-    </div>
-
     <script>
-        // 🌟 आपका अपना मूवी डेटाबेस
-        // यहाँ 'videoUrl' में आपको अपनी खुद की अपलोड की हुई वीडियो फाइल का नाम या लिंक डालना है।
         const moviesDatabase = [
-            { 
-                title: "Jana Nayagan (2026)", 
-                poster: "32945.jpg", 
-                videoUrl: "video1.mp4", // 👈 अपनी असली वीडियो फाइल का नाम यहाँ लिखें
-                rating: "9.5" 
-            },
-            { 
-                title: "Pushpa 2: The Rule", 
-                poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", 
-                videoUrl: "pushpa2.mp4", 
-                rating: "9.2" 
-            },
-            { 
-                title: "Kalki 2898 AD", 
-                poster: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500", 
-                videoUrl: "kalki.mp4", 
-                rating: "8.9" 
-            },
-            { 
-                title: "Stree 2", 
-                poster: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=500", 
-                videoUrl: "stree2.mp4", 
-                rating: "8.7" 
-            },
-            { 
-                title: "Jawan", 
-                poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", 
-                videoUrl: "jawan.mp4", 
-                rating: "8.5" 
-            }
-            // 📝 भविष्य में 1000 फिल्में पूरी करने के लिए ऐसे ही ब्लॉक्स नीचे बढ़ाते जाएं!
+            { title: "Jana Nayagan (2026)", poster: "32945.jpg", videoUrl: "jana-nayagan.mp4", rating: "9.5" },
+            { title: "Pushpa 2: The Rule", poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", videoUrl: "pushpa2.mp4", rating: "9.2" },
+            { title: "Kalki 2898 AD", poster: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500", videoUrl: "kalki.mp4", rating: "8.9" },
+            { title: "Stree 2", poster: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=500", videoUrl: "stree2.mp4", rating: "8.7" },
+            { title: "Jawan", poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", videoUrl: "jawan.mp4", rating: "8.5" }
         ];
 
-        // फिल्मों को पेज पर दिखाने का फंक्शन
         function loadMovies(moviesToRender) {
             const container = document.getElementById('movieContainer');
             container.innerHTML = ""; 
@@ -240,7 +148,8 @@
             moviesToRender.forEach(movie => {
                 const card = document.createElement('div');
                 card.className = 'movie-card';
-                card.setAttribute('onclick', `playLocalMedia('${movie.videoUrl}')`);
+                // अब यह नए watch.html पेज पर रिडायरेक्ट करेगा मूवी के नाम और वीडियो लिंक के साथ
+                card.setAttribute('onclick', `goToPlayer('${movie.videoUrl}', '${encodeURIComponent(movie.title)}')`);
                 
                 card.innerHTML = `
                     <img src="${movie.poster}" alt="${movie.title}">
@@ -253,41 +162,13 @@
             });
         }
 
-        // पहली बार लोड करें
         loadMovies(moviesDatabase);
 
-        // लोकल वीडियो प्लेयर चलाने का फंक्शन
-        function playLocalMedia(videoFileUrl) {
-            const container = document.getElementById('player-container');
-            const videoTag = document.getElementById('html5-player');
-            
-            // प्लेयर को साफ़ करें
-            videoTag.src = videoFileUrl;
-            
-            // प्लेयर दिखाएं और स्मूथ स्क्रॉल करें
-            container.style.display = 'block';
-            container.scrollIntoView({ behavior: 'smooth' });
-            
-            // वीडियो शुरू करें
-            videoTag.play();
+        // नए पेज पर भेजने का फंक्शन
+        function goToPlayer(video, title) {
+            window.location.href = `watch.html?video=${video}&title=${title}`;
         }
 
-        function goHome() {
-            const container = document.getElementById('player-container');
-            const videoTag = document.getElementById('html5-player');
-            const searchInput = document.getElementById('movieSearch');
-            
-            videoTag.pause();
-            videoTag.src = "";
-            
-            container.style.display = 'none';
-            searchInput.value = "";
-            
-            loadMovies(moviesDatabase);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // लोकल सर्च फंक्शन
         function searchMovie() {
             let input = document.getElementById('movieSearch').value.toLowerCase();
             let filteredMovies = moviesDatabase.filter(movie => 
@@ -298,4 +179,4 @@
     </script>
 
 </body>
-</html>WELCOME 
+</html>welcome 
