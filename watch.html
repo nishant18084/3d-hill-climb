@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Watch Online - RaceDrive</title>
+    <title>Matrix Player - RaceDrive</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Courier New', Courier, monospace;
         }
 
         body {
-            background-color: #08090d;
-            color: #ffffff;
+            background-color: #050508;
+            color: #00ffcc;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -25,38 +25,36 @@
         .wrapper {
             width: 100%;
             max-width: 960px;
-            margin-top: 10px;
         }
 
         .back-home {
-            background: #12131c;
-            color: #fff;
-            border: 1px solid #232537;
+            background: #000;
+            color: #00ffcc;
+            border: 2px solid #00ffcc;
             padding: 10px 22px;
-            border-radius: 20px;
             cursor: pointer;
             font-weight: bold;
             text-decoration: none;
             display: inline-block;
             margin-bottom: 25px;
-            transition: 0.2s;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
         }
 
         .back-home:hover {
-            background: #e50914;
-            border-color: #e50914;
+            background: #ff0055;
+            color: #fff;
+            border-color: #ff0055;
+            box-shadow: 0 0 15px #ff0055;
         }
 
-        /* 🎬 थियेटर प्लेयर मोड */
+        /* 🎬 साइबर थियेटर प्लेयर */
         .player-wrapper {
             position: relative;
             width: 100%;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            padding-top: 56.25%;
             background: #000;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
-            border: 1px solid #1c1d2a;
+            border: 2px solid #00ffcc;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
         }
 
         .player-wrapper video, .player-wrapper iframe {
@@ -68,92 +66,59 @@
             border: none;
         }
 
-        /* इन्फो बॉक्स */
         .details-box {
-            background: #12131c;
+            background: #0a0b10;
             padding: 25px;
-            border-radius: 12px;
             margin-top: 25px;
-            border: 1px solid #1c1d2a;
+            border: 2px solid #ff0055;
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.2);
         }
 
         h2 {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             color: #fff;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 5px #00ffcc;
         }
 
-        .badges {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        .badge {
-            background: #1c1d2a;
-            padding: 5px 12px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            color: #ffb400;
-        }
-
-        /* 📥 MoviesDrive स्टाइल डाउनलोड पैक्स */
         .download-box {
-            border-top: 1px solid #232537;
-            padding-top: 25px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            margin-top: 20px;
         }
 
         .btn-dl {
-            background: #25a25a;
-            color: white;
+            background: #000;
+            color: #ff0055;
+            border: 2px solid #ff0055;
             text-align: center;
-            padding: 14px;
-            border-radius: 8px;
+            padding: 15px;
             font-weight: bold;
             text-decoration: none;
-            transition: 0.3s;
             display: block;
-            box-shadow: 0 4px 12px rgba(37,162,90,0.2);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px rgba(255, 0, 85, 0.3);
+            transition: 0.2s;
         }
 
         .btn-dl:hover {
-            background: #1e8449;
-            transform: translateY(-2px);
-        }
-
-        .btn-dl.alternate {
-            background: #232537;
+            background: #ff0055;
             color: #fff;
-            box-shadow: none;
-        }
-
-        .btn-dl.alternate:hover {
-            background: #2f324a;
+            box-shadow: 0 0 20px #ff0055;
+            transform: scale(1.01);
         }
     </style>
 </head>
 <body>
 
     <div class="wrapper">
-        <a href="index.html" class="back-home">⬅ वापस होम पेज पर जाएं</a>
+        <a href="index.html" class="back-home">[ << बैक टू मेनू ]</a>
 
         <div class="player-wrapper" id="videoBox"></div>
 
         <div class="details-box">
-            <h2 id="titleText">Loading...</h2>
-            <div class="badges">
-                <span class="badge">Ultra Fast Stream</span>
-                <span class="badge">Google Shared Alternative</span>
-                <span class="badge">1080p Max</span>
-            </div>
-
+            <h2 id="titleText">Loading_System_Core...</h2>
             <div class="download-box">
-                <a href="#" id="dlServer1" target="_blank" class="btn-dl">📥 Download / Stream Link (Server 1)</a>
-                <a href="#" id="dlServer2" target="_blank" class="btn-dl alternate">🔗 Mirror Link (Server 2)</a>
+                <a href="#" id="dlServer1" target="_blank" class="btn-dl">[ 📥 डिक्रिप्ट एंड डाउनलोड फ़ाइल ]</a>
             </div>
         </div>
     </div>
@@ -161,12 +126,11 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const videoUrl = urlParams.get('video');
-        const titleText = decodeURIComponent(urlParams.get('title') || 'Race Hub Video');
+        const titleText = decodeURIComponent(urlParams.get('title') || 'Secure Stream');
 
-        document.getElementById('titleText').innerText = titleText;
+        document.getElementById('titleText').innerText = "📍 PLAYING: " + titleText;
         const videoBox = document.getElementById('videoBox');
 
-        // अगर लिंक YouTube का है तो iframe, नहीं तो normal HTML5 video player
         if (videoUrl.includes('youtube.com') || videoUrl.includes('embed')) {
             videoBox.innerHTML = `<iframe src="${videoUrl}?autoplay=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
         } else {
@@ -174,7 +138,7 @@
         }
 
         document.getElementById('dlServer1').href = videoUrl;
-        document.getElementById('dlServer2').href = videoUrl;
     </script>
 </body>
-</html>
+        </html>
+            
