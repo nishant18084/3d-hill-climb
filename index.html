@@ -3,97 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RaceDrive v3.1</title>
+    <title>RaceDrive - Premium Streaming</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
-            background-color: #050508;
-            color: #00ffcc;
+            background-color: #0b0b12;
+            color: #ffffff;
             padding-bottom: 50px;
-            overflow-x: hidden;
         }
 
-        /* ⚡ साइबरपंक हेडर */
         .header {
             width: 100%;
-            background: #0a0b10;
-            padding: 20px 5%;
+            background: #161722;
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #ff0055;
-            box-shadow: 0 0 15px #ff0055;
+            border-bottom: 2px solid #e50914;
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
         .logo {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 900;
+            text-transform: uppercase;
             color: #fff;
-            text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
         }
 
         .logo span {
-            color: #ff0055;
-            text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055;
+            color: #e50914;
         }
 
-        /* 🍿 कंटेंट ज़ोन */
         .content-section {
             width: 90%;
             max-width: 1200px;
-            margin: 40px auto;
+            margin: 0 auto;
         }
 
         .section-title {
-            font-size: 1.8rem;
-            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 700;
             margin: 40px 0 20px 0;
-            text-shadow: 0 0 10px #ff0055;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 5px;
+            height: 20px;
+            background: #e50914;
+            margin-right: 10px;
+            display: inline-block;
         }
 
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
         }
 
-        /* फ्यूचरिस्टिक मूवी कार्ड्स */
         .movie-card {
-            background: #0a0b10;
-            border-radius: 0px;
+            background: #141423;
+            border-radius: 8px;
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.3s ease-in-out;
-            border: 2px solid #00ffcc;
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+            transition: transform 0.3s, border-color 0.3s;
+            border: 1px solid #1e1e2f;
+            position: relative;
         }
 
         .movie-card:hover {
-            transform: scale(1.03);
-            border-color: #ff0055;
-            box-shadow: 0 0 20px #ff0055;
+            transform: translateY(-5px);
+            border-color: #e50914;
+            box-shadow: 0 10px 20px rgba(229, 9, 20, 0.3);
         }
 
         .poster-box {
             position: relative;
             width: 100%;
-            height: 300px;
-            border-bottom: 2px solid #00ffcc;
-        }
-
-        .movie-card:hover .poster-box {
-            border-color: #ff0055;
+            height: 280px;
         }
 
         .poster-box img {
@@ -106,59 +103,74 @@
             position: absolute;
             top: 10px;
             left: 10px;
-            background: #ff0055;
+            background: #e50914;
             color: #fff;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: bold;
             padding: 4px 8px;
-            box-shadow: 0 0 8px #ff0055;
+            border-radius: 4px;
         }
 
         .movie-details {
             padding: 15px;
-            background: #000;
         }
 
         .movie-details h3 {
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: #fff;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin-bottom: 10px;
-        }
-
-        .meta-info {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            color: #00ffcc;
         }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <div class="logo">RACE<span>_DRIVE</span></div>
-        <div style="font-size: 0.9rem; color: #00ffcc;">[ DIRECT DATABASE ]</div>
+        <div class="logo">Race<span>Drive</span></div>
     </div>
 
     <div class="content-section">
-        <div class="section-title">// SYSTEM DATABASE CONTAINER</div>
-        <div class="grid-container" id="mainContainer"></div>
+        <div class="section-title">Motu Patlu (YouTube Specials)</div>
+        <div class="grid-container" id="cartoonContainer"></div>
+
+        <div class="section-title">Latest Movies</div>
+        <div class="grid-container" id="movieContainer"></div>
     </div>
 
     <script>
         const moviesDatabase = [
-            { title: "Motu Patlu - Superheroes (Full)", poster: "https://img.youtube.com/vi/aRJw72rniss/0.jpg", videoUrl: "https://www.youtube.com/embed/aRJw72rniss", rating: "9.5", quality: "HD 720P", category: "cartoon" },
-            { title: "Motu Patlu - In Airplane (Full)", poster: "https://img.youtube.com/vi/4of37kzfX7w/0.jpg", videoUrl: "https://www.youtube.com/embed/4of37kzfX7w", rating: "9.2", quality: "HD 720P", category: "cartoon" },
-            { title: "Jana Nayagan (2026)", poster: "32945.jpg", videoUrl: "jana-nayagan.mp4", rating: "9.5", quality: "4K RIP", category: "movie" },
-            { title: "Pushpa 2: The Rule", poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", rating: "9.2", quality: "1080P WEB", category: "movie" }
+            { 
+                title: "Motu Patlu - Superheroes (Full)", 
+                poster: "https://img.youtube.com/vi/aRJw72rniss/0.jpg", 
+                videoUrl: "https://www.youtube.com/embed/aRJw72rniss", 
+                quality: "720p", category: "cartoon" 
+            },
+            { 
+                title: "Motu Patlu - In Airplane (Full)", 
+                poster: "https://img.youtube.com/vi/4of37kzfX7w/0.jpg", 
+                videoUrl: "https://www.youtube.com/embed/4of37kzfX7w", 
+                quality: "720p", category: "cartoon" 
+            },
+            { 
+                title: "Jana Nayagan (2026)", 
+                poster: "32945.jpg", 
+                videoUrl: "jana-nayagan.mp4", 
+                quality: "HDRip", category: "movie" 
+            },
+            { 
+                title: "Pushpa 2: The Rule", 
+                poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", 
+                videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", 
+                quality: "1080p Web", category: "movie" 
+            }
         ];
 
         function displayContent(data) {
-            const mainContainer = document.getElementById('mainContainer');
-            mainContainer.innerHTML = "";
+            const cartoonContainer = document.getElementById('cartoonContainer');
+            const movieContainer = document.getElementById('movieContainer');
+            cartoonContainer.innerHTML = "";
+            movieContainer.innerHTML = "";
 
             data.forEach(item => {
                 const card = document.createElement('div');
@@ -172,13 +184,11 @@
                     </div>
                     <div class="movie-details">
                         <h3>${item.title}</h3>
-                        <div class="meta-info">
-                            <span>⚡ TYPE: ${item.category.toUpperCase()}</span>
-                            <span>⭐ ${item.rating}</span>
-                        </div>
                     </div>
                 `;
-                mainContainer.appendChild(card);
+
+                if (item.category === 'cartoon') cartoonContainer.appendChild(card);
+                else if (item.category === 'movie') movieContainer.appendChild(card);
             });
         }
 
@@ -186,7 +196,6 @@
             window.location.href = `watch.html?video=${video}&title=${title}`;
         }
 
-        // डायरेक्ट सारा डेटा दिखाएं
         displayContent(moviesDatabase);
     </script>
 </body>
