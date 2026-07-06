@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RaceDrive - HDHub Premium Hub</title>
+    <title>RaceDrive -Premium Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
@@ -77,7 +77,7 @@
         <div class="modal-content" id="modalBox">
             <span class="close-modal" id="modalCloseBtn" onclick="closeAccount()">&times;</span>
             <div id="loginStep1">
-                <div class="RACEhub-logo-area">Race<span>Drive</span></div>
+                <div class="jio-logo-area">Race<span>Drive</span></div>
                 <h3 style="margin: 10px 0 20px 10px; font-size: 1.05rem; color: rgba(255,255,255,0.7); text-align: left;">लॉगिन करें और VIP फीचर्स का आनंद लें</h3>
                 <div class="modal-input-group"><i class="fas fa-user"></i><input type="text" id="jioNameInput" class="modal-input" placeholder="अपना नाम दर्ज करें"></div>
                 <div class="modal-input-group"><i class="fas fa-phone"></i><input type="tel" id="jioPhoneInput" class="modal-input" placeholder="मोबाइल नंबर दर्ज करें" maxlength="10"></div>
@@ -195,7 +195,7 @@
 
         function sendOtpSimulated() {
             const name = document.getElementById('jioNameInput').value.trim();
-            const phone = document.getElementById('Gmail Input').value.trim();
+            const phone = document.getElementById('jioPhoneInput').value.trim();
             if(name !== "" && phone.length === 10) {
                 document.getElementById('loginStep1').style.display = 'none';
                 const spinner = document.getElementById('jioSpinner');
@@ -205,7 +205,7 @@
                     document.getElementById('otpSentMessage').innerText = `OTP sent to +91 ${phone}`;
                     document.getElementById('loginStep2').style.display = 'block';
                 }, 1000);
-            } else { alert("कृपया सही नाम और जीमेल डालें!"); }
+            } else { alert("कृपया सही नाम और GMAIL डालें!"); }
         }
 
         function verifyOtpSimulated() {
