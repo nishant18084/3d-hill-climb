@@ -24,7 +24,7 @@
         .section-title::before { content: ''; width: 6px; height: 24px; background: #e50914; margin-right: 12px; border-radius: 4px; display: inline-block; box-shadow: 0 0 15px #e50914; }
         .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
         
-        /* 💎 3D ग्लास मूवी कार्ड्स */
+        /* 💎 मूवी कार्ड्स */
         .movie-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 16px; overflow: hidden; cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); position: relative; }
         .movie-card:hover { transform: translateY(-10px) scale(1.03); border-color: #e50914; box-shadow: 0 15px 35px rgba(229, 9, 20, 0.45); }
         .poster-box { width: 100%; height: 310px; overflow: hidden; position: relative; }
@@ -34,38 +34,58 @@
         .movie-details { padding: 18px; background: rgba(10, 6, 12, 0.8); text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.05); }
         .movie-details h3 { font-size: 1rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff; }
 
-        /* 📱 प्रीमियम 3D ग्लास बॉटम नेविगेशन बार */
+        /* 📱 बॉटम बार */
         .bottom-nav { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 450px; background: rgba(18, 11, 16, 0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 30px; display: flex; justify-content: space-around; padding: 12px 0; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 1px 3px rgba(255,255,255,0.2); z-index: 1000; }
         .nav-item { color: rgba(255, 255, 255, 0.6); font-size: 1.2rem; display: flex; flex-direction: column; align-items: center; text-decoration: none; cursor: pointer; transition: 0.3s; background: none; border: none; outline: none; }
         .nav-item span { font-size: 0.75rem; font-weight: 600; margin-top: 4px; }
         .nav-item.active, .nav-item:hover { color: #e50914; text-shadow: 0 0 10px rgba(229, 9, 20, 0.5); }
 
-        /* 👤 ग्लास मर्फ़िज़्म अकाउंट पॉप-अप (Modal) */
+        /* 👤 MyJio पॉप-अप (लॉगिन फॉर्म डार्क रहेगा, पर प्रोफाइल वाइट/लाइट रहेगा) */
         .account-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-content { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 20px; width: 90%; max-width: 400px; padding: 30px; text-align: center; position: relative; }
-        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: rgba(255,255,255,0.6); }
-        .close-modal:hover { color: #e50914; }
-        .modal-content h2 { margin-bottom: 15px; font-size: 1.4rem; text-transform: uppercase; letter-spacing: 1px; }
-        .modal-input { width: 100%; padding: 12px 20px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: #fff; margin-bottom: 20px; outline: none; font-size: 1rem; text-align: center; }
-        .modal-input:focus { border-color: #e50914; }
         
-        /* 🎭 अवतार सिलेक्शन ग्रिड */
-        .avatar-selection { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; }
-        .avatar-option { font-size: 2.2rem; cursor: pointer; padding: 8px; border-radius: 50%; border: 2px solid transparent; transition: 0.3s; }
-        .avatar-option.selected { border-color: #e50914; background: rgba(229, 9, 20, 0.2); box-shadow: 0 0 10px #e50914; }
+        /* लॉगिन बॉक्स स्टाइल */
+        .modal-content { background: #1a1c2e; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); border-radius: 24px; width: 95%; max-width: 420px; padding: 30px 20px; text-align: center; position: relative; color: #fff; transition: 0.3s; }
+        
+        /* 🎨 जब प्रोफाइल खुलेगा तब यह असली श्वेत (White) थीम में बदल जाएगा */
+        .modal-content.white-theme { background: #ffffff; color: #1c1c1c; padding: 0; overflow-y: auto; max-height: 90vh; }
+        
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: rgba(255,255,255,0.6); z-index: 10; }
+        .close-modal.dark-close { color: #333; }
+        
+        .jio-logo-area { font-size: 2.2rem; color: #e50914; margin-bottom: 5px; font-weight: bold; text-align: left; padding-left: 10px; }
+        .jio-logo-area span { color: #fff; }
+        
+        .modal-input-group { position: relative; margin-bottom: 18px; width: 100%; }
+        .modal-input-group i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.4); }
+        .modal-input { width: 100%; padding: 14px 15px 14px 45px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; color: #fff; outline: none; font-size: 1rem; transition: 0.3s; }
+        .modal-input:focus { border-color: #e50914; background: rgba(255,255,255,0.1); }
+        
+        .modal-btn { width: 100%; padding: 14px; background: #e50914; color: #fff; border: none; border-radius: 14px; font-weight: bold; font-size: 1rem; cursor: pointer; box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3); transition: 0.3s; }
+        
+        .spinner { display: none; margin: 15px auto; width: 30px; height: 30px; border: 3px solid rgba(255,255,255,0.1); border-radius: 50%; border-top-color: #e50914; animation: spin 1s ease infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        .modal-btn { width: 100%; padding: 12px; background: #e50914; color: #fff; border: none; border-radius: 12px; font-weight: bold; font-size: 1rem; cursor: pointer; box-shadow: 0 5px 15px rgba(229, 9, 20, 0.4); transition: 0.3s; }
-        .modal-btn:hover { background: #b8070f; transform: translateY(-2px); }
-        
-        /* 📊 प्रोफाइल डैशबोर्ड एडवांस्ड इन्फो */
-        .profile-card { background: rgba(255, 255, 255, 0.03); border-radius: 14px; padding: 20px; border: 1px solid rgba(255, 255, 255, 0.05); margin-top: 15px; text-align: left; }
-        .profile-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.95rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 8px; }
-        .profile-row span:first-child { color: rgba(255, 255, 255, 0.6); }
-        .profile-row span:last-child { font-weight: bold; }
-        
-        .user-main-avatar { font-size: 4.5rem; color: #e50914; margin-bottom: 10px; text-shadow: 0 0 15px rgba(229,9,20,0.4); text-align: center; }
-        .logout-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); margin-top: 15px; }
-        .logout-btn:hover { background: #e50914; }
+        /* 📲 असली MYJIO PROFILE INTERFACE (वाइट स्क्रीन लेआउट) */
+        .jio-profile-header { display: flex; align-items: center; padding: 30px 20px 20px 20px; text-align: left; border-bottom: 1px solid #edf2f7; background: #ffffff; position: relative; }
+        .jio-avatar-circle { width: 55px; height: 55px; background: #e8f3ff; color: #1e73be; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.4rem; font-weight: bold; margin-right: 15px; text-transform: uppercase; }
+        .jio-profile-details { display: flex; flex-direction: column; }
+        .jio-real-name { font-size: 1.25rem; font-weight: 700; color: #111111; }
+        .jio-real-meta { font-size: 0.95rem; color: #555555; margin-top: 2px; }
+
+        /* सेटिंग्स लिस्ट लेआउट */
+        .jio-settings-list { padding: 10px 0; text-align: left; background: #ffffff; }
+        .jio-settings-item { display: flex; align-items: center; padding: 16px 20px; cursor: pointer; transition: 0.2s; border-bottom: 1px solid #f7f9fa; }
+        .jio-settings-item:hover { background: #f5f8fc; }
+        .jio-settings-item i { font-size: 1.15rem; color: #555555; width: 30px; text-align: center; margin-right: 15px; }
+        .jio-settings-text { flex: 1; }
+        .jio-settings-title { font-size: 1rem; font-weight: 600; color: #222222; }
+        .jio-settings-sub { font-size: 0.8rem; color: #777777; margin-top: 1px; }
+        .jio-switch-link { color: #0056b3; font-weight: bold; font-size: 0.88rem; text-decoration: none; }
+
+        .jio-section-divider { background: #f4f6f9; padding: 12px 20px; font-size: 0.85rem; font-weight: 700; color: #111111; text-transform: none; letter-spacing: 0.3px; border-top: 1px solid #edf2f7; border-bottom: 1px solid #edf2f7; }
+
+        .jio-logout-btn-item { color: #e50914 !important; font-weight: bold; }
+        .jio-logout-btn-item i { color: #e50914 !important; }
     </style>
 </head>
 <body>
@@ -87,37 +107,117 @@
     </div>
 
     <div class="account-modal" id="accountModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeAccount()">&times;</span>
+        <div class="modal-content" id="modalBox">
+            <span class="close-modal" id="modalCloseBtn" onclick="closeAccount()">&times;</span>
             
-            <div id="loginForm">
-                <h2>Create Account</h2>
-                <p style="color: rgba(255,255,255,0.6); font-size: 0.85rem; margin-bottom: 15px;">अपना नाम और पसंदीदा अवतार चुनें</p>
+            <div id="loginStep1">
+                <div class="jio-logo-area">Race<span>Drive</span></div>
+                <h3 style="margin: 10px 0 20px 10px; font-size: 1.05rem; color: rgba(255,255,255,0.7); text-align: left;">लॉगिन करें और VIP फीचर्स का आनंद लें</h3>
                 
-                <div class="avatar-selection">
-                    <span class="avatar-option selected" onclick="selectAvatar(this, 'fa-user-astronaut')"><i class="fas fa-user-astronaut"></i></span>
-                    <span class="avatar-option" onclick="selectAvatar(this, 'fa-ninja')"><i class="fas fa-user-ninja"></i></span>
-                    <span class="avatar-option" onclick="selectAvatar(this, 'fa-user-secret')"><i class="fas fa-user-secret"></i></span>
-                    <span class="avatar-option" onclick="selectAvatar(this, 'fa-robot')"><i class="fas fa-robot"></i></span>
+                <div class="modal-input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="jioNameInput" class="modal-input" placeholder="अपना नाम दर्ज करें">
                 </div>
-
-                <input type="text" id="usernameInput" class="modal-input" placeholder="अपना नाम दर्ज करें...">
-                <button class="modal-btn" onclick="saveAccount()">Create Account</button>
+                <div class="modal-input-group">
+                    <i class="fas fa-phone"></i>
+                    <input type="tel" id="jioPhoneInput" class="modal-input" placeholder="मोबाइल नंबर दर्ज करें" maxlength="10">
+                </div>
+                <button class="modal-btn" onclick="sendOtpSimulated()">Generate OTP</button>
             </div>
 
-            <div id="profileDashboard" style="display: none;">
-                <h2>User Profile</h2>
-                <div class="user-main-avatar" id="dashboardAvatar"><i class="fas fa-user-astronaut"></i></div>
-                <h3 id="welcomeUser" style="text-align: center; margin-bottom: 15px;">Welcome!</h3>
+            <div id="loginStep2" style="display: none;">
+                <div class="jio-logo-area">Race<span>Drive</span></div>
+                <h3 style="margin-top: 10px; text-align: left; padding-left: 10px;">Enter OTP</h3>
+                <p id="otpSentMessage" style="font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 20px; text-align: left; padding-left: 10px;"></p>
                 
-                <div class="profile-card">
-                    <div class="profile-row"><span>Account Status</span><span style="color: #ffb400;"><i class="fas fa-crown"></i> VIP Premium</span></div>
-                    <div class="profile-row"><span>Server Speed</span><span style="color: #00ff6c;">1 Gbps (Max)</span></div>
-                    <div class="profile-row"><span>Daily Limit</span><span>Unlimited Streaming</span></div>
-                    <div class="profile-row"><span>Joined On</span><span id="joinDate">July 2026</span></div>
+                <div class="modal-input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="text" id="jioOtpInput" class="modal-input" placeholder="4-अंकीय OTP दर्ज करें (उदा: 1234)" maxlength="4">
+                </div>
+                <button class="modal-btn" onclick="verifyOtpSimulated()">Verify & Proceed</button>
+            </div>
+
+            <div class="spinner" id="jioSpinner"></div>
+
+            <div id="profileDashboard" style="display: none;">
+                <div class="jio-profile-header">
+                    <div class="jio-avatar-circle" id="profileInitials">DC</div>
+                    <div class="jio-profile-details">
+                        <span class="jio-real-name" id="dashboardName">Dhaneshwar Chaurasiya</span>
+                        <span class="jio-real-meta" id="dashboardPhone">8102886303 | Prepaid 5G</span>
+                    </div>
                 </div>
 
-                <button class="modal-btn logout-btn" onclick="logoutAccount()">Logout Account</button>
+                <div class="jio-settings-list">
+                    <div class="jio-settings-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <div class="jio-settings-text">
+                            <div class="jio-settings-title">Mobile settings</div>
+                            <div class="jio-settings-sub" id="subMetaPhone">8102886303 | Dhaneshwar Cha...</div>
+                        </div>
+                        <a href="#" class="jio-switch-link" onclick="alert('Switching account feature simulated!')">Switch Account</a>
+                    </div>
+
+                    <div class="jio-settings-item">
+                        <i class="fas fa-cog"></i>
+                        <div class="jio-settings-text">
+                            <div class="jio-settings-title">Other mini app settings</div>
+                        </div>
+                    </div>
+
+                    <div class="jio-settings-item">
+                        <i class="fas fa-user-friends"></i>
+                        <div class="jio-settings-text">
+                            <div class="jio-settings-title">Linked account</div>
+                        </div>
+                    </div>
+
+                    <div class="jio-settings-item">
+                        <i class="fas fa-palette"></i>
+                        <div class="jio-settings-text">
+                            <div class="jio-settings-title">App theme</div>
+                        </div>
+                    </div>
+
+                    <div class="jio-section-divider">More from Jio</div>
+
+                    <div class="jio-settings-item">
+                        <i class="fas fa-music"></i>
+                        <div class="jio-settings-text">
+                            <div class="jio-settings-title">JioTunes</div>
+                        </div>
+                    </div>
+
+                    <div class="jio-settings-item">
+                        <i class="fas fa-percentage"></i>
+                        <div class="jio-settings-text">
+                            <div class="jio-settings-title">Coupons</div>
+                        </div>
+                    </div>
+
+                    <div class="jio-settings-item">
+                        <i class="fas fa-sim-card"></i>
+                        <div class="jio-settings-text">
+                            <div class="jio-settings-title">Get Jio SIM</div>
+                        </div>
+                    </div>
+
+                    <div class="jio-settings-item">
+                        <i class="fas fa-home"></i>
+                        <div class="jio-settings-text">
+                            <div class="jio-settings-title">Get JioHome</div>
+                        </div>
+                    </div>
+
+                    <div class="jio-section-divider">Help & Support</div>
+                    
+                    <div class="jio-settings-item jio-logout-btn-item" onclick="logoutAccount()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <div class="jio-settings-text">
+                            <div class="jio-settings-title">Sign Out Account</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -136,8 +236,6 @@
             { title: "Pushpa 2: The Rule", poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", quality: "1080p Web", category: "movie" }
         ];
 
-        let selectedAvatarClass = 'fa-user-astronaut';
-
         function displayContent(data) {
             const cartoonContainer = document.getElementById('cartoonContainer');
             const movieContainer = document.getElementById('movieContainer');
@@ -149,109 +247,40 @@
                 card.className = 'movie-card';
                 card.setAttribute('onclick', `goToPlayer('${item.videoUrl}', '${encodeURIComponent(item.title)}')`);
                 card.innerHTML = `<div class="poster-box"><img src="${item.poster}" alt="${item.title}" onerror="this.src='https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=500'"><span class="tag-quality">${item.quality}</span></div><div class="movie-details"><h3>${item.title}</h3></div>`;
-                
                 if (item.category === 'cartoon') cartoonContainer.appendChild(card);
                 else if (item.category === 'movie') movieContainer.appendChild(card);
             });
         }
 
         function goToPlayer(video, title) { window.location.href = `watch.html?video=${video}&title=${title}`; }
-        
-        function toggleSearch() {
-            resetTabs();
-            document.getElementById('searchTab').classList.add('active');
-            const sc = document.getElementById('searchContainer');
-            sc.style.display = (sc.style.display === 'block') ? 'none' : 'block';
-            if(sc.style.display === 'block') document.getElementById('searchInput').focus();
-        }
+        function toggleSearch() { resetTabs(); document.getElementById('searchTab').classList.add('active'); const sc = document.getElementById('searchContainer'); sc.style.display = (sc.style.display === 'block') ? 'none' : 'block'; if(sc.style.display === 'block') document.getElementById('searchInput').focus(); }
+        function searchMovies() { const query = document.getElementById('searchInput').value.toLowerCase(); const filtered = moviesDatabase.filter(m => m.title.toLowerCase().includes(query)); displayContent(filtered); }
+        function showHome() { resetTabs(); document.getElementById('homeTab').classList.add('active'); document.getElementById('searchInput').value = ""; document.getElementById('searchContainer').style.display = 'none'; displayContent(moviesDatabase); }
+        function resetTabs() { document.getElementById('homeTab').classList.remove('active'); document.getElementById('searchTab').classList.remove('active'); document.getElementById('accountTab').classList.remove('active'); }
 
-        function searchMovies() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = moviesDatabase.filter(m => m.title.toLowerCase().includes(query));
-            displayContent(filtered);
-        }
-
-        function showHome() {
-            resetTabs();
-            document.getElementById('homeTab').classList.add('active');
-            document.getElementById('searchInput').value = "";
-            document.getElementById('searchContainer').style.display = 'none';
-            displayContent(moviesDatabase);
-        }
-
-        function resetTabs() {
-            document.getElementById('homeTab').classList.remove('active');
-            document.getElementById('searchTab').classList.remove('active');
-            document.getElementById('accountTab').classList.remove('active');
-        }
-
-        /* 🎭 अवतार चूज़र लॉजिक */
-        function selectAvatar(element, avatarClass) {
-            document.querySelectorAll('.avatar-option').forEach(opt => opt.classList.remove('selected'));
-            element.classList.add('selected');
-            selectedAvatarClass = avatarClass;
-        }
-
-        /* 👤 एडवांस्ड अकाउंट सिस्टम लॉजिक */
+        /* 👤 MyJio लॉगिन एवं सेटिंग्स लिस्ट लॉजिक */
         function checkUserLogin() {
-            const savedUser = localStorage.getItem('raceDriveUser');
-            const savedAvatar = localStorage.getItem('raceDriveAvatar') || 'fa-user-astronaut';
+            const savedUser = localStorage.getItem('jioUser');
+            const savedPhone = localStorage.getItem('jioPhone');
+            const modalBox = document.getElementById('modalBox');
+            const closeBtn = document.getElementById('modalCloseBtn');
             
-            if (savedUser) {
-                document.getElementById('navAccountLabel').innerText = savedUser;
-                document.getElementById('welcomeUser').innerText = savedUser;
-                document.getElementById('dashboardAvatar').innerHTML = `<i class="fas ${savedAvatar}"></i>`;
+            if (savedUser && savedPhone) {
+                document.getElementById('navAccountLabel').innerText = savedUser.split(" ")[0];
+                document.getElementById('dashboardName').innerText = savedUser;
+                document.getElementById('dashboardPhone').innerText = `${savedPhone} | Prepaid 5G`;
+                document.getElementById('subMetaPhone').innerText = `${savedPhone} | ${savedUser.substring(0, 15)}...`;
                 
-                // तारीख सेट करना
-                let date = localStorage.getItem('raceDriveJoinDate') || 'Today';
-                document.getElementById('joinDate').innerText = date;
+                // शुरुआती दो अक्षर का लोगो (Initials) बनाना
+                let initials = savedUser.split(" ").map(n => n[0]).join("").toUpperCase().substring(0, 2);
+                document.getElementById('profileInitials').innerText = initials || "DC";
 
-                document.getElementById('loginForm').style.display = 'none';
+                // थीम को श्वेत (White) मोड में बदलें
+                modalBox.classList.add('white-theme');
+                closeBtn.classList.add('dark-close');
+
+                document.getElementById('loginStep1').style.display = 'none';
+                document.getElementById('loginStep2').style.display = 'none';
                 document.getElementById('profileDashboard').style.display = 'block';
             } else {
-                document.getElementById('navAccountLabel').innerText = "Account";
-                document.getElementById('loginForm').style.display = 'block';
-                document.getElementById('profileDashboard').style.display = 'none';
-            }
-        }
-
-        function openAccount() {
-            resetTabs();
-            document.getElementById('accountTab').classList.add('active');
-            document.getElementById('accountModal').style.display = 'flex';
-            checkUserLogin();
-        }
-
-        function closeAccount() {
-            document.getElementById('accountModal').style.display = 'none';
-            document.getElementById('accountTab').classList.remove('active');
-            document.getElementById('homeTab').classList.add('active');
-        }
-
-        function saveAccount() {
-            const name = document.getElementById('usernameInput').value.trim();
-            if(name !== "") {
-                const today = new Date().toLocaleDateString('hi-IN', { year: 'numeric', month: 'long', day: 'numeric' });
-                localStorage.setItem('raceDriveUser', name);
-                localStorage.setItem('raceDriveAvatar', selectedAvatarClass);
-                localStorage.setItem('raceDriveJoinDate', today);
-                checkUserLogin();
-                closeAccount();
-            } else {
-                alert("कृपया अपना नाम लिखें!");
-            }
-        }
-
-        function logoutAccount() {
-            localStorage.removeItem('raceDriveUser');
-            localStorage.removeItem('raceDriveAvatar');
-            localStorage.removeItem('raceDriveJoinDate');
-            checkUserLogin();
-            closeAccount();
-        }
-
-        displayContent(moviesDatabase);
-        checkUserLogin();
-    </script>
-</body>
-</html>
+                document.getElementById('navAccountLabel').innerTe
