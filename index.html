@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RaceDrive - Ultimate Premium Hub</title>
+    <title>RaceDrive - Premium Glass Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
-        body { background-color: #06060c; color: #ffffff; padding-bottom: 90px; background-image: radial-gradient(circle at 50% 0%, #251218 0%, #06060c 70%); overflow-x: hidden; }
+        body { background-color: #06060c; color: #ffffff; padding-bottom: 110px; background-image: radial-gradient(circle at 50% 0%, #251218 0%, #06060c 70%); overflow-x: hidden; }
         
         .header { width: 100%; background: rgba(18, 11, 16, 0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e50914; position: sticky; top: 0; z-index: 100; box-shadow: 0 0 25px rgba(229, 9, 20, 0.2); }
         .logo { font-size: 1.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; color: #fff; }
         .logo span { color: #e50914; text-shadow: 0 0 15px rgba(229, 9, 20, 0.8); }
 
-        /* 🔍 सर्च बार (डिफ़ॉल्ट रूप से छुपा रहेगा, सर्च बटन पर क्लिक करने से दिखेगा) */
-        .search-container { display: none; width: 90%; max-width: 500px; margin: 20px auto 0 auto; transition: 0.3s; }
+        /* 🔍 सर्च बार स्टाइल */
+        .search-container { display: none; width: 90%; max-width: 500px; margin: 20px auto 0 auto; }
         .search-box { width: 100%; padding: 12px 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 25px; color: #fff; font-size: 1rem; outline: none; transition: 0.3s; }
         .search-box:focus { border-color: #e50914; box-shadow: 0 0 10px rgba(229, 9, 20, 0.5); }
 
@@ -23,9 +23,10 @@
         .section-title::before { content: ''; width: 6px; height: 24px; background: #e50914; margin-right: 12px; border-radius: 4px; display: inline-block; box-shadow: 0 0 15px #e50914; }
         .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
         
+        /* 💎 3D ग्लास मूवी कार्ड्स */
         .movie-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 16px; overflow: hidden; cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); }
         .movie-card:hover { transform: translateY(-10px) scale(1.03); border-color: #e50914; box-shadow: 0 15px 35px rgba(229, 9, 20, 0.45); }
-        .poster-box { position: relative; width: 100%; height: 310px; overflow: hidden; }
+        .poster-box { relative; width: 100%; height: 310px; overflow: hidden; }
         .poster-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
         .movie-card:hover .poster-box img { transform: scale(1.1); }
         .tag-quality { position: absolute; top: 12px; left: 12px; background: #e50914; box-shadow: 0 0 10px #e50914; color: #fff; font-size: 0.75rem; font-weight: bold; padding: 5px 10px; border-radius: 6px; }
@@ -37,6 +38,22 @@
         .nav-item { color: rgba(255, 255, 255, 0.6); font-size: 1.2rem; display: flex; flex-direction: column; align-items: center; text-decoration: none; cursor: pointer; transition: 0.3s; background: none; border: none; outline: none; }
         .nav-item span { font-size: 0.75rem; font-weight: 600; margin-top: 4px; }
         .nav-item.active, .nav-item:hover { color: #e50914; text-shadow: 0 0 10px rgba(229, 9, 20, 0.5); }
+
+        /* 👤 ग्लास मर्फ़िज़्म अकाउंट पॉप-अप (Modal) */
+        .account-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 20px; width: 90%; max-width: 400px; padding: 30px; text-align: center; position: relative; }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: rgba(255,255,255,0.6); }
+        .close-modal:hover { color: #e50914; }
+        .modal-content h2 { margin-bottom: 20px; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 1px; }
+        .modal-input { width: 100%; padding: 12px 20px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: #fff; margin-bottom: 20px; outline: none; font-size: 1rem; }
+        .modal-input:focus { border-color: #e50914; }
+        .modal-btn { width: 100%; padding: 12px; background: #e50914; color: #fff; border: none; border-radius: 12px; font-weight: bold; font-size: 1rem; cursor: pointer; box-shadow: 0 5px 15px rgba(229, 9, 20, 0.4); transition: 0.3s; }
+        .modal-btn:hover { background: #b8070f; transform: translateY(-2px); }
+        
+        .user-profile-info { margin-top: 15px; }
+        .user-avatar { font-size: 4rem; color: #e50914; margin-bottom: 10px; text-shadow: 0 0 15px rgba(229,9,20,0.4); }
+        .logout-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); margin-top: 20px; }
+        .logout-btn:hover { background: #e50914; }
     </style>
 </head>
 <body>
@@ -57,10 +74,33 @@
         <div class="grid-container" id="movieContainer"></div>
     </div>
 
+    <div class="account-modal" id="accountModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeAccount()">&times;</span>
+            
+            <div id="loginForm">
+                <h2>Create Account / Login</h2>
+                <div class="user-avatar"><i class="fas fa-user-circle"></i></div>
+                <input type="text" id="usernameInput" class="modal-input" placeholder="अपना नाम दर्ज करें...">
+                <button class="modal-btn" onclick="saveAccount()">Login Now</button>
+            </div>
+
+            <div id="profileDashboard" style="display: none;">
+                <h2>User Profile</h2>
+                <div class="user-profile-info">
+                    <div class="user-avatar"><i class="fas fa-user-shield"></i></div>
+                    <h3 id="welcomeUser" style="margin-bottom: 5px;">Welcome, User!</h3>
+                    <p style="color: #ffb400; font-size: 0.9rem; font-weight: bold;"><i class="fas fa-crown"></i> RaceDrive VIP Member</p>
+                    <button class="modal-btn logout-btn" onclick="logoutAccount()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <nav class="bottom-nav">
-        <button class="nav-item active" onclick="showHome()"><i class="fas fa-home"></i><span>Home</span></button>
-        <button class="nav-item" onclick="toggleSearch()"><i class="fas fa-search"></i><span>Search</span></button>
-        <button class="nav-item" onclick="alert('Account feature coming soon!')"><i class="fas fa-user"></i><span>Account</span></button>
+        <button class="nav-item active" id="homeTab" onclick="showHome()"><i class="fas fa-home"></i><span>Home</span></button>
+        <button class="nav-item" id="searchTab" onclick="toggleSearch()"><i class="fas fa-search"></i><span>Search</span></button>
+        <button class="nav-item" id="accountTab" onclick="openAccount()"><i class="fas fa-user"></i><span id="navAccountLabel">Account</span></button>
     </nav>
 
     <script>
@@ -90,8 +130,9 @@
 
         function goToPlayer(video, title) { window.location.href = `watch.html?video=${video}&title=${title}`; }
         
-        // 🔍 सर्च और नेविगेशन फंक्शन्स
         function toggleSearch() {
+            resetTabs();
+            document.getElementById('searchTab').classList.add('active');
             const sc = document.getElementById('searchContainer');
             sc.style.display = (sc.style.display === 'block') ? 'none' : 'block';
             if(sc.style.display === 'block') document.getElementById('searchInput').focus();
@@ -104,12 +145,69 @@
         }
 
         function showHome() {
+            resetTabs();
+            document.getElementById('homeTab').classList.add('active');
             document.getElementById('searchInput').value = "";
             document.getElementById('searchContainer').style.display = 'none';
             displayContent(moviesDatabase);
         }
 
+        function resetTabs() {
+            document.getElementById('homeTab').classList.remove('active');
+            document.getElementById('searchTab').classList.remove('active');
+            document.getElementById('accountTab').classList.remove('active');
+        }
+
+        /* 👤 अकाउंट मैनेजमेंट सिस्टम लॉजिक (Local Storage) */
+        function checkUserLogin() {
+            const savedUser = localStorage.getItem('raceDriveUser');
+            if (savedUser) {
+                document.getElementById('navAccountLabel').innerText = savedUser;
+                document.getElementById('welcomeUser').innerText = `Welcome, ${savedUser}!`;
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('profileDashboard').style.display = 'block';
+            } else {
+                document.getElementById('navAccountLabel').innerText = "Account";
+                document.getElementById('loginForm').style.display = 'block';
+                document.getElementById('profileDashboard').style.display = 'none';
+            }
+        }
+
+        function openAccount() {
+            resetTabs();
+            document.getElementById('accountTab').classList.add('active');
+            document.getElementById('accountModal').style.display = 'flex';
+            checkUserLogin();
+        }
+
+        function closeAccount() {
+            document.getElementById('accountModal').style.display = 'none';
+            document.getElementById('accountTab').classList.remove('active');
+            document.getElementById('homeTab').classList.add('active');
+        }
+
+        function saveAccount() {
+            const name = document.getElementById('usernameInput').value.trim();
+            if(name !== "") {
+                localStorage.setItem('raceDriveUser', name);
+                checkUserLogin();
+                alert(`Account successfully created for ${name}!`);
+                closeAccount();
+            } else {
+                alert("कृपया लॉगिन करने के लिए अपना नाम लिखें।");
+            }
+        }
+
+        function logoutAccount() {
+            localStorage.removeItem('raceDriveUser');
+            checkUserLogin();
+            alert("सफलतापूर्वक लॉगआउट कर दिया गया है।");
+            closeAccount();
+        }
+
+        // लोड होने पर डेटा चेक करें
         displayContent(moviesDatabase);
+        checkUserLogin();
     </script>
 </body>
 </html>
