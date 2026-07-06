@@ -3,143 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RaceDrive - Best Premium Streaming</title>
+    <title>RaceDrive - Ultimate Premium Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: #06060c; color: #ffffff; padding-bottom: 90px; background-image: radial-gradient(circle at 50% 0%, #251218 0%, #06060c 70%); overflow-x: hidden; }
+        
+        .header { width: 100%; background: rgba(18, 11, 16, 0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e50914; position: sticky; top: 0; z-index: 100; box-shadow: 0 0 25px rgba(229, 9, 20, 0.2); }
+        .logo { font-size: 1.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; color: #fff; }
+        .logo span { color: #e50914; text-shadow: 0 0 15px rgba(229, 9, 20, 0.8); }
 
-        body {
-            background-color: #06060c;
-            color: #ffffff;
-            padding-bottom: 50px;
-            background-image: radial-gradient(circle at 50% 0%, #1c132b 0%, #06060c 70%);
-        }
+        /* 🔍 सर्च बार (डिफ़ॉल्ट रूप से छुपा रहेगा, सर्च बटन पर क्लिक करने से दिखेगा) */
+        .search-container { display: none; width: 90%; max-width: 500px; margin: 20px auto 0 auto; transition: 0.3s; }
+        .search-box { width: 100%; padding: 12px 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 25px; color: #fff; font-size: 1rem; outline: none; transition: 0.3s; }
+        .search-box:focus { border-color: #e50914; box-shadow: 0 0 10px rgba(229, 9, 20, 0.5); }
 
-        .header {
-            width: 100%;
-            background: rgba(18, 19, 32, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 20px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+        .content-section { width: 90%; max-width: 1200px; margin: 0 auto; }
+        .section-title { font-size: 1.6rem; font-weight: 700; margin: 40px 0 20px 0; display: flex; align-items: center; }
+        .section-title::before { content: ''; width: 6px; height: 24px; background: #e50914; margin-right: 12px; border-radius: 4px; display: inline-block; box-shadow: 0 0 15px #e50914; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
+        
+        .movie-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 16px; overflow: hidden; cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); }
+        .movie-card:hover { transform: translateY(-10px) scale(1.03); border-color: #e50914; box-shadow: 0 15px 35px rgba(229, 9, 20, 0.45); }
+        .poster-box { position: relative; width: 100%; height: 310px; overflow: hidden; }
+        .poster-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .movie-card:hover .poster-box img { transform: scale(1.1); }
+        .tag-quality { position: absolute; top: 12px; left: 12px; background: #e50914; box-shadow: 0 0 10px #e50914; color: #fff; font-size: 0.75rem; font-weight: bold; padding: 5px 10px; border-radius: 6px; }
+        .movie-details { padding: 18px; background: rgba(10, 6, 12, 0.8); text-align: center; }
+        .movie-details h3 { font-size: 1rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #fff;
-        }
-
-        .logo span {
-            color: #e50914;
-            text-shadow: 0 0 15px rgba(229, 9, 20, 0.6);
-        }
-
-        .content-section {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin: 40px 0 20px 0;
-            display: flex;
-            align-items: center;
-        }
-
-        .section-title::before {
-            content: '';
-            width: 6px;
-            height: 24px;
-            background: #e50914;
-            margin-right: 12px;
-            border-radius: 4px;
-            display: inline-block;
-            box-shadow: 0 0 10px #e50914;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 30px;
-        }
-
-        /* 💎 3D ग्लास इफेक्ट कार्ड्स */
-        .movie-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 14px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-        }
-
-        .movie-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: #e50914;
-            box-shadow: 0 15px 35px rgba(229, 9, 20, 0.35);
-        }
-
-        .poster-box {
-            position: relative;
-            width: 100%;
-            height: 300px;
-            overflow: hidden;
-        }
-
-        .poster-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .movie-card:hover .poster-box img {
-            transform: scale(1.08);
-        }
-
-        .tag-quality {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            background: rgba(229, 9, 20, 0.9);
-            color: #fff;
-            font-size: 0.75rem;
-            font-weight: bold;
-            padding: 5px 10px;
-            border-radius: 6px;
-        }
-
-        .movie-details {
-            padding: 18px;
-            background: rgba(10, 11, 18, 0.6);
-        }
-
-        .movie-details h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #fff;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+        /* 📱 प्रीमियम 3D ग्लास बॉटम नेविगेशन बार */
+        .bottom-nav { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 450px; background: rgba(18, 11, 16, 0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 30px; display: flex; justify-content: space-around; padding: 12px 0; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 1px 3px rgba(255,255,255,0.2); z-index: 1000; }
+        .nav-item { color: rgba(255, 255, 255, 0.6); font-size: 1.2rem; display: flex; flex-direction: column; align-items: center; text-decoration: none; cursor: pointer; transition: 0.3s; background: none; border: none; outline: none; }
+        .nav-item span { font-size: 0.75rem; font-weight: 600; margin-top: 4px; }
+        .nav-item.active, .nav-item:hover { color: #e50914; text-shadow: 0 0 10px rgba(229, 9, 20, 0.5); }
     </style>
 </head>
 <body>
@@ -148,13 +45,23 @@
         <div class="logo">Race<span>Drive</span></div>
     </div>
 
+    <div class="search-container" id="searchContainer">
+        <input type="text" class="search-box" id="searchInput" placeholder="मूवी या कार्टून का नाम खोजें..." oninput="searchMovies()">
+    </div>
+
     <div class="content-section">
-        <div class="section-title">Motu Patlu Mega Collection</div>
+        <div class="section-title" id="cartoonTitle">Motu Patlu Mega Collection</div>
         <div class="grid-container" id="cartoonContainer"></div>
 
-        <div class="section-title">Latest Movies</div>
+        <div class="section-title" id="movieTitleSection">Latest Blockbusters</div>
         <div class="grid-container" id="movieContainer"></div>
     </div>
+
+    <nav class="bottom-nav">
+        <button class="nav-item active" onclick="showHome()"><i class="fas fa-home"></i><span>Home</span></button>
+        <button class="nav-item" onclick="toggleSearch()"><i class="fas fa-search"></i><span>Search</span></button>
+        <button class="nav-item" onclick="alert('Account feature coming soon!')"><i class="fas fa-user"></i><span>Account</span></button>
+    </nav>
 
     <script>
         const moviesDatabase = [
@@ -174,26 +81,35 @@
                 const card = document.createElement('div');
                 card.className = 'movie-card';
                 card.setAttribute('onclick', `goToPlayer('${item.videoUrl}', '${encodeURIComponent(item.title)}')`);
+                card.innerHTML = `<div class="poster-box"><img src="${item.poster}" alt="${item.title}" onerror="this.src='https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=500'"><span class="tag-quality">${item.quality}</span></div><div class="movie-details"><h3>${item.title}</h3></div>`;
                 
-                card.innerHTML = `
-                    <div class="poster-box">
-                        <img src="${item.poster}" alt="${item.title}" onerror="this.src='https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=500'">
-                        <span class="tag-quality">${item.quality}</span>
-                    </div>
-                    <div class="movie-details">
-                        <h3>${item.title}</h3>
-                    </div>
-                `;
                 if (item.category === 'cartoon') cartoonContainer.appendChild(card);
                 else if (item.category === 'movie') movieContainer.appendChild(card);
             });
         }
 
-        function goToPlayer(video, title) {
-            window.location.href = `watch.html?video=${video}&title=${title}`;
+        function goToPlayer(video, title) { window.location.href = `watch.html?video=${video}&title=${title}`; }
+        
+        // 🔍 सर्च और नेविगेशन फंक्शन्स
+        function toggleSearch() {
+            const sc = document.getElementById('searchContainer');
+            sc.style.display = (sc.style.display === 'block') ? 'none' : 'block';
+            if(sc.style.display === 'block') document.getElementById('searchInput').focus();
         }
+
+        function searchMovies() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = moviesDatabase.filter(m => m.title.toLowerCase().includes(query));
+            displayContent(filtered);
+        }
+
+        function showHome() {
+            document.getElementById('searchInput').value = "";
+            document.getElementById('searchContainer').style.display = 'none';
+            displayContent(moviesDatabase);
+        }
+
         displayContent(moviesDatabase);
     </script>
 </body>
 </html>
-HELLO 
