@@ -5,153 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premium Player - Race Drive</title>
     <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: #06060c;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 15px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 900px;
-            margin-top: 10px;
-        }
-
-        .back-btn {
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-            margin-bottom: 20px;
-            transition: 0.3s;
-        }
-
-        .back-btn:hover {
-            background: #e50914;
-            border-color: #e50914;
-            box-shadow: 0 0 15px rgba(229, 9, 20, 0.4);
-        }
-
-        .player-box {
-            width: 100%;
-            background: #000;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #06060c; color: #ffffff; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 15px 15px 90px 15px; background-image: radial-gradient(circle at 50% 0%, #251218 0%, #06060c 70%); }
+        .container { width: 100%; max-width: 900px; margin-top: 10px; }
+        
+        .player-box { width: 100%; background: #000; border-radius: 16px; overflow: hidden; box-shadow: 0 15px 35px rgba(229, 9, 20, 0.2); border: 2px solid #e50914; }
         :root { --plyr-color-main: #e50914; }
 
-        .movie-info-section {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            padding: 22px;
-            border-radius: 12px;
-            margin-top: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        h2 { font-size: 1.6rem; margin-bottom: 12px; font-weight: 700; }
-
+        .movie-info-section { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 25px; border-radius: 16px; margin-top: 25px; border: 1px solid rgba(255, 255, 255, 0.06); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); }
+        h2 { font-size: 1.7rem; margin-bottom: 12px; font-weight: 700; text-shadow: 0 0 10px rgba(255,255,255,0.1); }
+        
         .tags { display: flex; gap: 10px; margin-bottom: 25px; }
-        .tag { background: rgba(255, 255, 255, 0.08); padding: 5px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; color: #ffb400; }
+        .tag { background: rgba(229, 9, 20, 0.15); border: 1px solid rgba(229, 9, 20, 0.3); padding: 5px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; color: #ffb400; }
+        .download-container { margin-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 20px; }
 
-        .download-container {
-            margin-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 20px;
-        }
+        .dl-btn { background: rgba(255, 255, 255, 0.06); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); color: white; text-align: center; padding: 16px; border-radius: 14px; font-weight: bold; font-size: 1.05rem; cursor: pointer; width: 100%; transition: all 0.3s ease; }
+        .dl-btn:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-5px); border-color: #e50914; box-shadow: 0 15px 30px rgba(229, 9, 20, 0.5); }
+        
+        .timer-box { display: none; background: rgba(229, 9, 20, 0.05); padding: 18px; border-radius: 14px; font-weight: bold; color: #ffb400; border: 1px dashed #e50914; font-size: 1.1rem; text-align: center; }
 
-        /* 💎 3D ग्लास इफ़ेक्ट डाउनलोड बटन */
-        .dl-btn {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.1);
-            color: white;
-            text-align: center;
-            padding: 15px;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.3s ease;
-        }
-
-        .dl-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-4px);
-            border-color: #e50914;
-            box-shadow: 0 15px 30px rgba(229, 9, 20, 0.4);
-        }
-
-        .timer-box {
-            display: none;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: 12px;
-            font-weight: bold;
-            color: #ffb400;
-            border: 1px dashed #e50914;
-            font-size: 1.1rem;
-        }
+        /* 📱 मैचिंग बॉटम बार */
+        .bottom-nav { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 450px; background: rgba(18, 11, 16, 0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 30px; display: flex; justify-content: space-around; padding: 12px 0; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); z-index: 1000; }
+        .nav-item { color: rgba(255, 255, 255, 0.6); font-size: 1.2rem; display: flex; flex-direction: column; align-items: center; text-decoration: none; cursor: pointer; transition: 0.3s; background: none; border: none; }
+        .nav-item span { font-size: 0.75rem; font-weight: 600; margin-top: 4px; }
+        .nav-item:hover, .nav-item.active { color: #e50914; }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <a href="index.html" class="back-btn">⬅ होम पेज</a>
-
         <div class="player-box"><div id="playerContainer"></div></div>
-
         <div class="movie-info-section">
             <h2 id="movieTitle">Loading...</h2>
-            <div class="tags"><span class="tag">Ultra HD</span><span class="tag">Fast Server</span><span class="tag">Hindi</span></div>
-
+            <div class="tags"><span class="tag">Ultra HD 4K</span><span class="tag">Fast Premium Server</span><span class="tag">Audio: Hindi</span></div>
             <div class="download-container">
-                <div id="downloadTimer" class="timer-box">⏳ Generating Link... <span id="countdown">5</span> Seconds...</div>
+                <div id="downloadTimer" class="timer-box">⏳ Generating VIP Link... <span id="countdown">5</span> Seconds...</div>
                 <button id="startDownloadBtn" class="dl-btn">⚡ Get High-Speed Download Link</button>
             </div>
         </div>
     </div>
 
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="index.html" class="nav-item"><i class="fas fa-search"></i><span>Search</span></a>
+        <button class="nav-item" onclick="alert('Account feature coming soon!')"><i class="fas fa-user"></i><span>Account</span></button>
+    </nav>
+
     <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        const videoUrl = urlParams.get('video') || '';
+        let videoUrl = urlParams.get('video') || '';
         const movieTitle = decodeURIComponent(urlParams.get('title') || 'Race Hub Video');
         document.getElementById('movieTitle').innerText = movieTitle;
-
         const playerContainer = document.getElementById('playerContainer');
+
         if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be') || videoUrl.includes('embed')) {
             let videoId = videoUrl.split('embed/')[1] || videoUrl.split('v=')[1];
             if(videoId) videoId = videoId.split('&')[0];
-            playerContainer.innerHTML = `<div class="plyr__video-embed" id="player"><iframe src="https://www.youtube.com/embed/${videoId}?modestbranding=1&rel=0" allowfullscreen allow="autoplay"></iframe></div>`;
+            playerContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?modestbranding=1&rel=0" allowfullscreen style="width:100%; height:100%; border:none; aspect-ratio:16/9;"></iframe>`;
         } else {
             playerContainer.innerHTML = `<video id="player" controls><source src="${videoUrl}" type="video/mp4" /></video>`;
+            const player = new Plyr('#player', { ratio: '16:9' });
         }
-
-        const player = new Plyr('#player', { ratio: '16:9' });
 
         const btn = document.getElementById('startDownloadBtn');
         btn.addEventListener('click', function() {
@@ -160,22 +76,20 @@
             btn.style.display = 'none';
             timerBox.style.display = 'block';
             let timeLeft = 5;
-            
             const downloadInterval = setInterval(function() {
                 timeLeft--;
                 countdownSpan.innerText = timeLeft;
                 if (timeLeft <= 0) {
                     clearInterval(downloadInterval);
-                    timerBox.innerHTML = "✅ Downloading...";
+                    timerBox.innerHTML = "✅ Downloading Started...";
                     setTimeout(function() {
                         window.open(videoUrl, '_blank');
                         timerBox.style.display = 'none';
                         btn.style.display = 'block';
-                        btn.innerHTML = "📥 Download Again";
                     }, 1000);
                 }
             }, 1000);
         });
     </script>
 </body>
-</html>WELCOME 
+</html>
