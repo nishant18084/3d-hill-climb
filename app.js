@@ -1,8 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // सारे कंपोनेंट्स स्क्रीन पर लोड करें
-    if (typeof renderComponents === 'function') renderComponents();
-
-    // वीडियो प्लेयर शुरू करें
+    // प्लेयर चालू करें
     if (typeof initPlayer === 'function') initPlayer();
 
     // मूवीज लिस्ट रेंडर करना
