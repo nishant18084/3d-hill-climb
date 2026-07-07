@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     initPlayer();
 
-    // मूवीज को स्क्रीन पर लोड करना
+    // मूवी लोडर
     const movieBox = document.getElementById('moviesContainer');
     if (movieBox && typeof movieStreams !== 'undefined') {
         movieStreams.forEach(item => {
@@ -13,13 +13,20 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // गेम्स गैलेक्सी को स्क्रीन पर लोड करना
+    // स्मार्ट गेम्स गैलेक्सी लोडर
     const gameBox = document.getElementById('gamesContainer');
     if (gameBox && typeof gamesList !== 'undefined') {
         gamesList.forEach(game => {
             const card = document.createElement('div');
             card.className = 'content-card';
-            card.onclick = () => launchGame(game.name, game.link);
+            
+            // अगर एक्शन मौजूद है तो लोकल आर्केड शुरू करें, नहीं तो बाहरी लिंक खोलें
+            if(game.action) {
+                card.onclick = () => startArcadeGame(game.action);
+            } else {
+                card.onclick = () => launchGame(game.name, game.link);
+            }
+            
             card.innerHTML = `<div class="card-icon-box" style="color: #00875a;"><i class="fas ${game.icon || 'fa-gamepad'}"></i></div><div class="card-title">${game.name}</div>`;
             gameBox.appendChild(card);
         });
