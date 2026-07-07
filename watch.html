@@ -9,23 +9,19 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
         body { background-color: #0b0b10; color: #fff; padding-bottom: 50px; }
         
-        /* 🌌 Header Style */
         .header { background: #000; padding: 15px 5%; border-bottom: 3px solid #e50914; display: flex; align-items: center; position: sticky; top: 0; z-index: 100; }
         .back-btn { color: #fff; font-size: 1.4rem; text-decoration: none; margin-right: 20px; cursor: pointer; transition: 0.2s; }
         .back-btn:hover { color: #e50914; }
         .logo { font-size: 1.5rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
         .logo span { color: #e50914; }
         
-        /* 📺 Advanced Smart Player Container */
         .player-container { width: 92%; max-width: 850px; margin: 20px auto; background: #000; box-shadow: 0 10px 40px rgba(0,0,0,0.8); border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #000; }
-        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .video-wrapper { width: 100%; display: block; background: #000; position: relative; }
+        video { width: 100%; height: auto; display: block; outline: none; aspect-ratio: 16/9; }
         
-        /* 🎬 Content Details */
         .movie-info { width: 92%; max-width: 850px; margin: 20px auto; padding: 0 5px; }
         .movie-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; color: #ffffff; line-height: 1.4; }
         
-        /* 📥 Actions Panel */
         .action-section { margin-top: 20px; background: #13131a; padding: 20px; border-radius: 10px; border: 1px solid #1f1f2e; display: flex; flex-direction: column; gap: 15px; }
         .row-item { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .row-title { font-size: 0.95rem; font-weight: bold; color: #b3b3b3; display: flex; align-items: center; gap: 8px; }
@@ -44,39 +40,41 @@
 
     <div class="header">
         <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
-        <div class="logo">Race<span>Drive</span> Player</div>
+        <div class="logo">Race<span>Drive</span> TV</div>
     </div>
 
     <div class="player-container">
         <div class="video-wrapper">
-            <iframe id="smartPlayer" src="" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+            <video id="myOwnTVPlayer" controls autoplay preload="auto" playsinline>
+                <source id="videoSource" src="" type="video/mp4">
+                आपका ब्राउज़र इस प्लेयर को सपोर्ट नहीं करता है।
+            </video>
         </div>
     </div>
 
     <div class="movie-info">
-        <h2 class="movie-title" id="videoTitle">Loading Title...</h2>
+        <h2 class="movie-title" id="videoTitle">Loading Channel Content...</h2>
         
         <div class="player-tags">
-            <span class="p-tag"><i class="fas fa-bolt" style="color: #ffb800;"></i> Multi-Server Link</span>
-            <span class="p-tag" style="background: #e50914; color: #fff; border: none;">1080p Ultra HD</span>
+            <span class="p-tag" style="background: #e50914; color: #fff; border: none;"><i class="fas fa-broadcast-tower"></i> Live Stream</span>
+            <span class="p-tag"><i class="fas fa-bolt" style="color: #ffb800;"></i> Direct Server</span>
         </div>
 
         <div class="action-section">
             <div class="row-item">
-                <div class="row-title"><i class="fas fa-language" style="color: #e50914;"></i> Change Audio / Language</div>
+                <div class="row-title"><i class="fas fa-language" style="color: #e50914;"></i> Channel Audio Tracks</div>
                 <select class="audio-select" id="audioSelect" onchange="changeAudioLanguage()">
-                    <option value="main">🔊 Main Audio (Default)</option>
-                    <option value="hindi">🇮🇳 Hindi Dubbed</option>
-                    <option value="english">🇺🇸 English Original</option>
+                    <option value="main">🔊 Default Audio Feed</option>
+                    <option value="hindi">🇮🇳 Hindi Feed</option>
                 </select>
             </div>
             
             <hr style="border: 0; border-top: 1px solid #262636;">
 
             <div class="row-item">
-                <div class="row-title"><i class="fas fa-cloud-download-alt" style="color: #00875a;"></i> Available Options</div>
-                <a href="#" id="downloadBtn" target="_blank" class="download-btn">
-                    <i class="fas fa-download"></i> Download Video (Direct)
+                <div class="row-title"><i class="fas fa-cloud-download-alt" style="color: #00875a;"></i> Save Stream / Show</div>
+                <a href="#" id="downloadBtn" download class="download-btn">
+                    <i class="fas fa-download"></i> Save Video
                 </a>
             </div>
         </div>
@@ -91,21 +89,15 @@
             return vars;
         }
 
-        const inputId = getUrlVars()["id"];
+        const videoUrl = getUrlVars()["id"];
         const videoTitle = decodeURIComponent(getUrlVars()["title"]);
 
-        if (inputId) {
-            const player = document.getElementById('smartPlayer');
-            
-            // 🧠 स्मार्ट डिटेक्शन: अगर इनपुट आईडी सिर्फ 11 अक्षरों की है तो वह यूट्यूब है, नहीं तो डायरेक्ट URL है
-            if (inputId.length === 11 && !inputId.includes("://")) {
-                player.src = `https://www.youtube.com/embed/${inputId}?autoplay=1&rel=0&modestbranding=1`;
-                document.getElementById('downloadBtn').href = `https://www.ssyoutube.com/watch?v=${inputId}`;
-            } else {
-                // अगर डायरेक्ट लिंक या कोई अन्य स्ट्रीमिंग सर्वर लिंक है
-                player.src = inputId;
-                document.getElementById('downloadBtn').href = inputId;
-            }
+        if (videoUrl) {
+            const player = document.getElementById('myOwnTVPlayer');
+            const source = document.getElementById('videoSource');
+            source.src = videoUrl;
+            player.load();
+            document.getElementById('downloadBtn').href = videoUrl;
         }
         
         if (videoTitle && videoTitle !== "undefined") {
@@ -113,7 +105,7 @@
         }
 
         function changeAudioLanguage() {
-            alert("यह स्ट्रीम सिंगल ऑडियो ट्रैक में है। मल्टी-ऑडियो विकल्प केवल मुख्य सर्वर फ़ाइलों पर ही समर्थित है।");
+            alert("यह वीडियो सिंगल ऑडियो स्ट्रीम में है।");
             document.getElementById('audioSelect').value = "main";
         }
     </script>
