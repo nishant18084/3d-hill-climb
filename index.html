@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RaceDrive - Movies & Games Hub</title>
+    <title>RaceDrive - Movies & Games Galaxy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link href="https://vjs.zencdn.net/8.3.0/video-js.css" rel="stylesheet" />
@@ -30,7 +30,7 @@
         .player-card { background: #0f0f15; border-radius: 16px; padding: 15px; border: 1px solid #1c1c28; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 25px; }
         .video-box { position: relative; width: 100%; background: #000; border-radius: 12px; overflow: hidden; border: 1px solid #252538; }
         
-        /* प्लेयर का साइज और पोस्टर इमेज सेटिंग */
+        /* प्लेयर पोस्टर सेटिंग */
         .video-js { width: 100% !important; height: auto !important; aspect-ratio: 16/9; }
         .vjs-poster { background-size: cover !important; background-position: center !important; }
         
@@ -90,7 +90,7 @@
 
     <div id="gamesWindow" class="app-window">
         <div class="player-card">
-            <div class="section-title" style="border-color: #00875a;"><i class="fas fa-gamepad"></i> Instant Play Games</div>
+            <div class="section-title" style="border-color: #00875a;"><i class="fas fa-galaxy"></i> Games Galaxy</div>
             <div class="content-scroll-box" id="gamesContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px;"></div>
         </div>
     </div>
@@ -104,7 +104,7 @@
 
     <div class="bottom-nav">
         <button class="nav-item active" onclick="switchWindowTab('homeWindow', this)"><i class="fas fa-film"></i>Movies</button>
-        <button class="nav-item" onclick="switchWindowTab('gamesWindow', this)"><i class="fas fa-gamepad"></i>Games</button>
+        <button class="nav-item" onclick="switchWindowTab('gamesWindow', this)"><i class="fas fa-gamepad"></i>Games Galaxy</button>
     </div>
 
     <script>
@@ -115,11 +115,12 @@
             { name: "Bollywood Hits", url: "https://pubads.g.doubleclick.net/ssai/event/O-M2XAnuR3WbQGv9a3B8Xw/master.m3u8", icon: "fa-heart" }
         ];
 
-        // 🎮 गेम्स लिस्ट
+        // 🎮 गेम्स गैलेक्सी लिस्ट (यहाँ Subway Surfers ऐड कर दिया है)
         const gamesList = [
-            { name: "Snake Arena", link: "https://m.gamesnacks.com/games/snake" },
-            { name: "Tower Builder", link: "https://m.gamesnacks.com/games/towerbuilding" },
-            { name: "Color Burst", link: "https://m.gamesnacks.com/games/colorburst" }
+            { name: "Subway Surfers", link: "https://m.gamesnacks.com/games/subwaysurfers", icon: "fa-running" },
+            { name: "Snake Arena", link: "https://m.gamesnacks.com/games/snake", icon: "fa-ghost" },
+            { name: "Tower Builder", link: "https://m.gamesnacks.com/games/towerbuilding", icon: "fa-building" },
+            { name: "Color Burst", link: "https://m.gamesnacks.com/games/colorburst", icon: "fa-palette" }
         ];
 
         let videoEngine = videojs('mainHubPlayer', { fluid: true });
@@ -132,7 +133,7 @@
 
         function launchGame(title, webLink) {
             videoEngine.pause(); 
-            document.getElementById('gameIframeContainer').innerHTML = `<iframe src="${webLink}" style="width:100%; height:100%; border:none;"></iframe>`;
+            document.getElementById('gameIframeContainer').innerHTML = `<iframe src="${webLink}" style="width:100%; height:100%; border:none;" allow="autoplay; gamepad"></iframe>`;
             document.getElementById('masterGamePopup').classList.add('active');
         }
 
@@ -151,13 +152,13 @@
             movieBox.appendChild(card);
         });
 
-        // गेम्स ग्रिड बनाना
+        // गेम्स ग्रिड बनाना (अब हर गेम के लिए अलग आइकॉन दिखेगा)
         const gameBox = document.getElementById('gamesContainer');
         gamesList.forEach(game => {
             const card = document.createElement('div');
             card.className = 'content-card';
             card.onclick = () => launchGame(game.name, game.link);
-            card.innerHTML = `<div class="card-icon-box" style="color: #00875a;"><i class="fas fa-gamepad"></i></div><div class="card-title">${game.name}</div>`;
+            card.innerHTML = `<div class="card-icon-box" style="color: #00875a;"><i class="fas ${game.icon || 'fa-gamepad'}"></i></div><div class="card-title">${game.name}</div>`;
             gameBox.appendChild(card);
         });
 
