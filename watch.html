@@ -16,8 +16,8 @@
         .logo span { color: #e50914; }
         
         .player-container { width: 92%; max-width: 850px; margin: 20px auto; background: #000; box-shadow: 0 10px 40px rgba(0,0,0,0.8); border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
-        .video-wrapper { width: 100%; display: block; background: #000; position: relative; }
-        video { width: 100%; height: auto; display: block; outline: none; aspect-ratio: 16/9; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #000; }
+        .video-wrapper iframe, .video-wrapper video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
         
         .movie-info { width: 92%; max-width: 850px; margin: 20px auto; padding: 0 5px; }
         .movie-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; color: #ffffff; line-height: 1.4; }
@@ -35,6 +35,7 @@
         .player-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
         .p-tag { background: #171721; padding: 6px 14px; border-radius: 6px; font-size: 0.8rem; color: #b3b3b3; border: 1px solid #262636; display: flex; align-items: center; gap: 6px; }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 <body>
 
@@ -44,12 +45,8 @@
     </div>
 
     <div class="player-container">
-        <div class="video-wrapper">
-            <video id="myOwnTVPlayer" controls autoplay preload="auto" playsinline>
-                <source id="videoSource" src="" type="video/mp4">
-                आपका ब्राउज़र इस प्लेयर को सपोर्ट नहीं करता है।
-            </video>
-        </div>
+        <div class="video-wrapper" id="playerWrapper">
+            </div>
     </div>
 
     <div class="movie-info">
@@ -57,24 +54,23 @@
         
         <div class="player-tags">
             <span class="p-tag" style="background: #e50914; color: #fff; border: none;"><i class="fas fa-broadcast-tower"></i> Live Stream</span>
-            <span class="p-tag"><i class="fas fa-bolt" style="color: #ffb800;"></i> Direct Server</span>
+            <span class="p-tag"><i class="fas fa-bolt" style="color: #ffb800;"></i> High-Speed Auto Server</span>
         </div>
 
         <div class="action-section">
             <div class="row-item">
-                <div class="row-title"><i class="fas fa-language" style="color: #e50914;"></i> Channel Audio Tracks</div>
+                <div class="row-title"><i class="fas fa-language" style="color: #e50914;"></i> Language Tracks</div>
                 <select class="audio-select" id="audioSelect" onchange="changeAudioLanguage()">
-                    <option value="main">🔊 Default Audio Feed</option>
-                    <option value="hindi">🇮🇳 Hindi Feed</option>
+                    <option value="main">🔊 Default Feed</option>
                 </select>
             </div>
             
             <hr style="border: 0; border-top: 1px solid #262636;">
 
             <div class="row-item">
-                <div class="row-title"><i class="fas fa-cloud-download-alt" style="color: #00875a;"></i> Save Stream / Show</div>
-                <a href="#" id="downloadBtn" download class="download-btn">
-                    <i class="fas fa-download"></i> Save Video
+                <div class="row-title"><i class="fas fa-cloud-download-alt" style="color: #00875a;"></i> Save/Download Stream</div>
+                <a href="#" id="downloadBtn" target="_blank" class="download-btn">
+                    <i class="fas fa-download"></i> Download / View Stream
                 </a>
             </div>
         </div>
@@ -89,24 +85,39 @@
             return vars;
         }
 
-        const videoUrl = getUrlVars()["id"];
+        const streamId = getUrlVars()["id"];
         const videoTitle = decodeURIComponent(getUrlVars()["title"]);
 
-        if (videoUrl) {
-            const player = document.getElementById('myOwnTVPlayer');
-            const source = document.getElementById('videoSource');
-            source.src = videoUrl;
-            player.load();
-            document.getElementById('downloadBtn').href = videoUrl;
-        }
-        
         if (videoTitle && videoTitle !== "undefined") {
             document.getElementById('videoTitle').innerText = videoTitle;
         }
 
+        const wrapper = document.getElementById('playerWrapper');
+
+        if (streamId) {
+            // 🧠 स्मार्ट डिटेक्शन: अगर .m3u8 या लाइव लिंक है तो डायरेक्ट HTML5 प्लेयर चलाओ
+            if (streamId.includes(".m3u8") || streamId.includes(".mp4") || streamId.includes("://")) {
+                wrapper.innerHTML = `<video id="nativePlayer" controls autoplay playsinline></video>`;
+                const video = document.getElementById('nativePlayer');
+                
+                if (Hls.isSupported()) {
+                    const hls = new Hls();
+                    hls.loadSource(streamId);
+                    hls.attachMedia(video);
+                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                    video.src = streamId;
+                }
+                document.getElementById('downloadBtn').href = streamId;
+            } 
+            // 🎬 अगर सिर्फ 11 अक्षरों की यूट्यूब आईडी है
+            else {
+                wrapper.innerHTML = `<iframe src="https://www.youtube.com/embed/${streamId}?autoplay=1&rel=0&modestbranding=1" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`;
+                document.getElementById('downloadBtn').href = `https://www.ssyoutube.com/watch?v=${streamId}`;
+            }
+        }
+
         function changeAudioLanguage() {
-            alert("यह वीडियो सिंगल ऑडियो स्ट्रीम में है।");
-            document.getElementById('audioSelect').value = "main";
+            alert("यह लाइव चैनल सिंगल ऑडियो ब्रॉडकास्ट पर सेट है।");
         }
     </script>
 </body>
