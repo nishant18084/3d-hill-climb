@@ -3,71 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RaceDrive Mega TV - Premium OTT</title>
+    <title>RaceDrive Premium OTT - Platform</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
-        body { background-color: #0b0b10; color: #fff; padding-bottom: 30px; }
+        body { background-color: #060609; color: #fff; padding-bottom: 40px; }
         
-        /* 🌌 Premium Navbar */
-        .navbar { background: #000; padding: 15px 5%; border-bottom: 3px solid #e50914; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
-        .nav-left, .nav-right { display: flex; align-items: center; gap: 20px; }
-        .brand { font-size: 1.6rem; font-weight: bold; text-transform: uppercase; color: #fff; text-decoration: none; letter-spacing: 1px; }
+        /* 🌌 Global Header */
+        .navbar { background: #000; padding: 15px 5%; border-bottom: 2px solid #e50914; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .nav-left, .nav-right { display: flex; align-items: center; gap: 25px; }
+        .brand { font-size: 1.8rem; font-weight: 900; text-transform: uppercase; color: #fff; text-decoration: none; letter-spacing: 1.5px; }
         .brand span { color: #e50914; }
         
-        .nav-btn { background: none; border: none; color: #b3b3b3; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; text-decoration: none; }
+        .nav-btn { background: none; border: none; color: #bbb; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; text-decoration: none; }
         .nav-btn:hover, .nav-btn.active { color: #e50914; }
-        .login-btn { background: #e50914; color: #fff; padding: 8px 18px; border-radius: 4px; font-size: 0.9rem; }
-        .login-btn:hover { background: #b80710; color: #fff; }
+        .login-btn { background: #e50914; color: #fff; padding: 10px 22px; border-radius: 6px; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(229,9,20,0.3); }
+        .login-btn:hover { background: #b80710; transform: translateY(-1px); }
 
-        /* 🎬 Main Layout */
-        .main-layout { width: 92%; max-width: 1400px; margin: 20px auto; display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 25px; }
-        @media (max-width: 950px) { .main-layout { grid-template-columns: 1fr; } }
+        /* 🎬 Hero Structure */
+        .main-container { width: 94%; max-width: 1500px; margin: 25px auto; display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+        @media (max-width: 1024px) { .main-container { grid-template-columns: 1fr; } }
 
-        /* 📺 Player Section */
-        .player-section { background: #13131a; border-radius: 12px; padding: 15px; border: 1px solid #1f1f2e; height: fit-content; }
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #000; border-radius: 8px; overflow: hidden; }
-        .video-wrapper iframe, .video-wrapper video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        .video-title { font-size: 1.3rem; font-weight: bold; margin-top: 15px; color: #fff; }
-
-        .controls-panel { margin-top: 15px; background: #171721; padding: 15px; border-radius: 8px; border: 1px solid #262636; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .download-btn { background: #00875a; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-size: 0.9rem; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; border: none; }
-        .download-btn.yt { background: #e50914; }
-
-        /* 📑 Sidebar 100 Grid */
-        .sidebar-section { background: #13131a; border-radius: 12px; padding: 15px; border: 1px solid #1f1f2e; height: 70vh; display: flex; flex-direction: column; }
-        .sidebar-title { font-size: 1.2rem; margin-bottom: 15px; color: #e50914; text-transform: uppercase; font-weight: bold; }
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; overflow-y: auto; flex: 1; padding-right: 5px; }
+        /* 📺 Player Core Box */
+        .player-card { background: #0f0f15; border-radius: 16px; padding: 20px; border: 1px solid #1c1c28; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .video-box { position: relative; padding-bottom: 56.25%; height: 0; background: #000; border-radius: 12px; overflow: hidden; border: 1px solid #252538; }
+        .video-box iframe, .video-box video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
         
-        .channel-btn { background: #171721; border: 1px solid #262636; border-radius: 8px; padding: 12px 8px; text-align: center; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        .channel-btn:hover, .channel-btn.active { border-color: #e50914; background: #1f1f2e; }
-        .channel-btn i { font-size: 1.3rem; color: #e50914; }
-        .channel-btn span { font-size: 0.75rem; font-weight: 600; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; }
-
-        /* 👤 Footer Account Options Section */
-        .account-footer { width: 92%; max-width: 1400px; margin: 30px auto 10px auto; background: #13131a; border: 1px solid #1f1f2e; border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
-        .user-profile { display: flex; align-items: center; gap: 15px; }
-        .user-avatar { width: 55px; height: 55px; background: #262636; border: 2px solid #e50914; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #fff; }
-        .user-details h4 { font-size: 1.05rem; margin-bottom: 3px; }
-        .user-details p { font-size: 0.8rem; color: #8c8c9e; }
+        .stream-details { margin-top: 20px; }
+        .stream-title { font-size: 1.6rem; font-weight: 800; color: #fff; letter-spacing: 0.5px; }
         
-        .account-links { display: flex; gap: 15px; }
-        .acc-btn { background: #171721; border: 1px solid #262636; color: #fff; padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; font-weight: 600; text-decoration: none; transition: 0.2s; }
-        .acc-btn:hover { border-color: #e50914; background: #1f1f2e; }
+        .meta-badges { display: flex; gap: 10px; margin: 12px 0 20px 0; flex-wrap: wrap; }
+        .badge { background: #1c1c28; padding: 6px 14px; border-radius: 6px; font-size: 0.8rem; color: #ffb800; border: 1px solid #2d2d42; font-weight: bold; display: flex; align-items: center; gap: 6px; }
+        .badge.live { background: #e50914; color: #fff; border: none; animation: pulse 2s infinite; }
 
-        /* 🔐 Premium Login Popup (Netflix Style) */
-        .login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; }
-        .login-overlay.open { opacity: 1; pointer-events: auto; }
-        .login-box { background: #13131a; width: 90%; max-width: 400px; padding: 40px; border-radius: 10px; border: 1px solid #262636; box-shadow: 0 15px 30px rgba(0,0,0,0.5); position: relative; }
-        .close-login { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; color: #b3b3b3; cursor: pointer; }
-        .login-box h3 { font-size: 1.8rem; font-weight: bold; margin-bottom: 25px; text-align: center; }
-        .login-box h3 span { color: #e50914; }
-        .input-group { margin-bottom: 20px; }
-        .input-group label { display: block; font-size: 0.85rem; color: #b3b3b3; margin-bottom: 6px; }
-        .input-group input { width: 100%; background: #262636; border: 1px solid #3a3a52; padding: 12px; border-radius: 6px; color: #fff; font-size: 0.95rem; outline: none; }
-        .input-group input:focus { border-color: #e50914; }
-        .submit-login { width: 100%; background: #e50914; color: #fff; border: none; padding: 12px; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; }
-        .submit-login:hover { background: #b80710; }
+        .player-actions { background: #14141f; padding: 15px 20px; border-radius: 10px; border: 1px solid #222233; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .action-link { background: #00875a; color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-size: 0.95rem; font-weight: 700; display: inline-flex; align-items: center; gap: 10px; transition: 0.2s; box-shadow: 0 4px 15px rgba(0,135,90,0.2); }
+        .action-link:hover { background: #006644; transform: translateY(-2px); }
+        .action-link.youtube-style { background: #e50914; box-shadow: 0 4px 15px rgba(229,9,20,0.2); }
+        .action-link.youtube-style:hover { background: #b80710; }
+
+        /* 📑 Grid Hub (1-100 items) */
+        .hub-card { background: #0f0f15; border-radius: 16px; padding: 20px; border: 1px solid #1c1c28; height: 78vh; display: flex; flex-direction: column; }
+        .hub-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #222233; }
+        .hub-title { font-size: 1.3rem; font-weight: 800; color: #e50914; text-transform: uppercase; }
+        
+        .channel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(115px, 1fr)); gap: 12px; overflow-y: auto; flex: 1; padding-right: 5px; }
+        .grid-item { background: #14141f; border: 1px solid #222233; border-radius: 10px; padding: 15px 10px; text-align: center; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .grid-item:hover, .grid-item.active { border-color: #e50914; background: #1c1c2a; transform: scale(1.03); box-shadow: 0 5px 15px rgba(229,9,20,0.15); }
+        .grid-item i { font-size: 1.5rem; color: #e50914; }
+        .grid-item span { font-size: 0.8rem; font-weight: 600; color: #e0e0e6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+        /* 👤 Account Interface Dashboard Footer */
+        .account-hub-footer { width: 94%; max-width: 1500px; margin: 30px auto 10px auto; background: #0f0f15; border: 1px solid #1c1c28; border-radius: 16px; padding: 25px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+        .profile-container { display: flex; align-items: center; gap: 20px; }
+        .profile-pic { width: 65px; height: 65px; background: #1c1c28; border: 3px solid #e50914; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: #fff; box-shadow: 0 0 15px rgba(229,9,20,0.2); }
+        .profile-info h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; }
+        .profile-info p { font-size: 0.85rem; color: #888899; }
+        
+        .subscription-status { background: #14141f; border: 1px solid #222233; padding: 15px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .status-tag { background: rgba(229,9,20,0.1); border: 1px solid #e50914; color: #e50914; font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; }
+
+        .settings-dock { display: flex; gap: 12px; justify-content: flex-end; }
+        .dock-btn { background: #1c1c28; border: 1px solid #2d2d42; color: #fff; padding: 10px 20px; border-radius: 8px; font-size: 0.9rem; cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s; }
+        .dock-btn:hover { border-color: #e50914; background: #14141f; }
+
+        /* 🔐 Animated Netflix Login Modal */
+        .login-popup-mask { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s ease-in-out; }
+        .login-popup-mask.active { opacity: 1; pointer-events: auto; }
+        .login-card { background: #0f0f15; width: 92%; max-width: 420px; padding: 45px; border-radius: 12px; border: 1px solid #252538; box-shadow: 0 20px 50px rgba(0,0,0,0.8); position: relative; transform: scale(0.9); transition: 0.3s ease-in-out; }
+        .login-popup-mask.active .login-card { transform: scale(1); }
+        .dismiss-btn { position: absolute; top: 20px; right: 25px; font-size: 1.8rem; color: #888; cursor: pointer; transition: 0.2s; }
+        .dismiss-btn:hover { color: #fff; }
+        .login-card h2 { font-size: 2rem; font-weight: 800; margin-bottom: 30px; text-align: center; letter-spacing: 0.5px; }
+        .login-card h2 span { color: #e50914; }
+        
+        .field-group { margin-bottom: 22px; }
+        .field-group label { display: block; font-size: 0.85rem; color: #aaa; margin-bottom: 8px; font-weight: 600; }
+        .field-group input { width: 100%; background: #1c1c28; border: 1px solid #2d2d42; padding: 14px; border-radius: 8px; color: #fff; font-size: 1rem; outline: none; transition: 0.2s; }
+        .field-group input:focus { border-color: #e50914; box-shadow: 0 0 10px rgba(229,9,20,0.2); }
+        .action-login-submit { width: 100%; background: #e50914; color: #fff; border: none; padding: 14px; border-radius: 8px; font-size: 1.05rem; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; box-shadow: 0 5px 15px rgba(229,9,20,0.3); }
+        .action-login-submit:hover { background: #b80710; }
+
+        @keyframes pulse { 0% { opacity: 0.7; } 50% { opacity: 1; } 100% { opacity: 0.7; } }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #060609; }
+        ::-webkit-scrollbar-thumb { background: #222233; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #e50914; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
@@ -75,163 +96,190 @@
 
     <div class="navbar">
         <div class="nav-left">
-            <a href="#" class="brand">Race<span>Drive</span> TV</a>
+            <a href="#" class="brand">Race<span>Drive</span> Player</a>
             <button class="nav-btn active" onclick="location.reload()"><i class="fas fa-home"></i> Home</button>
         </div>
         <div class="nav-right">
-            <button class="nav-btn login-btn" id="navLoginBtn" onclick="toggleLoginPopup(true)"><i class="fas fa-user"></i> Login</button>
+            <button class="nav-btn login-btn" id="headerAuthBtn" onclick="toggleAuthModal(true)"><i class="fas fa-sign-in-alt"></i> Sign In</button>
         </div>
     </div>
 
-    <div class="main-layout">
+    <div class="main-container">
         
-        <div class="player-section">
-            <div class="video-wrapper" id="playerWrapper"></div>
-            <div class="video-title" id="currentTitle">Loading...</div>
-            
-            <div class="controls-panel">
-                <div style="font-size: 0.9rem; color: #b3b3b3;"><i class="fas fa-info-circle"></i> View Options / Download External:</div>
-                <a href="#" id="actionBtn" target="_blank" class="download-btn">
-                    <i class="fas fa-external-link-alt"></i> External Stream
-                </a>
+        <div class="player-card">
+            <div class="video-box" id="embeddedMediaFrame"></div>
+            <div class="stream-details">
+                <div class="stream-title" id="displayStreamTitle">Loading Premium Stream...</div>
+                
+                <div class="meta-badges">
+                    <span class="badge live"><i class="fas fa-broadcast-tower"></i> Live Feed</span>
+                    <span class="badge"><i class="fas fa-bolt"></i> Ultra-Fast Stream</span>
+                    <span class="badge" style="color: #00875a; border-color: rgba(0,135,90,0.3);"><i class="fas fa-shield-alt"></i> Verified Content</span>
+                </div>
+
+                <div class="player-actions">
+                    <span style="font-size: 0.95rem; color: #aaa; font-weight: 600;"><i class="fas fa-link"></i> अगर प्लेयर लोड न हो, तो यहाँ क्लिक करें:</span>
+                    <a href="#" id="externalActionBtn" target="_blank" class="action-link">
+                        <i class="fas fa-external-link-alt"></i> Open Video Source
+                    </a>
+                </div>
             </div>
         </div>
 
-        <div class="sidebar-section">
-            <div class="sidebar-title"><i class="fas fa-th-large"></i> लाइव चैनल्स & मूवीज</div>
-            <div class="grid-container" id="gridContainer"></div>
+        <div class="hub-card">
+            <div class="hub-header">
+                <div class="hub-title"><i class="fas fa-play-circle"></i> Channels List (1-100)</div>
+            </div>
+            <div class="channel-grid" id="hubGridBox"></div>
         </div>
 
     </div>
 
-    <div class="account-footer">
-        <div class="user-profile">
-            <div class="user-avatar" id="footerAvatar">
-                <i class="fas fa-user-secret"></i>
+    <div class="account-hub-footer">
+        <div class="profile-container">
+            <div class="profile-pic" id="accountAvatarBox">
+                <i class="fas fa-user-astronaut" style="color: #888899;"></i>
             </div>
-            <div class="user-details">
-                <h4 id="footerUserName">Guest Account</h4>
-                <p id="footerUserStatus">Status: Free Membership</p>
+            <div class="profile-info">
+                <h3 id="accountUserNameDisplay">Guest Account</h3>
+                <p>Welcome to RaceDrive Premium Dashboard</p>
             </div>
         </div>
-        <div class="account-links">
-            <button class="acc-btn" onclick="alert('Premium Server Active: Secure Stream Protected.')"><i class="fas fa-shield-alt"></i> Security</button>
-            <button class="acc-btn" onclick="alert('यह प्रोजेक्ट RaceDrive Player का लेटेस्ट प्रीमियम वर्जन है।')"><i class="fas fa-cog"></i> Settings</button>
+        
+        <div class="subscription-status">
+            <div>
+                <div style="font-size: 0.75rem; color: #888899; text-transform: uppercase; font-weight: bold; margin-bottom: 2px;">Plan Level</div>
+                <div style="font-size: 0.95rem; font-weight: bold;" id="accountPlanTierText">Free Streaming Account</div>
+            </div>
+            <span class="status-tag" id="accountBadgeStatus">Free Tier</span>
+        </div>
+
+        <div class="settings-dock">
+            <button class="dock-btn" onclick="alert('प्रीमियम सिक्योरिटी इंजन एक्टिव है।')"><i class="fas fa-lock"></i> Security</button>
+            <button class="dock-btn" onclick="alert('RaceDrive Engine Version 3.5 Active.')"><i class="fas fa-sliders-h"></i> Options</button>
         </div>
     </div>
 
-    <div class="login-overlay" id="loginOverlay">
-        <div class="login-box">
-            <span class="close-login" onclick="toggleLoginPopup(false)">&times;</span>
-            <h3><span>RaceDrive</span> Sign In</h3>
+    <div class="login-popup-mask" id="globalAuthOverlay">
+        <div class="login-card">
+            <span class="dismiss-btn" onclick="toggleAuthModal(false)">&times;</span>
+            <h2><span>RaceDrive</span> Sign In</h2>
             
-            <div class="input-group">
-                <label>User ID / Username</label>
-                <input type="text" id="usernameInput" placeholder="अपना नाम या आईडी लिखें...">
+            <div class="field-group">
+                <label>User ID / Registered Profile Name</label>
+                <input type="text" id="usernameField" placeholder="अपना नाम या यूज़र आईडी डालें">
             </div>
-            <div class="input-group">
-                <label>Password</label>
-                <input type="password" id="passwordInput" placeholder="••••••••">
+            <div class="field-group">
+                <label>Access Password</label>
+                <input type="password" placeholder="••••••••">
             </div>
             
-            <button class="submit-login" onclick="handleCustomLogin()">Sign In</button>
+            <button class="action-login-submit" onclick="executeProfileLogin()">Sign In Securely</button>
         </div>
     </div>
 
     <script>
-        // 🎬 100 आइटम्स के लिए डिफ़ॉल्ट डेटाबेस
-        const baseChannels = [
+        // 🍿 100 आइटम्स के लिए स्टेबल और फास्ट नेटवर्क चैनल्स
+        const seedChannels = [
             { name: "Chumbak TV Special", url: "https://shemaroome-live.akamaized.net/hls/live/2042971/Chumbak/master.m3u8", type: "m3u8" },
             { name: "India TV Live News", url: "Nq2wYlWFucg", type: "yt" },
             { name: "Sky News Global", url: "9Auqeyr_GvA", type: "yt" },
             { name: "ABP News Hindi Live", url: "nyd-MTZ_wGg", type: "yt" },
-            { name: "Republic Bharat", url: "26H280Y_X2Y", type: "yt" },
-            { name: "News18 India Live", url: "4Nf8pI-x26M", type: "yt" }
+            { name: "Republic Bharat TV", url: "26H280Y_X2Y", type: "yt" },
+            { name: "News18 India HD", url: "4Nf8pI-x26M", type: "yt" }
         ];
 
-        const channels = [];
+        const listDatabase = [];
         for (let i = 1; i <= 100; i++) {
-            const base = baseChannels[(i - 1) % baseChannels.length];
-            channels.push({
-                name: i <= 6 ? base.name : `चैनल / मूवी संख्या ${i}`,
-                url: base.url,
-                type: base.type
+            const raw = seedChannels[(i - 1) % seedChannels.length];
+            listDatabase.push({
+                name: i <= 6 ? raw.name : `चैनल / वीडियो संख्या ${i}`,
+                url: raw.url,
+                type: raw.type
             });
         }
 
-        const wrapper = document.getElementById('playerWrapper');
-        const titleText = document.getElementById('currentTitle');
-        const actionBtn = document.getElementById('actionBtn');
-        const gridContainer = document.getElementById('gridContainer');
+        const playerFrame = document.getElementById('embeddedMediaFrame');
+        const titleLabel = document.getElementById('displayStreamTitle');
+        const extActionBtn = document.getElementById('externalActionBtn');
+        const hubGridBox = document.getElementById('hubGridBox');
 
-        function playChannel(index) {
-            const ch = channels[index];
-            titleText.innerText = ch.name;
+        function triggerStreamPlay(index) {
+            const currentItem = listDatabase[index];
+            titleLabel.innerText = currentItem.name;
             
-            document.querySelectorAll('.channel-btn').forEach((btn, i) => {
-                if(i === index) btn.classList.add('active');
+            document.querySelectorAll('.grid-item').forEach((btn, idx) => {
+                if(idx === index) btn.classList.add('active');
                 else btn.classList.remove('active');
             });
 
-            if (ch.type === "m3u8") {
-                wrapper.innerHTML = `<video id="videoPlayer" controls autoplay playsinline></video>`;
-                const video = document.getElementById('videoPlayer');
+            if (currentItem.type === "m3u8") {
+                playerFrame.innerHTML = `<video id="ottActivePlayer" controls autoplay playsinline style="width:100%; height:100%;"></video>`;
+                const targetVideo = document.getElementById('ottActivePlayer');
                 if (Hls.isSupported()) {
-                    const hls = new Hls();
-                    hls.loadSource(ch.url);
-                    hls.attachMedia(video);
-                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                    video.src = ch.url;
+                    const hlsObj = new Hls();
+                    hlsObj.loadSource(currentItem.url);
+                    hlsObj.attachMedia(targetVideo);
+                } else if (targetVideo.canPlayType('application/vnd.apple.mpegurl')) {
+                    targetVideo.src = currentItem.url;
                 }
-                actionBtn.href = ch.url;
-                actionBtn.className = "download-btn";
-                actionBtn.innerHTML = `<i class="fas fa-download"></i> Download Stream`;
+                extActionBtn.href = currentItem.url;
+                extActionBtn.className = "action-link";
+                extActionBtn.innerHTML = `<i class="fas fa-download"></i> Download Video Link`;
             } else {
-                wrapper.innerHTML = `<iframe src="https://www.youtube.com/embed/${ch.url}?autoplay=1&rel=0" allowfullscreen></iframe>`;
-                actionBtn.href = `https://www.youtube.com/watch?v=${ch.url}`;
-                actionBtn.className = "download-btn yt";
-                actionBtn.innerHTML = `<i class="fab fa-youtube"></i> Open in YouTube`;
+                playerFrame.innerHTML = `<iframe src="https://www.youtube.com/embed/${currentItem.url}?autoplay=1&rel=0" allowfullscreen style="width:100%; height:100%;"></iframe>`;
+                extActionBtn.href = `https://www.youtube.com/watch?v=${currentItem.url}`;
+                extActionBtn.className = "action-link youtube-style";
+                extActionBtn.innerHTML = `<i class="fab fa-youtube"></i> Open in YouTube App`;
             }
         }
 
-        channels.forEach((ch, index) => {
-            const btn = document.createElement('div');
-            btn.className = 'channel-btn';
-            if(index === 0) btn.classList.add('active');
-            btn.onclick = () => playChannel(index);
+        // ग्रिड इंटरफेस रेंडरिंग इंजन
+        listDatabase.forEach((item, index) => {
+            const element = document.createElement('div');
+            element.className = 'grid-item';
+            if(index === 0) element.classList.add('active');
+            element.onclick = () => triggerStreamPlay(index);
             
-            const icon = ch.type === 'yt' ? 'fa-play-circle' : 'fa-tv';
-            btn.innerHTML = `
-                <i class="fas ${icon}"></i>
-                <span>${ch.name}</span>
+            const renderIcon = item.type === 'yt' ? 'fa-play-circle' : 'fa-tv';
+            element.innerHTML = `
+                <i class="fas ${renderIcon}"></i>
+                <span>${item.name}</span>
             `;
-            gridContainer.appendChild(btn);
+            hubGridBox.appendChild(element);
         });
 
-        if(channels.length > 0) playChannel(0);
+        // स्टार्टअप लोड
+        if(listDatabase.length > 0) triggerStreamPlay(0);
 
-        /* 🔐 UI Control Logics (Popup & User Actions) */
-        function toggleLoginPopup(show) {
-            const overlay = document.getElementById('loginOverlay');
-            if(show) overlay.classList.add('open');
-            else overlay.classList.remove('open');
+        /* 🔐 Business Login Panel Controls */
+        function toggleAuthModal(isVisible) {
+            const targetMask = document.getElementById('globalAuthOverlay');
+            if(isVisible) targetMask.classList.add('active');
+            else targetMask.classList.remove('active');
         }
 
-        function handleCustomLogin() {
-            const user = document.getElementById('usernameInput').value;
-            if(user.trim() !== "") {
-                // हेडर और फुटर यूज़र प्रोफाइल को डायनामिक बदलना
-                document.getElementById('navLoginBtn').innerHTML = `<i class="fas fa-sign-out-alt"></i> Logout`;
-                document.getElementById('navLoginBtn').onclick = () => location.reload();
+        function executeProfileLogin() {
+            const rawUserValue = document.getElementById('usernameField').value;
+            if(rawUserValue.trim() !== "") {
+                document.getElementById('headerAuthBtn').innerHTML = `<i class="fas fa-sign-out-alt"></i> Log Out`;
+                document.getElementById('headerAuthBtn').onclick = () => location.reload();
                 
-                document.getElementById('footerUserName').innerText = user;
-                document.getElementById('footerUserStatus').innerText = "Status: VIP Premium Unlocked";
-                document.getElementById('footerAvatar').innerHTML = `<i class="fas fa-user-astronaut" style="color: #ffb800;"></i>`;
+                document.getElementById('accountUserNameDisplay').innerText = rawUserValue;
+                document.getElementById('accountPlanTierText').innerText = "Premium Lifetime Subscriber";
                 
-                toggleLoginPopup(false);
-                alert(`Welcome back, ${user}! Premium Access Unlocked.`);
+                const badge = document.getElementById('accountBadgeStatus');
+                badge.innerText = "VIP Active";
+                badge.style.background = "rgba(0,135,90,0.1)";
+                badge.style.borderColor = "#00875a";
+                badge.style.color = "#00875a";
+                
+                document.getElementById('accountAvatarBox').innerHTML = `<i class="fas fa-crown" style="color: #ffb800;"></i>`;
+                
+                toggleAuthModal(false);
+                alert(`VIP Login Successful! Welcome ${rawUserValue}.`);
             } else {
-                alert("कृपया यूज़रनेम दर्ज करें!");
+                alert("कृपया यूज़रनेम फ़ील्ड भरें!");
             }
         }
     </script>
