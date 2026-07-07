@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RaceDrive - Movies & Games Galaxy</title>
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://vjs.zencdn.net/8.3.0/video-js.css" rel="stylesheet" />
     <link rel="stylesheet" href="style.css">
@@ -25,7 +24,6 @@
             </div>
             <div class="stream-title" id="activeContentTitle">RaceDrive Premium Media Hub</div>
         </div>
-
         <div class="row-section">
             <div class="section-title"><i class="fas fa-film"></i> Blockbuster Movies</div>
             <div class="content-scroll-box" id="moviesContainer"></div>
@@ -33,9 +31,42 @@
     </div>
 
     <div id="gamesWindow" class="app-window">
-        <div class="player-card">
+        <div class="player-card" id="gamesMenuSection">
             <div class="section-title" style="border-color: #00875a;"><i class="fas fa-space-shuttle"></i> Games Galaxy</div>
             <div class="content-scroll-box" id="gamesContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px;"></div>
+        </div>
+
+        <div id="arcade-snake" class="arcade-container" style="display:none;">
+            <h3>🐍 क्लासिक स्नेक गेम</h3>
+            <div id="snakeScore" style="font-size:18px; margin:10px 0; color:#4CAF50;">स्कोर: 0</div>
+            <canvas id="snakeCanvas" width="400" height="400"></canvas>
+            <button class="back-arcade-btn" onclick="closeArcadeGame()">← गेम्स लिस्ट में वापस जाएं</button>
+        </div>
+
+        <div id="arcade-ttt" class="arcade-container" style="display:none;">
+            <h3>❌ टिक-टैक-टो ⭕</h3>
+            <div id="tttStatus" style="font-size:18px; margin:10px 0; color:#2196F3;">खिलाड़ी X की बारी</div>
+            <div class="board" id="tttBoard">
+                <div class="cell" data-index="0"></div><div class="cell" data-index="1"></div><div class="cell" data-index="2"></div>
+                <div class="cell" data-index="3"></div><div class="cell" data-index="4"></div><div class="cell" data-index="5"></div>
+                <div class="cell" data-index="6"></div><div class="cell" data-index="7"></div><div class="cell" data-index="8"></div>
+            </div>
+            <button class="back-arcade-btn" style="background-color:#4CAF50; margin-bottom:10px;" onclick="startSnakeArcadeLogic('ttt')">रीस्टार्ट गेम</button><br>
+            <button class="back-arcade-btn" onclick="closeArcadeGame()">← गेम्स लिस्ट में वापस जाएं</button>
+        </div>
+
+        <div id="arcade-pong" class="arcade-container" style="display:none;">
+            <h3>🏓 पोंग टेनिस (vs कंप्यूटर)</h3>
+            <p style="font-size:12px; color:#aaa;">कंट्रोल करने के लिए Up/Down Arrow कीज का इस्तेमाल करें</p>
+            <canvas id="pongCanvas" width="500" height="350"></canvas>
+            <button class="back-arcade-btn" onclick="closeArcadeGame()">← गेम्स लिस्ट में वापस जाएं</button>
+        </div>
+
+        <div id="arcade-subway" class="arcade-container" style="display:none;">
+            <h3>🏃 सबवे रनर</h3>
+            <div id="subwayScore" style="font-size:18px; margin:10px 0; color:#e67e22;">स्कोर: 0</div>
+            <canvas id="subwayCanvas" width="500" height="250"></canvas>
+            <button class="back-arcade-btn" onclick="closeArcadeGame()">← गेम्स लिस्ट में वापस जाएं</button>
         </div>
     </div>
 
