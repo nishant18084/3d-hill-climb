@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RaceDrive - Fixed Multi Hub</title>
+    <title>RaceDrive - Movies & Games Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link href="https://vjs.zencdn.net/8.3.0/video-js.css" rel="stylesheet" />
@@ -11,57 +11,50 @@
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
-        body { background-color: #060609; color: #fff; padding-bottom: 90px; }
+        body { background-color: #060609; color: #fff; padding-bottom: 90px; overflow-x: hidden; }
         
-        /* 🌌 Top Header Bar */
+        /* 🌌 Top Bar */
         .navbar { background: #000; padding: 15px 5%; border-bottom: 2px solid #e50914; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
         .brand { font-size: 1.6rem; font-weight: 900; text-transform: uppercase; color: #fff; text-decoration: none; letter-spacing: 1px; }
         .brand span { color: #e50914; }
 
-        /* 🖥️ मास्टर वेबसाइट फुल स्क्रीन बटन */
+        /* 🖥️ Full Screen App Mode Button */
         .web-fs-btn { background: #fff; color: #000; border: none; padding: 8px 15px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
         .web-fs-btn:hover { background: #e50914; color: #fff; }
         
-        /* 📱 Screen Window Tabs */
+        /* 📱 Main Layout Containers */
         .app-window { display: none; width: 94%; max-width: 900px; margin: 20px auto; animation: scaleUp 0.25s ease; }
         .app-window.active { display: block; }
 
-        /* 📺 Video Player Frame */
+        /* 📺 Player Box */
         .player-card { background: #0f0f15; border-radius: 16px; padding: 15px; border: 1px solid #1c1c28; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 25px; }
         .video-box { position: relative; width: 100%; background: #000; border-radius: 12px; overflow: hidden; border: 1px solid #252538; }
         .video-js { width: 100% !important; height: auto !important; aspect-ratio: 16/9; }
-        .stream-title { font-size: 1.3rem; font-weight: 800; margin-top: 12px; color: #fff; }
+        .stream-title { font-size: 1.2rem; font-weight: 800; margin-top: 12px; color: #fff; }
 
-        /* 📑 Dynamic Rows & Content Grids */
-        .row-section { margin-bottom: 30px; }
-        .section-title { font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: 15px; border-left: 4px solid #e50914; padding-left: 10px; text-transform: uppercase; }
+        /* 📑 Horizontal Content Rows */
+        .row-section { margin-bottom: 25px; }
+        .section-title { font-size: 1.1rem; font-weight: 800; color: #fff; margin-bottom: 12px; border-left: 4px solid #e50914; padding-left: 10px; text-transform: uppercase; }
         
-        .content-scroll-box { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; scroll-behavior: smooth; }
-        .content-scroll-box::-webkit-scrollbar { height: 5px; }
+        .content-scroll-box { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; }
+        .content-scroll-box::-webkit-scrollbar { height: 4px; }
         .content-scroll-box::-webkit-scrollbar-thumb { background: #222233; border-radius: 10px; }
 
-        /* 🎬 Movie Poster Design */
-        .movie-card { min-width: 130px; width: 130px; background: #0f0f15; border: 1px solid #1c1c28; border-radius: 10px; overflow: hidden; cursor: pointer; transition: 0.2s; position: relative; }
-        .movie-card:hover { transform: scale(1.05); border-color: #e50914; }
-        .poster-img { width: 100%; height: 160px; background: #14141f; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 2.2rem; color: #e50914; border-bottom: 1px solid #1c1c28; }
-        .movie-title { font-size: 0.8rem; font-weight: 700; padding: 10px 8px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #e0e0e6; }
+        /* 🎬 Card Design */
+        .content-card { min-width: 120px; width: 120px; background: #0f0f15; border: 1px solid #1c1c28; border-radius: 10px; overflow: hidden; cursor: pointer; transition: 0.2s; text-align: center; }
+        .content-card:hover { transform: scale(1.04); border-color: #e50914; }
+        .card-icon-box { width: 100%; height: 100px; background: #14141f; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #e50914; }
+        .card-title { font-size: 0.75rem; font-weight: 700; padding: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #e0e0e6; }
 
-        /* 🎮 Game Frame Setup */
-        .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; }
-        .game-card { background: linear-gradient(135deg, #14141f, #0f0f15); border: 1px solid #222233; border-radius: 12px; padding: 20px 10px; text-align: center; cursor: pointer; transition: 0.2s; }
-        .game-card:hover { border-color: #00875a; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,135,90,0.2); }
-        .game-card i { font-size: 2.2rem; color: #00875a; margin-bottom: 10px; }
-        .game-card span { display: block; font-size: 0.85rem; font-weight: 700; }
-
-        /* 🎯 Game Overlay Popup (क्रैश प्रोटेक्शन के लिए) */
+        /* 🎮 Game Frame Popup */
         .game-popup { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; }
         .game-popup.active { display: flex; }
-        .popup-content { width: 95%; max-width: 500px; height: 80vh; background: #000; border-radius: 16px; overflow: hidden; border: 2px solid #00875a; position: relative; }
+        .popup-content { width: 95%; max-width: 450px; height: 80vh; background: #000; border-radius: 16px; overflow: hidden; border: 2px solid #00875a; position: relative; }
         .close-popup-btn { position: absolute; top: 10px; right: 10px; background: #e50914; color: #fff; border: none; padding: 8px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; z-index: 2100; }
 
-        /* 📱 App Bottom Navigation Bar */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #000; border-top: 2px solid #1c1c28; display: flex; justify-content: space-around; padding: 12px 0; z-index: 200; box-shadow: 0 -5px 25px rgba(0,0,0,0.6); }
-        .nav-item { background: none; border: none; color: #888899; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: 0.2s; width: 30%; }
+        /* 📱 Bottom Nav Bar */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #000; border-top: 2px solid #1c1c28; display: flex; justify-content: space-around; padding: 12px 0; z-index: 200; }
+        .nav-item { background: none; border: none; color: #888899; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; font-size: 0.8rem; font-weight: 600; width: 45%; }
         .nav-item i { font-size: 1.4rem; }
         .nav-item.active { color: #e50914; }
 
@@ -82,32 +75,19 @@
             <div class="video-box">
                 <video id="mainHubPlayer" class="video-js vjs-default-skin vjs-big-play-centered" controls autoplay preload="auto" playsinline></video>
             </div>
-            <div class="stream-title" id="activeContentTitle">Loading Main Stream...</div>
+            <div class="stream-title" id="activeContentTitle">Loading Movie Server...</div>
         </div>
 
         <div class="row-section">
             <div class="section-title"><i class="fas fa-film"></i> Blockbuster Movies</div>
-            <div class="content-scroll-box" id="moviesRowContainer"></div>
-        </div>
-
-        <div class="row-section">
-            <div class="section-title"><i class="fas fa-broadcast-tower"></i> Quick Live Channels</div>
-            <div class="content-scroll-box" id="liveTvRowContainer"></div>
+            <div class="content-scroll-box" id="moviesContainer"></div>
         </div>
     </div>
 
     <div id="gamesWindow" class="app-window">
         <div class="player-card">
-            <div class="section-title" style="border-color: #00875a;"><i class="fas fa-gamepad"></i> Instant Play Games (No Install)</div>
-            <div class="game-grid" id="gamesGridBox"></div>
-        </div>
-    </div>
-
-    <div id="accountWindow" class="app-window">
-        <div class="player-card" style="text-align: center; padding: 30px 15px;">
-            <i class="fas fa-crown" style="font-size: 3.5rem; color: #ffb800; margin-bottom: 15px;"></i>
-            <h3>RaceDrive Premium Creator</h3>
-            <p style="color: #888899; font-size: 0.9rem; margin-top: 5px;">All Content Fixed & Unlocked</p>
+            <div class="section-title" style="border-color: #00875a;"><i class="fas fa-gamepad"></i> Instant Play Games</div>
+            <div class="content-scroll-box" id="gamesContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px;"></div>
         </div>
     </div>
 
@@ -119,110 +99,70 @@
     </div>
 
     <div class="bottom-nav">
-        <button class="nav-item active" onclick="switchWindowTab('homeWindow', this)"><i class="fas fa-home"></i>Home</button>
+        <button class="nav-item active" onclick="switchWindowTab('homeWindow', this)"><i class="fas fa-film"></i>Movies</button>
         <button class="nav-item" onclick="switchWindowTab('gamesWindow', this)"><i class="fas fa-gamepad"></i>Games</button>
-        <button class="nav-item" onclick="switchWindowTab('accountWindow', this)"><i class="fas fa-user-circle"></i>Profile</button>
     </div>
 
     <script>
-        // 🍿 100% एक्टिव और लाइव स्ट्रीम्स बैकअप (मूवीज और लाइव दोनों के लिए)
-        const verifiedLiveFeeds = [
-            { name: "Sadhna TV HD", url: "https://rec.ustream.in/sadhna/live/playlist.m3u8", icon: "fa-film" },
-            { name: "DD News HD Live", url: "https://ddnews.akamaized.net/hls/live/2034336/ddnews/master.m3u8", icon: "fa-video" },
-            { name: "News 24 Live", url: "https://pubads.g.doubleclick.net/ssai/event/O-M2XAnuR3WbQGv9a3B8Xw/master.m3u8", icon: "fa-bolt" }
+        // 🍿 मूवीज लिंक्स (यहाँ आप अपने .m3u8 या MP4 वीडियो लिंक्स डाल सकते हैं)
+        const movieStreams = [
+            { name: "Action Movie Premium", url: "https://rec.ustream.in/sadhna/live/playlist.m3u8", icon: "fa-mask" },
+            { name: "Hollywood Sci-Fi", url: "https://ddnews.akamaized.net/hls/live/2034336/ddnews/master.m3u8", icon: "fa-rocket" },
+            { name: "Bollywood Romance", url: "https://pubads.g.doubleclick.net/ssai/event/O-M2XAnuR3WbQGv9a3B8Xw/master.m3u8", icon: "fa-heart" },
+            { name: "South Blockbuster", url: "https://rec.ustream.in/sadhna/live/playlist.m3u8", icon: "fa-bolt" },
+            { name: "Horror Special", url: "https://ddnews.akamaized.net/hls/live/2034336/ddnews/master.m3u8", icon: "fa-ghost" }
         ];
 
-        // मूवीज लिस्ट जेनरेटर
-        const movieDatabase = [
-            { name: "Action Movie Hub", url: verifiedLiveFeeds[0].url, icon: "fa-mask" },
-            { name: "Hollywood Sci-Fi", url: verifiedLiveFeeds[1].url, icon: "fa-rocket" },
-            { name: "Bollywood Hits", url: verifiedLiveFeeds[2].url, icon: "fa-heart" },
-            { name: "South Blockbuster", url: verifiedLiveFeeds[0].url, icon: "fa-bolt" },
-            { name: "Horror Special", url: verifiedLiveFeeds[1].url, icon: "fa-ghost" }
-        ];
-
-        // 20 लाइव टीवी चैनल्स की लिस्ट
-        const liveTvDatabase = [];
-        for(let i = 1; i <= 20; i++) {
-            const feed = verifiedLiveFeeds[(i - 1) % verifiedLiveFeeds.length];
-            liveTvDatabase.push({
-                name: `लाइव टीवी चैनल ${i}`,
-                url: feed.url
-            });
-        }
-
-        // 🎮 टॉप रेटेड सिक्योर HTML5 गेम्स
-        const gamesDatabase = [
+        // 🎮 गेम्स लिस्ट
+        const gamesList = [
             { name: "Snake Arena", link: "https://m.gamesnacks.com/games/snake" },
-            { name: "Tower Building", link: "https://m.gamesnacks.com/games/towerbuilding" },
-            { name: "Color Burst", link: "https://m.gamesnacks.com/games/colorburst" },
-            { name: "Perfect Turn", link: "https://m.gamesnacks.com/games/perfectturn" }
+            { name: "Tower Builder", link: "https://m.gamesnacks.com/games/towerbuilding" },
+            { name: "Color Burst", link: "https://m.gamesnacks.com/games/colorburst" }
         ];
 
-        // Video.js प्लेयर इनिशियलाइज़ेशन
         let videoEngine = videojs('mainHubPlayer', { fluid: true });
 
-        // प्लेयर में वीडियो चलाने का फंक्शन
-        function loadContentToPlayer(title, url) {
+        function loadVideo(title, url) {
             document.getElementById('activeContentTitle').innerText = title;
             videoEngine.src({ src: url, type: 'application/x-mpegURL' });
-            videoEngine.play().catch(e => console.log("Play wait: ", e));
+            videoEngine.play().catch(e => console.log("Engine active."));
         }
 
-        // 🎮 गेम चालू करने का नया सिक्योर मोड (ताकि प्लेयर क्रैश न हो)
         function launchGame(title, webLink) {
-            const container = document.getElementById('gameIframeContainer');
-            container.innerHTML = `<iframe src="${webLink}" style="width:100%; height:100%; border:none;"></iframe>`;
+            videoEngine.pause(); 
+            document.getElementById('gameIframeContainer').innerHTML = `<iframe src="${webLink}" style="width:100%; height:100%; border:none;"></iframe>`;
             document.getElementById('masterGamePopup').classList.add('active');
         }
 
         function closeGamePopup() {
             document.getElementById('masterGamePopup').classList.remove('active');
-            document.getElementById('gameIframeContainer').innerHTML = ""; // मेमोरी क्लीन
+            document.getElementById('gameIframeContainer').innerHTML = ""; 
         }
 
-        // 🎬 मूवीज लिस्ट लोड करना
-        const movieRow = document.getElementById('moviesRowContainer');
-        movieDatabase.forEach(item => {
+        // मूवीज लिस्ट बनाना
+        const movieBox = document.getElementById('moviesContainer');
+        movieStreams.forEach((item) => {
             const card = document.createElement('div');
-            card.className = 'movie-card';
-            card.onclick = () => loadContentToPlayer(item.name, item.url);
-            card.innerHTML = `
-                <div class="poster-img"><i class="fas ${item.icon}"></i></div>
-                <div class="movie-title">${item.name}</div>
-            `;
-            movieRow.appendChild(card);
+            card.className = 'content-card';
+            card.onclick = () => loadVideo(item.name, item.url);
+            card.innerHTML = `<div class="card-icon-box"><i class="fas ${item.icon}"></i></div><div class="card-title">${item.name}</div>`;
+            movieBox.appendChild(card);
         });
 
-        // 📡 लाइव टीवी लोड करना
-        const tvRow = document.getElementById('liveTvRowContainer');
-        liveTvDatabase.forEach(item => {
+        // गेम्स ग्रिड बनाना
+        const gameBox = document.getElementById('gamesContainer');
+        gamesList.forEach(game => {
             const card = document.createElement('div');
-            card.className = 'movie-card';
-            card.onclick = () => loadContentToPlayer(item.name, item.url);
-            card.innerHTML = `
-                <div class="poster-img" style="height:100px; color: #888899;"><i class="fas fa-tv"></i></div>
-                <div class="movie-title">${item.name}</div>
-            `;
-            tvRow.appendChild(card);
+            card.className = 'content-card';
+            card.onclick = () => launchGame(game.name, game.link);
+            card.innerHTML = `<div class="card-icon-box" style="color: #00875a;"><i class="fas fa-gamepad"></i></div><div class="card-title">${game.name}</div>`;
+            gameBox.appendChild(card);
         });
 
-        // 🎮 गेम्स रेंडर करना
-        const gameGrid = document.getElementById('gamesGridBox');
-        gamesDatabase.forEach(game => {
-            const el = document.createElement('div');
-            el.className = 'game-card';
-            el.onclick = () => launchGame(game.name, game.link);
-            el.innerHTML = `<i class="fas fa-gamepad"></i><span>${game.name}</span>`;
-            gameGrid.appendChild(el);
-        });
-
-        // पहला चैनल डिफ़ॉल्ट प्ले करें
         videoEngine.ready(function() {
-            if(movieDatabase.length > 0) loadContentToPlayer(movieDatabase[0].name, movieDatabase[0].url);
+            if(movieStreams.length > 0) loadVideo(movieStreams[0].name, movieStreams[0].url);
         });
 
-        // 📱 टैब स्विचिंग लॉजिक
         function switchWindowTab(windowId, buttonEl) {
             document.querySelectorAll('.app-window').forEach(win => win.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
@@ -230,22 +170,16 @@
             buttonEl.classList.add('active');
         }
 
-        // 🖥️ पूरी वेबसाइट को ऐप मोड (फुल स्क्रीन) में बदलने का मास्टर बटन
         function toggleMasterFullScreen() {
             const doc = document.documentElement;
-            const icon = document.getElementById('fsIcon');
-            const text = document.getElementById('fsText');
-
             if (!document.fullscreenElement && !document.webkitFullscreenElement) {
                 if (doc.requestFullscreen) doc.requestFullscreen();
                 else if (doc.webkitRequestFullscreen) doc.webkitRequestFullscreen();
-                icon.className = "fas fa-compress";
-                text.innerText = "Exit App";
+                document.getElementById('fsText').innerText = "Exit App";
             } else {
                 if (document.exitFullscreen) document.exitFullscreen();
                 else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-                icon.className = "fas fa-expand";
-                text.innerText = "App Mode";
+                document.getElementById('fsText').innerText = "App Mode";
             }
         }
     </script>
