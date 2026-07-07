@@ -29,7 +29,11 @@
         /* 📺 Player Box */
         .player-card { background: #0f0f15; border-radius: 16px; padding: 15px; border: 1px solid #1c1c28; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 25px; }
         .video-box { position: relative; width: 100%; background: #000; border-radius: 12px; overflow: hidden; border: 1px solid #252538; }
+        
+        /* प्लेयर का साइज और पोस्टर इमेज सेटिंग */
         .video-js { width: 100% !important; height: auto !important; aspect-ratio: 16/9; }
+        .vjs-poster { background-size: cover !important; background-position: center !important; }
+        
         .stream-title { font-size: 1.2rem; font-weight: 800; margin-top: 12px; color: #fff; }
 
         /* 📑 Horizontal Content Rows */
@@ -73,9 +77,9 @@
     <div id="homeWindow" class="app-window active">
         <div class="player-card">
             <div class="video-box">
-                <video id="mainHubPlayer" class="video-js vjs-default-skin vjs-big-play-centered" controls autoplay preload="auto" playsinline></video>
+                <video id="mainHubPlayer" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" poster="IMG_20260626_164127.jpg" playsinline></video>
             </div>
-            <div class="stream-title" id="activeContentTitle">Loading Movie Server...</div>
+            <div class="stream-title" id="activeContentTitle">RaceDrive Premium Media Hub</div>
         </div>
 
         <div class="row-section">
@@ -104,13 +108,11 @@
     </div>
 
     <script>
-        // 🍿 मूवीज लिंक्स (यहाँ आप अपने .m3u8 या MP4 वीडियो लिंक्स डाल सकते हैं)
+        // 🍿 मूवीज लिस्ट
         const movieStreams = [
-            { name: "Action Movie Premium", url: "https://rec.ustream.in/sadhna/live/playlist.m3u8", icon: "fa-mask" },
-            { name: "Hollywood Sci-Fi", url: "https://ddnews.akamaized.net/hls/live/2034336/ddnews/master.m3u8", icon: "fa-rocket" },
-            { name: "Bollywood Romance", url: "https://pubads.g.doubleclick.net/ssai/event/O-M2XAnuR3WbQGv9a3B8Xw/master.m3u8", icon: "fa-heart" },
-            { name: "South Blockbuster", url: "https://rec.ustream.in/sadhna/live/playlist.m3u8", icon: "fa-bolt" },
-            { name: "Horror Special", url: "https://ddnews.akamaized.net/hls/live/2034336/ddnews/master.m3u8", icon: "fa-ghost" }
+            { name: "Jana Nayagan (2026)", url: "https://rec.ustream.in/sadhna/live/playlist.m3u8", icon: "fa-mask" },
+            { name: "Hollywood Sci-Fi Extra", url: "https://ddnews.akamaized.net/hls/live/2034336/ddnews/master.m3u8", icon: "fa-rocket" },
+            { name: "Bollywood Hits", url: "https://pubads.g.doubleclick.net/ssai/event/O-M2XAnuR3WbQGv9a3B8Xw/master.m3u8", icon: "fa-heart" }
         ];
 
         // 🎮 गेम्स लिस्ट
@@ -125,7 +127,7 @@
         function loadVideo(title, url) {
             document.getElementById('activeContentTitle').innerText = title;
             videoEngine.src({ src: url, type: 'application/x-mpegURL' });
-            videoEngine.play().catch(e => console.log("Engine active."));
+            videoEngine.play().catch(e => console.log("User action required."));
         }
 
         function launchGame(title, webLink) {
@@ -157,10 +159,6 @@
             card.onclick = () => launchGame(game.name, game.link);
             card.innerHTML = `<div class="card-icon-box" style="color: #00875a;"><i class="fas fa-gamepad"></i></div><div class="card-title">${game.name}</div>`;
             gameBox.appendChild(card);
-        });
-
-        videoEngine.ready(function() {
-            if(movieStreams.length > 0) loadVideo(movieStreams[0].name, movieStreams[0].url);
         });
 
         function switchWindowTab(windowId, buttonEl) {
