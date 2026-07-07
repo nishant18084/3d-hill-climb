@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RaceDrive - Premium Hub</title>
+    <title>RaceDrive - HDHub Premium Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
@@ -60,18 +60,18 @@
     <div class="hero-banner">
         <div class="hero-text">
             <h1>Premium HD Streaming</h1>
-            <p>HD Movies & Cartoons Hub Like HDHub4u</p>
+            <p>HD Movies & Cult Classics Hub Like HDHub4u</p>
         </div>
     </div>
 
     <div class="filter-tags">
         <button class="tag-btn active" onclick="filterCategory('all', this)">All Content</button>
-        <button class="tag-btn" onclick="filterCategory('movie', this)">Hollywood & Cult Classics</button>
-        <button class="tag-btn" onclick="filterCategory('cartoon', this)">Motu Patlu Special</button>
+        <button class="tag-btn" onclick="filterCategory('drama', this)">Drama & Classics</button>
+        <button class="tag-btn" onclick="filterCategory('scifi', this)">Sci-Fi & Action</button>
     </div>
 
     <div class="search-container" id="searchContainer">
-        <input type="text" class="search-box" id="searchInput" placeholder="मूवी या कार्टून का नाम खोजें..." oninput="searchMovies()">
+        <input type="text" class="search-box" id="searchInput" placeholder="मूवी का नाम खोजें..." oninput="searchMovies()">
     </div>
 
     <div class="content-section">
@@ -85,15 +85,14 @@
     </nav>
 
     <script>
-        // 🍿 Movies & Cartoons Database (Updated with your list)
+        // 🍿 यहाँ youtube की वीडियो ID डाली गई है (ताकि यह आपके watch.html पेज पर ही खुले)
         const moviesDatabase = [
-            { title: "The Dark Knight (Christopher Nolan)", poster: "https://picsum.photos/id/101/300/420", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", quality: "4K UHD", category: "movie" },
-            { title: "Inception (Mind-Bending Thriller)", poster: "https://picsum.photos/id/102/300/420", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", quality: "1080p Bluray", category: "movie" },
-            { title: "Interstellar (Sci-Fi Masterpiece)", poster: "https://picsum.photos/id/103/300/420", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", quality: "4K UHD", category: "movie" },
-            { title: "Pulp Fiction (Quentin Tarantino)", poster: "https://picsum.photos/id/104/300/420", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", quality: "1080p HD", category: "movie" },
-            { title: "Psycho (Alfred Hitchcock Mystery)", poster: "https://picsum.photos/id/110/300/420", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", quality: "1080p HD", category: "movie" },
-            { title: "Motu Patlu - Superheroes (Mega Edition)", poster: "https://img.youtube.com/vi/gI8V_L_vP64/0.jpg", videoUrl: "https://www.youtube.com/embed/gI8V_L_vP64", quality: "720p HD", category: "cartoon" },
-            { title: "Motu Patlu - In Airplane Blockbuster", poster: "https://img.youtube.com/vi/tPe8-78gC0I/0.jpg", videoUrl: "https://www.youtube.com/embed/tPe8-78gC0I", quality: "720p HD", category: "cartoon" }
+            { title: "The Shawshank Redemption (Hindi Explainer)", poster: "https://picsum.photos/id/101/300/420", youtubeId: "19fA_tX6wO8", quality: "1080p Web", category: "drama" },
+            { title: "The Godfather (Full Story Breakdown)", poster: "https://picsum.photos/id/102/300/420", youtubeId: "H-R7W_T337E", quality: "4K UHD", category: "drama" },
+            { title: "Pulp Fiction (Best Cult Scenes Explained)", poster: "https://picsum.photos/id/103/300/420", youtubeId: "s7EdQ4FqbhY", quality: "1080p HD", category: "drama" },
+            { title: "The Dark Knight (The Joker Legend)", poster: "https://picsum.photos/id/104/300/420", youtubeId: "EXeTwQWrcwY", quality: "4K UHD", category: "scifi" },
+            { title: "Inception (Ending Deeply Explained)", poster: "https://picsum.photos/id/106/300/420", youtubeId: "JeYpI_S9qK4", quality: "1080p Bluray", category: "scifi" },
+            { title: "Interstellar (Science Behind Movie)", poster: "https://picsum.photos/id/107/300/420", youtubeId: "zSWdZAOhMIA", quality: "4K UHD", category: "scifi" }
         ];
 
         let currentCategory = 'all';
@@ -108,7 +107,8 @@
             data.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'movie-card';
-                card.setAttribute('onclick', `goToPlayer('${item.videoUrl}', '${encodeURIComponent(item.title)}')`);
+                // 🚀 यह सीधे आपके watch.html पर भेजेगा, यूट्यूब पर नहीं!
+                card.setAttribute('onclick', `goToPlayer('${item.youtubeId}', '${encodeURIComponent(item.title)}')`);
                 card.innerHTML = `
                     <div class="poster-box">
                         <img src="${item.poster}" alt="${item.title}" onerror="this.onerror=null; this.src='https://picsum.photos/id/22/300/420';">
@@ -127,12 +127,13 @@
                 document.getElementById('mainSectionTitle').innerText = "Latest Uploads";
                 displayContent(moviesDatabase);
             } else {
-                document.getElementById('mainSectionTitle').innerText = cat === 'movie' ? "Hollywood & Cult Classics" : "Motu Patlu Special Collection";
+                document.getElementById('mainSectionTitle').innerText = cat === 'drama' ? "Drama & Cult Classics" : "Sci-Fi & Action Movies";
                 displayContent(moviesDatabase.filter(m => m.category === cat));
             }
         }
 
-        function goToPlayer(video, title) { window.location.href = `watch.html?video=${video}&title=${title}`; }
+        // 🚀 यह फंक्शन आपके watch.html पेज को ओपन करेगा
+        function goToPlayer(id, title) { window.location.href = `watch.html?id=${id}&title=${title}`; }
         
         function toggleSearch() { 
             resetTabs(); 
@@ -162,7 +163,6 @@
             document.getElementById('searchTab').classList.remove('active'); 
         }
 
-        // Initial Load
         displayContent(moviesDatabase);
     </script>
 </body>
