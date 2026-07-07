@@ -3,25 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RaceDrive - Playing Movie</title>
+    <title>RaceDrive - Premium Player</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
         body { background-color: #0b0b10; color: #fff; padding-bottom: 50px; }
-        .header { background: #000; padding: 15px; border-bottom: 3px solid #e50914; display: flex; align-items: center; }
-        .back-btn { color: #fff; font-size: 1.2rem; text-decoration: none; margin-right: 15px; cursor: pointer; }
-        .logo { font-size: 1.5rem; font-weight: bold; text-transform: uppercase; }
+        
+        /* 🌌 Header Style */
+        .header { background: #000; padding: 15px 5%; border-bottom: 3px solid #e50914; display: flex; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .back-btn { color: #fff; font-size: 1.4rem; text-decoration: none; margin-right: 20px; cursor: pointer; transition: 0.2s; }
+        .back-btn:hover { color: #e50914; }
+        .logo { font-size: 1.5rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
         .logo span { color: #e50914; }
         
-        /* 📺 Player Box Container */
-        .player-container { width: 100%; max-width: 800px; margin: 20px auto; background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-radius: 8px; overflow: hidden; }
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; }
-        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        /* 📺 HTML5 Video Player Container */
+        .player-container { width: 92%; max-width: 850px; margin: 20px auto; background: #000; box-shadow: 0 10px 40px rgba(0,0,0,0.8); border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
+        .video-wrapper { width: 100%; display: block; background: #000; }
+        video { width: 100%; height: auto; display: block; outline: none; }
         
-        .movie-info { width: 90%; max-width: 800px; margin: 15px auto; }
-        .movie-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 10px; color: #f1f1f1; }
-        .player-tags { display: flex; gap: 10px; margin-top: 10px; }
-        .p-tag { background: #222; padding: 5px 10px; border-radius: 4px; font-size: 0.75rem; color: #aaa; }
+        /* 🎬 Content Details */
+        .movie-info { width: 92%; max-width: 850px; margin: 20px auto; padding: 0 5px; }
+        .movie-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; color: #ffffff; line-height: 1.4; }
+        
+        /* 📥 Download & 🌐 Language Settings Box */
+        .action-section { margin-top: 20px; background: #13131a; padding: 20px; border-radius: 10px; border: 1px solid #1f1f2e; display: flex; flex-direction: column; gap: 15px; }
+        
+        .row-item { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .row-title { font-size: 0.95rem; font-weight: bold; color: #b3b3b3; display: flex; align-items: center; gap: 8px; }
+        
+        /* Language Dropdown */
+        .audio-select { background: #171721; color: #fff; border: 1px solid #262636; padding: 8px 15px; border-radius: 6px; font-size: 0.9rem; outline: none; cursor: pointer; transition: 0.2s; }
+        .audio-select:focus { border-color: #e50914; }
+
+        /* Download Button */
+        .download-btn { background: #00875a; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-size: 0.9rem; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s; }
+        .download-btn:hover { background: #006644; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0, 135, 90, 0.3); }
+
+        .player-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+        .p-tag { background: #171721; padding: 6px 14px; border-radius: 6px; font-size: 0.8rem; color: #b3b3b3; border: 1px solid #262636; display: flex; align-items: center; gap: 6px; }
     </style>
 </head>
 <body>
@@ -33,38 +52,75 @@
 
     <div class="player-container">
         <div class="video-wrapper">
-            <iframe id="videoPlayer" src="" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+            <video id="mainVideoPlayer" controls autoplay preload="auto">
+                <source id="videoSource" src="" type="video/mp4">
+                आपका ब्राउज़र इस वीडियो प्लेयर को सपोर्ट नहीं करता है।
+            </video>
         </div>
     </div>
 
     <div class="movie-info">
         <h2 class="movie-title" id="videoTitle">Loading Title...</h2>
+        
         <div class="player-tags">
-            <span class="p-tag"><i class="fas fa-bolt"></i> Fast Server</span>
-            <span class="p-tag"><i class="fas fa-closed-captioning"></i> Multi Audio</span>
-            <span class="p-tag" style="background:#00875a; color:#fff;">1080p Ultra HD</span>
+            <span class="p-tag"><i class="fas fa-bolt" style="color: #ffb800;"></i> Direct High-Speed Server</span>
+            <span class="p-tag" style="background: #e50914; color: #fff; border: none;">1080p Ultra HD</span>
+        </div>
+
+        <div class="action-section">
+            <div class="row-item">
+                <div class="row-title"><i class="fas fa-language" style="color: #e50914;"></i> Change Audio / Language</div>
+                <select class="audio-select" id="audioSelect" onchange="changeAudioLanguage()">
+                    <option value="main">🔊 Main Audio (Default)</option>
+                    <option value="hindi">🇮🇳 Hindi Dubbed</option>
+                    <option value="english">🇺🇸 English Original</option>
+                </select>
+            </div>
+            
+            <hr style="border: 0; border-top: 1px solid #262636;">
+
+            <div class="row-item">
+                <div class="row-title"><i class="fas fa-cloud-download-alt" style="color: #00875a;"></i> Available Options</div>
+                <a href="#" id="downloadBtn" download class="download-btn">
+                    <i class="fas fa-download"></i> Download Video (Direct)
+                </a>
+            </div>
         </div>
     </div>
 
     <script>
-        // URL से Video ID और Title निकालने का स्क्रिप्ट
         function getUrlVars() {
             var vars = {};
-            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+            window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
                 vars[key] = value;
             });
             return vars;
         }
 
-        const videoId = getUrlVars()["id"];
+        // यहाँ अब यूट्यूब ID की जगह सीधा वीडियो फ़ाइल का URL (`id` पैरामीटर में) काम करेगा
+        const videoUrl = getUrlVars()["id"];
         const videoTitle = decodeURIComponent(getUrlVars()["title"]);
 
-        if (videoId) {
-            // यूट्यूब का नो-कुकी (No-cookie) सर्वर लिंक ताकि यूजर आपकी साइट पर ही रहे
-            document.getElementById('videoPlayer').src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+        if (videoUrl) {
+            const player = document.getElementById('mainVideoPlayer');
+            const source = document.getElementById('videoSource');
+            
+            // वीडियो सोर्स अपडेट करना
+            source.src = videoUrl;
+            player.load(); // नए सोर्स को लोड करने के लिए
+            
+            // डाउनलोड बटन में सीधा लिंक सेट करना
+            document.getElementById('downloadBtn').href = videoUrl;
         }
+        
         if (videoTitle && videoTitle !== "undefined") {
             document.getElementById('videoTitle').innerText = videoTitle;
+        }
+
+        // भाषा बदलने का लॉजिक
+        function changeAudioLanguage() {
+            const selectedLanguage = document.getElementById('audioSelect').value;
+            alert("भाषा बदलने के लिए मल्टी-ऑडियो ट्रैक लिंक की आवश्यकता है। वर्तमान में यह वीडियो डिफ़ॉल्ट भाषा में चल रहा है।");
         }
     </script>
 </body>
