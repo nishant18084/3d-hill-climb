@@ -5,8 +5,9 @@ const movieStreams = [
 ];
 
 const gamesList = [
-    { name: "Subway Surfers", link: "https://m.gamesnacks.com/games/subwaysurfers", icon: "fa-running" },
-    { name: "Snake Arena", link: "https://m.gamesnacks.com/games/snake", icon: "fa-ghost" },
-    { name: "Tower Builder", link: "https://m.gamesnacks.com/games/towerbuilding", icon: "fa-building" },
-    { name: "Color Burst", link: "https://m.gamesnacks.com/games/colorburst", icon: "fa-palette" }
+    { name: "Subway Surfers (Web)", link: "https://m.gamesnacks.com/games/subwaysurfers", icon: "fa-running" },
+    { name: "1. स्नेक गेम", action: "snake", icon: "fa-snake" },
+    { name: "2. टिक-टैक-टो", action: "ttt", icon: "fa-times-circle" },
+    { name: "3. पोंग टेनिस", action: "pong", icon: "fa-table-tennis-tennis" },
+    { name: "4. सबवे रनर", action: "subway", icon: "fa-running" }
 ];
