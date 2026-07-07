@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // प्लेयर चालू करें
-    if (typeof initPlayer === 'function') initPlayer();
+    initPlayer();
 
-    // मूवीज लिस्ट रेंडर करना
+    // मूवीज को स्क्रीन पर लोड करना
     const movieBox = document.getElementById('moviesContainer');
     if (movieBox && typeof movieStreams !== 'undefined') {
         movieStreams.forEach(item => {
@@ -14,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // गेम्स गैलेक्सी लिस्ट रेंडर करना
+    // गेम्स गैलेक्सी को स्क्रीन पर लोड करना
     const gameBox = document.getElementById('gamesContainer');
     if (gameBox && typeof gamesList !== 'undefined') {
         gamesList.forEach(game => {
