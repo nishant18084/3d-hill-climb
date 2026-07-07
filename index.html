@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RaceDrive - HDHub Premium Hub</title>
+    <title>RaceDrive - Premium Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
@@ -66,7 +66,7 @@
 
     <div class="filter-tags">
         <button class="tag-btn active" onclick="filterCategory('all', this)">All Content</button>
-        <button class="tag-btn" onclick="filterCategory('movie', this)">Bollywood & South</button>
+        <button class="tag-btn" onclick="filterCategory('movie', this)">Hollywood & Cult Classics</button>
         <button class="tag-btn" onclick="filterCategory('cartoon', this)">Motu Patlu Special</button>
     </div>
 
@@ -85,12 +85,15 @@
     </nav>
 
     <script>
-        // 🍿 Movies Database
+        // 🍿 Movies & Cartoons Database (Updated with your list)
         const moviesDatabase = [
+            { title: "The Dark Knight (Christopher Nolan)", poster: "https://picsum.photos/id/101/300/420", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", quality: "4K UHD", category: "movie" },
+            { title: "Inception (Mind-Bending Thriller)", poster: "https://picsum.photos/id/102/300/420", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", quality: "1080p Bluray", category: "movie" },
+            { title: "Interstellar (Sci-Fi Masterpiece)", poster: "https://picsum.photos/id/103/300/420", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", quality: "4K UHD", category: "movie" },
+            { title: "Pulp Fiction (Quentin Tarantino)", poster: "https://picsum.photos/id/104/300/420", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", quality: "1080p HD", category: "movie" },
+            { title: "Psycho (Alfred Hitchcock Mystery)", poster: "https://picsum.photos/id/110/300/420", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", quality: "1080p HD", category: "movie" },
             { title: "Motu Patlu - Superheroes (Mega Edition)", poster: "https://img.youtube.com/vi/gI8V_L_vP64/0.jpg", videoUrl: "https://www.youtube.com/embed/gI8V_L_vP64", quality: "720p HD", category: "cartoon" },
-            { title: "Motu Patlu - In Airplane Blockbuster", poster: "https://img.youtube.com/vi/tPe8-78gC0I/0.jpg", videoUrl: "https://www.youtube.com/embed/tPe8-78gC0I", quality: "720p HD", category: "cartoon" },
-            { title: "Jana Nayagan (2026) Official", poster: "https://picsum.photos/id/237/300/420", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", quality: "4K UHD", category: "movie" },
-            { title: "Pushpa 2: The Rule (Hindi Dubbed)", poster: "https://picsum.photos/id/12/300/420", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", quality: "1080p Web", category: "movie" }
+            { title: "Motu Patlu - In Airplane Blockbuster", poster: "https://img.youtube.com/vi/tPe8-78gC0I/0.jpg", videoUrl: "https://www.youtube.com/embed/tPe8-78gC0I", quality: "720p HD", category: "cartoon" }
         ];
 
         let currentCategory = 'all';
@@ -124,7 +127,7 @@
                 document.getElementById('mainSectionTitle').innerText = "Latest Uploads";
                 displayContent(moviesDatabase);
             } else {
-                document.getElementById('mainSectionTitle').innerText = cat === 'movie' ? "Bollywood & South Movies" : "Motu Patlu Special Collection";
+                document.getElementById('mainSectionTitle').innerText = cat === 'movie' ? "Hollywood & Cult Classics" : "Motu Patlu Special Collection";
                 displayContent(moviesDatabase.filter(m => m.category === cat));
             }
         }
