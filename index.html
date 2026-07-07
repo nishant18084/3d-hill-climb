@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RaceDrive OTT - Premium Mobile Player</title>
+    <title>RaceDrive OTT - Ultimate Fixed Player</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://vjs.zencdn.net/8.3.0/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/8.3.0/video.min.js"></script>
+
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
-        body { background-color: #060609; color: #fff; padding-bottom: 90px; } /* बॉटम बार के लिए स्पेस */
+        body { background-color: #060609; color: #fff; padding-bottom: 90px; }
         
         /* 🌌 Header */
         .navbar { background: #000; padding: 15px 5%; border-bottom: 2px solid #e50914; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
@@ -18,18 +22,20 @@
         .app-window { display: none; width: 94%; max-width: 800px; margin: 20px auto; animation: fadeIn 0.3s ease; }
         .app-window.active { display: block; }
 
-        /* 📺 Player Box */
+        /* 📺 Player Box Fixes */
         .player-card { background: #0f0f15; border-radius: 16px; padding: 15px; border: 1px solid #1c1c28; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .video-box { position: relative; padding-bottom: 56.25%; height: 0; background: #000; border-radius: 12px; overflow: hidden; border: 1px solid #252538; }
-        .video-box video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .video-box { position: relative; width: 100%; height: auto; background: #000; border-radius: 12px; overflow: hidden; border: 1px solid #252538; }
+        
+        /* Video.js रिस्पॉन्सिव स्टाइल */
+        .video-js { width: 100% !important; height: auto !important; aspect-ratio: 16/9; }
         
         .stream-title { font-size: 1.4rem; font-weight: 800; margin-top: 15px; color: #fff; }
         
-        /* ⚙️ Player Controls & Full Screen */
+        /* ⚙️ Controls & Full Screen */
         .player-actions { margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap; }
         .fs-btn { flex: 1; background: #e50914; color: #fff; border: none; padding: 14px; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 15px rgba(229,9,20,0.3); transition: 0.2s; }
-        .fs-btn:hover { background: #b80710; transform: scale(1.02); }
-        .dl-btn { background: #00875a; color: #fff; text-decoration: none; padding: 14px; border-radius: 8px; font-size: 1rem; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .fs-btn:hover { background: #b80710; transform: scale(1.01); }
+        .dl-btn { background: #00875a; color: #fff; text-decoration: none; padding: 14px 20px; border-radius: 8px; font-size: 1rem; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
         /* 📑 Live TV Grid System */
         .grid-title { font-size: 1.2rem; font-weight: 800; color: #e50914; margin-bottom: 15px; text-transform: uppercase; }
@@ -39,13 +45,13 @@
         .grid-item i { font-size: 1.6rem; color: #e50914; }
         .grid-item span { font-size: 0.8rem; font-weight: 600; color: #e0e0e6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-        /* 👤 Account Interface Tab */
+        /* 👤 Account Tab */
         .account-card { background: #0f0f15; border: 1px solid #1c1c28; border-radius: 16px; padding: 25px; text-align: center; }
         .avatar-large { width: 80px; height: 80px; background: #1c1c28; border: 3px solid #e50914; border-radius: 50%; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: #ffb800; box-shadow: 0 0 20px rgba(229,9,20,0.3); }
         .acc-field { background: #14141f; border: 1px solid #222233; padding: 12px 15px; border-radius: 8px; margin-top: 12px; display: flex; justify-content: space-between; font-size: 0.95rem; }
         .logout-action { background: #e50914; color: #fff; border: none; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; margin-top: 25px; cursor: pointer; }
 
-        /* 📱 Premium Bottom Navigation Bar */
+        /* 📱 Bottom Navigation Bar */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #000; border-top: 2px solid #1c1c28; display: flex; justify-content: space-around; padding: 10px 0; z-index: 200; box-shadow: 0 -5px 25px rgba(0,0,0,0.6); }
         .nav-item { background: none; border: none; color: #888899; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: 0.2s; width: 25%; }
         .nav-item i { font-size: 1.3rem; }
@@ -55,7 +61,6 @@
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-thumb { background: #222233; border-radius: 10px; }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 <body>
 
@@ -65,10 +70,10 @@
 
     <div id="homeWindow" class="app-window active">
         <div class="player-card">
-            <div class="video-box" id="playerContainer">
-                <video id="mainOTTPlayer" controls autoplay playsinline></video>
+            <div class="video-box">
+                <video id="mainOTTPlayer" class="video-js vjs-default-skin vjs-big-play-centered" controls autoplay preload="auto" playsinline></video>
             </div>
-            <div class="stream-title" id="activeStreamTitle">Chumbak TV Live</div>
+            <div class="stream-title" id="activeStreamTitle">Chumbak TV Special Live</div>
             
             <div class="player-actions">
                 <button class="fs-btn" onclick="openFullScreen()"><i class="fas fa-expand"></i> Go Full Screen</button>
@@ -92,9 +97,9 @@
             
             <div class="acc-field"><span>Account Type:</span> <span style="color: #ffb800; font-weight: bold;">Lifetime Free VIP</span></div>
             <div class="acc-field"><span>Active Devices:</span> <span>Mobile (This Device)</span></div>
-            <div class="acc-field"><span>Server Core:</span> <span style="color: #00875a;">HLS High-Speed</span></div>
+            <div class="acc-field"><span>Server Core:</span> <span style="color: #00875a;">Video.js High-Speed</span></div>
             
-            <button class="logout-action" onclick="alert('अकाउंट रीसेट फ़ीचर चालू है!')">Reset Profile</button>
+            <button class="logout-action" onclick="alert('अकाउंट बिल्कुल सुरक्षित है!')">Reset Profile</button>
         </div>
     </div>
 
@@ -105,29 +110,29 @@
     </div>
 
     <script>
-        // 🍿 शुद्ध लाइव .m3u8 स्ट्रीम लिंक्स का डेटाबेस (कोई यूट्यूब नहीं)
+        // 🍿 स्टेबल लाइव .m3u8 लिंक्स का कलेक्शन
         const pureLiveStreams = [
             { name: "Chumbak TV Special Live", url: "https://shemaroome-live.akamaized.net/hls/live/2042971/Chumbak/master.m3u8" },
-            { name: "Shemaroo TV Live", url: "https://shemaroome-live.akamaized.net/hls/live/2042971/ShemarooTV/master.m3u8" },
-            { name: "Premium Movie Feed 1", url: "https://shemaroome-live.akamaized.net/hls/live/2042971/Chumbak/master.m3u8" }
+            { name: "Shemaroo TV Live", url: "https://shemaroome-live.akamaized.net/hls/live/2042971/ShemarooTV/master.m3u8" }
         ];
 
-        // 1-100 लूप बिना यूट्यूब के
+        // 1-100 ऑटोमैटिक चैनल्स
         const database = [];
         for (let i = 1; i <= 100; i++) {
             const raw = pureLiveStreams[(i - 1) % pureLiveStreams.length];
             database.push({
-                name: i <= 2 ? raw.name : `चैनल संख्या ${i} (M3U8)`,
+                name: i <= 2 ? raw.name : `चैनल संख्या ${i} (Live)`,
                 url: raw.url
             });
         }
 
-        const videoObj = document.getElementById('mainOTTPlayer');
         const titleLabel = document.getElementById('activeStreamTitle');
         const dlBtn = document.getElementById('directDownloadBtn');
         const gridBox = document.getElementById('channelsGridBox');
+        
+        // Video.js प्लेयर इनिशियलाइज़ेशन
+        let player = videojs('mainOTTPlayer');
 
-        // चैनल प्ले करने का इंजन
         function selectAndPlay(index) {
             const item = database[index];
             titleLabel.innerText = item.name;
@@ -138,19 +143,18 @@
                 else btn.classList.remove('active');
             });
 
-            if (Hls.isSupported()) {
-                const hls = new Hls();
-                hls.loadSource(item.url);
-                hls.attachMedia(videoObj);
-            } else if (videoObj.canPlayType('application/vnd.apple.mpegurl')) {
-                videoObj.src = item.url;
-            }
+            // प्लेयर में नया लाइव सोर्स लोड करना
+            player.src({
+                src: item.url,
+                type: 'application/x-mpegURL'
+            });
+            player.play();
             
-            // चैनल बदलने पर वापस सीधे होम स्क्रीन (प्लेयर) पर यूज़र को ले आएं
+            // चैनल चुनते ही सीधे 'Home' (प्लेयर स्क्रीन) पर स्विच करें
             switchTab('homeWindow', document.querySelectorAll('.nav-item')[0]);
         }
 
-        // 100 चैनल्स का ग्रिड तैयार करना
+        // ग्रिड यूआई रेंडर करना
         database.forEach((item, index) => {
             const el = document.createElement('div');
             el.className = 'grid-item';
@@ -160,10 +164,12 @@
             gridBox.appendChild(el);
         });
 
-        // पहला स्लॉट ऑटो-प्ले
-        if(database.length > 0) selectAndPlay(0);
+        // डिफ़ॉल्ट रूप से पहला चैनल शुरू करें
+        player.ready(function() {
+            if(database.length > 0) selectAndPlay(0);
+        });
 
-        // 📱 टैब स्विच करने का लॉजिक
+        // 📱 टैब स्विचिंग लॉजिक
         function switchTab(windowId, buttonEl) {
             document.querySelectorAll('.app-window').forEach(win => win.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
@@ -172,14 +178,12 @@
             buttonEl.classList.add('active');
         }
 
-        // 🖥️ फुल स्क्रीन ट्रिगर फंक्शन
+        // 🖥️ परफेक्ट फुल स्क्रीन मोड
         function openFullScreen() {
-            if (videoObj.requestFullscreen) {
-                videoObj.requestFullscreen();
-            } else if (videoObj.webkitRequestFullscreen) { /* Safari / iOS */
-                videoObj.webkitRequestFullscreen();
-            } else if (videoObj.msRequestFullscreen) { /* IE11 */
-                videoObj.msRequestFullscreen();
+            if (player.isFullscreen()) {
+                player.exitFullscreen();
+            } else {
+                player.requestFullscreen();
             }
         }
     </script>
