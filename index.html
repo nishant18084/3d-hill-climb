@@ -3,88 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RaceDrive Player</title>
+    <title>RaceDrive Mega TV - Premium OTT</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
-        body { background-color: #0b0b10; color: #fff; padding-bottom: 50px; }
+        body { background-color: #0b0b10; color: #fff; padding-bottom: 30px; }
         
-        .header { background: #000; padding: 15px 5%; border-bottom: 3px solid #e50914; display: flex; align-items: center; }
-        .back-btn { color: #fff; font-size: 1.4rem; text-decoration: none; margin-right: 20px; }
-        .logo { font-size: 1.5rem; font-weight: bold; text-transform: uppercase; }
-        .logo span { color: #e50914; }
+        /* 🌌 Premium Navbar */
+        .navbar { background: #000; padding: 15px 5%; border-bottom: 3px solid #e50914; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .nav-left, .nav-right { display: flex; align-items: center; gap: 20px; }
+        .brand { font-size: 1.6rem; font-weight: bold; text-transform: uppercase; color: #fff; text-decoration: none; letter-spacing: 1px; }
+        .brand span { color: #e50914; }
         
-        .player-container { width: 92%; max-width: 850px; margin: 20px auto; background: #000; box-shadow: 0 10px 40px rgba(0,0,0,0.8); border-radius: 12px; overflow: hidden; }
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #000; }
+        .nav-btn { background: none; border: none; color: #b3b3b3; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; text-decoration: none; }
+        .nav-btn:hover, .nav-btn.active { color: #e50914; }
+        .login-btn { background: #e50914; color: #fff; padding: 8px 18px; border-radius: 4px; font-size: 0.9rem; }
+        .login-btn:hover { background: #b80710; color: #fff; }
+
+        /* 🎬 Main Layout */
+        .main-layout { width: 92%; max-width: 1400px; margin: 20px auto; display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 25px; }
+        @media (max-width: 950px) { .main-layout { grid-template-columns: 1fr; } }
+
+        /* 📺 Player Section */
+        .player-section { background: #13131a; border-radius: 12px; padding: 15px; border: 1px solid #1f1f2e; height: fit-content; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #000; border-radius: 8px; overflow: hidden; }
         .video-wrapper iframe, .video-wrapper video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .video-title { font-size: 1.3rem; font-weight: bold; margin-top: 15px; color: #fff; }
+
+        .controls-panel { margin-top: 15px; background: #171721; padding: 15px; border-radius: 8px; border: 1px solid #262636; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .download-btn { background: #00875a; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-size: 0.9rem; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; border: none; }
+        .download-btn.yt { background: #e50914; }
+
+        /* 📑 Sidebar 100 Grid */
+        .sidebar-section { background: #13131a; border-radius: 12px; padding: 15px; border: 1px solid #1f1f2e; height: 70vh; display: flex; flex-direction: column; }
+        .sidebar-title { font-size: 1.2rem; margin-bottom: 15px; color: #e50914; text-transform: uppercase; font-weight: bold; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; overflow-y: auto; flex: 1; padding-right: 5px; }
         
-        .movie-info { width: 92%; max-width: 850px; margin: 20px auto; }
-        .movie-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; }
+        .channel-btn { background: #171721; border: 1px solid #262636; border-radius: 8px; padding: 12px 8px; text-align: center; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .channel-btn:hover, .channel-btn.active { border-color: #e50914; background: #1f1f2e; }
+        .channel-btn i { font-size: 1.3rem; color: #e50914; }
+        .channel-btn span { font-size: 0.75rem; font-weight: 600; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; }
+
+        /* 👤 Footer Account Options Section */
+        .account-footer { width: 92%; max-width: 1400px; margin: 30px auto 10px auto; background: #13131a; border: 1px solid #1f1f2e; border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .user-profile { display: flex; align-items: center; gap: 15px; }
+        .user-avatar { width: 55px; height: 55px; background: #262636; border: 2px solid #e50914; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #fff; }
+        .user-details h4 { font-size: 1.05rem; margin-bottom: 3px; }
+        .user-details p { font-size: 0.8rem; color: #8c8c9e; }
         
-        .player-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
-        .p-tag { background: #171721; padding: 6px 14px; border-radius: 6px; font-size: 0.8rem; color: #b3b3b3; }
-        
-        .action-section { background: #13131a; padding: 20px; border-radius: 10px; border: 1px solid #1f1f2e; display: flex; flex-direction: column; gap: 15px; }
-        .row-item { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .row-title { font-size: 0.95rem; font-weight: bold; color: #b3b3b3; }
-        
-        .audio-select { background: #171721; color: #fff; border: 1px solid #262636; padding: 8px 15px; border-radius: 6px; }
-        .download-btn { background: #00875a; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-size: 0.9rem; font-weight: bold; }
+        .account-links { display: flex; gap: 15px; }
+        .acc-btn { background: #171721; border: 1px solid #262636; color: #fff; padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; font-weight: 600; text-decoration: none; transition: 0.2s; }
+        .acc-btn:hover { border-color: #e50914; background: #1f1f2e; }
+
+        /* 🔐 Premium Login Popup (Netflix Style) */
+        .login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; }
+        .login-overlay.open { opacity: 1; pointer-events: auto; }
+        .login-box { background: #13131a; width: 90%; max-width: 400px; padding: 40px; border-radius: 10px; border: 1px solid #262636; box-shadow: 0 15px 30px rgba(0,0,0,0.5); position: relative; }
+        .close-login { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; color: #b3b3b3; cursor: pointer; }
+        .login-box h3 { font-size: 1.8rem; font-weight: bold; margin-bottom: 25px; text-align: center; }
+        .login-box h3 span { color: #e50914; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; font-size: 0.85rem; color: #b3b3b3; margin-bottom: 6px; }
+        .input-group input { width: 100%; background: #262636; border: 1px solid #3a3a52; padding: 12px; border-radius: 6px; color: #fff; font-size: 0.95rem; outline: none; }
+        .input-group input:focus { border-color: #e50914; }
+        .submit-login { width: 100%; background: #e50914; color: #fff; border: none; padding: 12px; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+        .submit-login:hover { background: #b80710; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 <body>
 
-    <div class="header">
-        <a href="#" class="back-btn"><i class="fas fa-arrow-left"></i></a>
-        <div class="logo">Race<span>Drive</span> Player</div>
+    <div class="navbar">
+        <div class="nav-left">
+            <a href="#" class="brand">Race<span>Drive</span> TV</a>
+            <button class="nav-btn active" onclick="location.reload()"><i class="fas fa-home"></i> Home</button>
+        </div>
+        <div class="nav-right">
+            <button class="nav-btn login-btn" id="navLoginBtn" onclick="toggleLoginPopup(true)"><i class="fas fa-user"></i> Login</button>
+        </div>
     </div>
 
-    <div class="player-container">
-        <div class="video-wrapper" id="playerArea">
-            </div>
-    </div>
-
-    <div class="movie-info">
-        <h2 class="movie-title" id="mainTitle">Chumbak TV Special</h2>
+    <div class="main-layout">
         
-        <div class="player-tags">
-            <span class="p-tag" style="background: #e50914; color: #fff;"><i class="fas fa-bolt"></i> Direct High-Speed Server</span>
-            <span class="p-tag" style="background: #e50914; color: #fff;">1080p Ultra HD</span>
+        <div class="player-section">
+            <div class="video-wrapper" id="playerWrapper"></div>
+            <div class="video-title" id="currentTitle">Loading...</div>
+            
+            <div class="controls-panel">
+                <div style="font-size: 0.9rem; color: #b3b3b3;"><i class="fas fa-info-circle"></i> View Options / Download External:</div>
+                <a href="#" id="actionBtn" target="_blank" class="download-btn">
+                    <i class="fas fa-external-link-alt"></i> External Stream
+                </a>
+            </div>
         </div>
 
-        <div class="action-section">
-            <div class="row-item">
-                <div class="row-title"><i class="fas fa-language"></i> Change Audio / Language</div>
-                <select class="audio-select" id="audioSelect">
-                    <option>🔊 Main Audio (Default)</option>
-                </select>
+        <div class="sidebar-section">
+            <div class="sidebar-title"><i class="fas fa-th-large"></i> लाइव चैनल्स & मूवीज</div>
+            <div class="grid-container" id="gridContainer"></div>
+        </div>
+
+    </div>
+
+    <div class="account-footer">
+        <div class="user-profile">
+            <div class="user-avatar" id="footerAvatar">
+                <i class="fas fa-user-secret"></i>
+            </div>
+            <div class="user-details">
+                <h4 id="footerUserName">Guest Account</h4>
+                <p id="footerUserStatus">Status: Free Membership</p>
+            </div>
+        </div>
+        <div class="account-links">
+            <button class="acc-btn" onclick="alert('Premium Server Active: Secure Stream Protected.')"><i class="fas fa-shield-alt"></i> Security</button>
+            <button class="acc-btn" onclick="alert('यह प्रोजेक्ट RaceDrive Player का लेटेस्ट प्रीमियम वर्जन है।')"><i class="fas fa-cog"></i> Settings</button>
+        </div>
+    </div>
+
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <span class="close-login" onclick="toggleLoginPopup(false)">&times;</span>
+            <h3><span>RaceDrive</span> Sign In</h3>
+            
+            <div class="input-group">
+                <label>User ID / Username</label>
+                <input type="text" id="usernameInput" placeholder="अपना नाम या आईडी लिखें...">
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="passwordInput" placeholder="••••••••">
             </div>
             
-            <div class="row-item">
-                <div class="row-title"><i class="fas fa-cloud-download-alt"></i> Available Options</div>
-                <a href="#" id="dlLink" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download Video (Direct)</a>
-            </div>
+            <button class="submit-login" onclick="handleCustomLogin()">Sign In</button>
         </div>
     </div>
 
     <script>
-        // 🔗 यह कोड सीधे आपके चुंबक टीवी के ओरिजिनल लाइव स्ट्रीमिंग लिंक से कनेक्ट कर रहा है
-        const liveStreamUrl = "https://shemaroome-live.akamaized.net/hls/live/2042971/Chumbak/master.m3u8";
-        
-        const playerArea = document.getElementById('playerArea');
-        document.getElementById('dlLink').href = liveStreamUrl;
+        // 🎬 100 आइटम्स के लिए डिफ़ॉल्ट डेटाबेस
+        const baseChannels = [
+            { name: "Chumbak TV Special", url: "https://shemaroome-live.akamaized.net/hls/live/2042971/Chumbak/master.m3u8", type: "m3u8" },
+            { name: "India TV Live News", url: "Nq2wYlWFucg", type: "yt" },
+            { name: "Sky News Global", url: "9Auqeyr_GvA", type: "yt" },
+            { name: "ABP News Hindi Live", url: "nyd-MTZ_wGg", type: "yt" },
+            { name: "Republic Bharat", url: "26H280Y_X2Y", type: "yt" },
+            { name: "News18 India Live", url: "4Nf8pI-x26M", type: "yt" }
+        ];
 
-        // सीधे डायरेक्ट HTML5 प्लेयर में लोड करने का कनेक्शन लॉजिक
-        playerArea.innerHTML = `<video id="videoObj" controls autoplay playsinline style="width:100%; height:100%;"></video>`;
-        const video = document.getElementById('videoObj');
+        const channels = [];
+        for (let i = 1; i <= 100; i++) {
+            const base = baseChannels[(i - 1) % baseChannels.length];
+            channels.push({
+                name: i <= 6 ? base.name : `चैनल / मूवी संख्या ${i}`,
+                url: base.url,
+                type: base.type
+            });
+        }
 
-        if (Hls.isSupported()) {
-            const hls = new Hls();
-            hls.loadSource(liveStreamUrl);
-            hls.attachMedia(video);
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = liveStreamUrl;
+        const wrapper = document.getElementById('playerWrapper');
+        const titleText = document.getElementById('currentTitle');
+        const actionBtn = document.getElementById('actionBtn');
+        const gridContainer = document.getElementById('gridContainer');
+
+        function playChannel(index) {
+            const ch = channels[index];
+            titleText.innerText = ch.name;
+            
+            document.querySelectorAll('.channel-btn').forEach((btn, i) => {
+                if(i === index) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+
+            if (ch.type === "m3u8") {
+                wrapper.innerHTML = `<video id="videoPlayer" controls autoplay playsinline></video>`;
+                const video = document.getElementById('videoPlayer');
+                if (Hls.isSupported()) {
+                    const hls = new Hls();
+                    hls.loadSource(ch.url);
+                    hls.attachMedia(video);
+                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                    video.src = ch.url;
+                }
+                actionBtn.href = ch.url;
+                actionBtn.className = "download-btn";
+                actionBtn.innerHTML = `<i class="fas fa-download"></i> Download Stream`;
+            } else {
+                wrapper.innerHTML = `<iframe src="https://www.youtube.com/embed/${ch.url}?autoplay=1&rel=0" allowfullscreen></iframe>`;
+                actionBtn.href = `https://www.youtube.com/watch?v=${ch.url}`;
+                actionBtn.className = "download-btn yt";
+                actionBtn.innerHTML = `<i class="fab fa-youtube"></i> Open in YouTube`;
+            }
+        }
+
+        channels.forEach((ch, index) => {
+            const btn = document.createElement('div');
+            btn.className = 'channel-btn';
+            if(index === 0) btn.classList.add('active');
+            btn.onclick = () => playChannel(index);
+            
+            const icon = ch.type === 'yt' ? 'fa-play-circle' : 'fa-tv';
+            btn.innerHTML = `
+                <i class="fas ${icon}"></i>
+                <span>${ch.name}</span>
+            `;
+            gridContainer.appendChild(btn);
+        });
+
+        if(channels.length > 0) playChannel(0);
+
+        /* 🔐 UI Control Logics (Popup & User Actions) */
+        function toggleLoginPopup(show) {
+            const overlay = document.getElementById('loginOverlay');
+            if(show) overlay.classList.add('open');
+            else overlay.classList.remove('open');
+        }
+
+        function handleCustomLogin() {
+            const user = document.getElementById('usernameInput').value;
+            if(user.trim() !== "") {
+                // हेडर और फुटर यूज़र प्रोफाइल को डायनामिक बदलना
+                document.getElementById('navLoginBtn').innerHTML = `<i class="fas fa-sign-out-alt"></i> Logout`;
+                document.getElementById('navLoginBtn').onclick = () => location.reload();
+                
+                document.getElementById('footerUserName').innerText = user;
+                document.getElementById('footerUserStatus').innerText = "Status: VIP Premium Unlocked";
+                document.getElementById('footerAvatar').innerHTML = `<i class="fas fa-user-astronaut" style="color: #ffb800;"></i>`;
+                
+                toggleLoginPopup(false);
+                alert(`Welcome back, ${user}! Premium Access Unlocked.`);
+            } else {
+                alert("कृपया यूज़रनेम दर्ज करें!");
+            }
         }
     </script>
 </body>
