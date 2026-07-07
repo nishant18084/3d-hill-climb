@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RaceDrive TV - Full Website Screen</title>
+    <title>RaceDrive - All-In-One Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link href="https://vjs.zencdn.net/8.3.0/video-js.css" rel="stylesheet" />
@@ -13,180 +13,228 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
         body { background-color: #060609; color: #fff; padding-bottom: 90px; }
         
-        /* 🌌 Header */
+        /* 🌌 Top Header Bar */
         .navbar { background: #000; padding: 15px 5%; border-bottom: 2px solid #e50914; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
         .brand { font-size: 1.6rem; font-weight: 900; text-transform: uppercase; color: #fff; text-decoration: none; letter-spacing: 1px; }
         .brand span { color: #e50914; }
 
-        /* 🖥️ वेबसाइट फुल स्क्रीन बटन स्टाइल */
+        /* 🖥️ Master Website Full Screen Button */
         .web-fs-btn { background: #fff; color: #000; border: none; padding: 8px 15px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
         .web-fs-btn:hover { background: #e50914; color: #fff; }
         
-        /* 📱 App Tabs */
-        .app-window { display: none; width: 94%; max-width: 800px; margin: 20px auto; animation: scaleUp 0.25s ease; }
+        /* 📱 Screen Window Tabs */
+        .app-window { display: none; width: 94%; max-width: 900px; margin: 20px auto; animation: scaleUp 0.25s ease; }
         .app-window.active { display: block; }
 
-        /* 📺 Player Interface Card */
-        .player-card { background: #0f0f15; border-radius: 16px; padding: 15px; border: 1px solid #1c1c28; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        /* 📺 Video Player Frame */
+        .player-card { background: #0f0f15; border-radius: 16px; padding: 15px; border: 1px solid #1c1c28; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 25px; }
         .video-box { position: relative; width: 100%; background: #000; border-radius: 12px; overflow: hidden; border: 1px solid #252538; }
-        
         .video-js { width: 100% !important; height: auto !important; aspect-ratio: 16/9; }
-        .vjs-big-play-centered .vjs-big-play-button { background-color: #e50914 !important; border-color: #e50914 !important; }
+        .stream-title { font-size: 1.3rem; font-weight: 800; margin-top: 12px; color: #fff; }
+
+        /* 📑 Dynamic Rows & Content Grids */
+        .row-section { margin-bottom: 30px; }
+        .section-title { font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: 15px; border-left: 4px solid #e50914; padding-left: 10px; text-transform: uppercase; }
         
-        .stream-title { font-size: 1.4rem; font-weight: 800; margin-top: 15px; color: #fff; }
+        /* horizontal scroll box for cards */
+        .content-scroll-box { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; scroll-behavior: smooth; }
+        .content-scroll-box::-webkit-scrollbar { height: 5px; }
+        .content-scroll-box::-webkit-scrollbar-thumb { background: #222233; border-radius: 10px; }
 
-        /* 📑 Grid Hub for 100 Channels */
-        .grid-title { font-size: 1.2rem; font-weight: 800; color: #e50914; margin-bottom: 15px; text-transform: uppercase; }
-        .channel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 12px; max-height: 65vh; overflow-y: auto; padding-right: 5px; }
-        .grid-item { background: #0f0f15; border: 1px solid #222233; border-radius: 12px; padding: 18px 10px; text-align: center; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        .grid-item:hover, .grid-item.active { border-color: #e50914; background: #1c1c2a; }
-        .grid-item i { font-size: 1.6rem; color: #e50914; }
-        .grid-item span { font-size: 0.8rem; font-weight: 600; color: #e0e0e6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        /* 🎬 Movie Poster Design */
+        .movie-card { min-width: 130px; width: 130px; background: #0f0f15; border: 1px solid #1c1c28; border-radius: 10px; overflow: hidden; cursor: pointer; transition: 0.2s; }
+        .movie-card:hover { transform: scale(1.05); border-color: #e50914; }
+        .poster-img { width: 100%; height: 180px; background: #222; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: #444; position: relative; }
+        .poster-img i { position: absolute; font-size: 2rem; color: rgba(235, 9, 20, 0.8); opacity: 0; transition: 0.2s; }
+        .movie-card:hover .poster-img i { opacity: 1; }
+        .movie-title { font-size: 0.8rem; font-weight: 700; padding: 8px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #e0e0e6; }
 
-        /* 👤 Account Portal UI */
-        .account-card { background: #0f0f15; border: 1px solid #1c1c28; border-radius: 16px; padding: 25px; text-align: center; }
-        .avatar-large { width: 80px; height: 80px; background: #1c1c28; border: 3px solid #e50914; border-radius: 50%; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: #ffb800; box-shadow: 0 0 20px rgba(229,9,20,0.3); }
-        .acc-field { background: #14141f; border: 1px solid #222233; padding: 12px 15px; border-radius: 8px; margin-top: 12px; display: flex; justify-content: space-between; font-size: 0.95rem; }
+        /* 🎮 Game Frame Setup */
+        .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; }
+        .game-card { background: linear-gradient(135deg, #14141f, #0f0f15); border: 1px solid #222233; border-radius: 12px; padding: 20px 10px; text-align: center; cursor: pointer; transition: 0.2s; }
+        .game-card:hover { border-color: #00875a; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,135,90,0.2); }
+        .game-card i { font-size: 2.2rem; color: #00875a; margin-bottom: 10px; }
+        .game-card span { display: block; font-size: 0.85rem; font-weight: 700; }
 
-        /* 📱 Bottom Navigation Bar */
+        /* 📱 App Bottom Navigation Bar */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #000; border-top: 2px solid #1c1c28; display: flex; justify-content: space-around; padding: 12px 0; z-index: 200; box-shadow: 0 -5px 25px rgba(0,0,0,0.6); }
         .nav-item { background: none; border: none; color: #888899; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: 0.2s; width: 30%; }
         .nav-item i { font-size: 1.4rem; }
         .nav-item.active { color: #e50914; }
 
         @keyframes scaleUp { from { transform: scale(0.98); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: #222233; border-radius: 10px; }
     </style>
 </head>
 <body>
 
     <div class="navbar">
-        <a href="#" class="brand">Race<span>Drive</span> TV</a>
-        <button class="web-fs-btn" onclick="toggleWebsiteFullScreen()">
-            <i id="fsIcon" class="fas fa-expand"></i> <span id="fsText">Full Screen</span>
+        <a href="#" class="brand">Race<span>Drive</span> Hub</a>
+        <button class="web-fs-btn" onclick="toggleMasterFullScreen()">
+            <i id="fsIcon" class="fas fa-expand"></i> <span id="fsText">App Mode</span>
         </button>
     </div>
 
     <div id="homeWindow" class="app-window active">
         <div class="player-card">
             <div class="video-box">
-                <video id="mainOTTPlayer" class="video-js vjs-default-skin vjs-big-play-centered" controls autoplay preload="auto" playsinline></video>
+                <video id="mainHubPlayer" class="video-js vjs-default-skin vjs-big-play-centered" controls autoplay preload="auto" playsinline></video>
             </div>
-            <div class="stream-title" id="activeStreamTitle">Loading Live Stream...</div>
+            <div class="stream-title" id="activeContentTitle">Select Content below to Play</div>
+        </div>
+
+        <div class="row-section">
+            <div class="section-title"><i class="fas fa-film"></i> Blockbuster Movies</div>
+            <div class="content-scroll-box" id="moviesRowContainer"></div>
+        </div>
+
+        <div class="row-section">
+            <div class="section-title"><i class="fas fa-broadcast-tower"></i> Quick Live Channels</div>
+            <div class="content-scroll-box" id="liveTvRowContainer"></div>
         </div>
     </div>
 
-    <div id="livetvWindow" class="app-window">
+    <div id="gamesWindow" class="app-window">
         <div class="player-card">
-            <div class="grid-title"><i class="fas fa-broadcast-tower"></i> टीवी चैनल्स & लाइव मूवीज (1-100)</div>
-            <div class="channel-grid" id="channelsGridBox"></div>
+            <div class="section-title" style="border-color: #00875a;"><i class="fas fa-gamepad"></i> Instant Play Games (No Install)</div>
+            
+            <div class="game-grid" id="gamesGridBox"></div>
         </div>
     </div>
 
     <div id="accountWindow" class="app-window">
-        <div class="account-card">
-            <div class="avatar-large"><i class="fas fa-crown"></i></div>
-            <h3>RaceDrive Premium User</h3>
-            <p style="color: #888899; font-size: 0.85rem; margin-bottom: 15px;">VIP Lifetime Active</p>
-            
-            <div class="acc-field"><span>Account Tier:</span> <span style="color: #ffb800; font-weight: bold;">Ultra VIP Access</span></div>
-            <div class="acc-field"><span>Server Core Engine:</span> <span style="color: #00875a; font-weight: bold;">VideoJS Native</span></div>
-            <div class="acc-field"><span>Stream Quality:</span> <span>Auto (High Definition)</span></div>
+        <div class="player-card" style="text-align: center; padding: 30px 15px;">
+            <i class="fas fa-crown" style="font-size: 3.5rem; color: #ffb800; margin-bottom: 15px;"></i>
+            <h3>RaceDrive Premium Creator</h3>
+            <p style="color: #888899; font-size: 0.9rem; margin-top: 5px;">All Content Unlocked Successfully</p>
         </div>
     </div>
 
     <div class="bottom-nav">
-        <button class="nav-item active" onclick="switchTab('homeWindow', this)"><i class="fas fa-home"></i>Home</button>
-        <button class="nav-item" onclick="switchTab('livetvWindow', this)"><i class="fas fa-tv"></i>Live TV</button>
-        <button class="nav-item" onclick="switchTab('accountWindow', this)"><i class="fas fa-user-circle"></i>Account</button>
+        <button class="nav-item active" onclick="switchWindowTab('homeWindow', this)"><i class="fas fa-home"></i>Home</button>
+        <button class="nav-item" onclick="switchWindowTab('gamesWindow', this)"><i class="fas fa-gamepad"></i>Games</button>
+        <button class="nav-item" onclick="switchWindowTab('accountWindow', this)"><i class="fas fa-user-circle"></i>Profile</button>
     </div>
 
     <script>
-        // 🍿 लाइव स्ट्रीम्स डेटाबेस
-        const verifiedLiveFeeds = [
-            { name: "Sadhna TV Live", url: "https://rec.ustream.in/sadhna/live/playlist.m3u8" },
-            { name: "DD News HD Live", url: "https://ddnews.akamaized.net/hls/live/2034336/ddnews/master.m3u8" },
-            { name: "News 24 India", url: "https://pubads.g.doubleclick.net/ssai/event/O-M2XAnuR3WbQGv9a3B8Xw/master.m3u8" }
+        // 🍿 मूवीज डेटाबेस (यहाँ आप अपनी फ़ाइलों या .m3u8 लिंक्स को बदल सकते हैं)
+        const movieDatabase = [
+            { name: "Action Movie Extra", url: "https://rec.ustream.in/sadhna/live/playlist.m3u8", icon: "fa-mask" },
+            { name: "Hollywood Sci-Fi", url: "https://pubads.g.doubleclick.net/ssai/event/O-M2XAnuR3WbQGv9a3B8Xw/master.m3u8", icon: "fa-rocket" },
+            { name: "Bollywood Romance", url: "https://ddnews.akamaized.net/hls/live/2034336/ddnews/master.m3u8", icon: "fa-heart" },
+            { name: "Horror Midnight", url: "https://rec.ustream.in/sadhna/live/playlist.m3u8", icon: "fa-ghost" },
+            { name: "South Blockbuster", url: "https://ddnews.akamaized.net/hls/live/2034336/ddnews/master.m3u8", icon: "fa-bolt" }
         ];
 
-        const database = [];
-        for (let i = 1; i <= 100; i++) {
-            const source = verifiedLiveFeeds[(i - 1) % verifiedLiveFeeds.length];
-            database.push({
-                name: i <= 3 ? source.name : `प्रीमियम लाइव चैनल ${i}`,
-                url: source.url
+        // 📡 लाइव टीवी डेटाबेस
+        const liveTvDatabase = [];
+        for(let i=1; i<=20; i++) {
+            liveTvDatabase.push({
+                name: `लाइव टीवी चैनल ${i}`,
+                url: i%2===0 ? "https://ddnews.akamaized.net/hls/live/2034336/ddnews/master.m3u8" : "https://rec.ustream.in/sadhna/live/playlist.m3u8"
             });
         }
 
-        const titleLabel = document.getElementById('activeStreamTitle');
-        const gridBox = document.getElementById('channelsGridBox');
-        
-        let player = videojs('mainOTTPlayer', { fluid: true });
+        // 🎮 गेम्स लिस्ट (ये HTML5 गेम्स हैं, जिनपर क्लिक करते ही गेमिंग स्क्रीन लोड होगी)
+        const gamesDatabase = [
+            { name: "Snake Arena", link: "https://m.gamesnacks.com/games/snake" },
+            { name: "Tower Building", link: "https://m.gamesnacks.com/games/towerbuilding" },
+            { name: "Color Burst", link: "https://m.gamesnacks.com/games/colorburst" },
+            { name: "Perfect Turn", link: "https://m.gamesnacks.com/games/perfectturn" },
+            { name: "Runner 3D", link: "https://m.gamesnacks.com/games/geometrydash" }
+        ];
 
-        function selectAndPlay(index) {
-            const item = database[index];
-            titleLabel.innerText = item.name;
+        // Video.js प्लेयर इनिशियलाइज़ेशन
+        let videoEngine = videojs('mainHubPlayer', { fluid: true });
 
-            document.querySelectorAll('.grid-item').forEach((btn, idx) => {
-                if(idx === index) btn.classList.add('active');
-                else btn.classList.remove('active');
-            });
-
-            player.src({ src: item.url, type: 'application/x-mpegURL' });
-            player.play().catch(e => console.log("Auto-play wait:", e));
+        // कंटेंट लोड करने का कोर फंक्शन
+        function loadContentToPlayer(title, url) {
+            document.getElementById('activeContentTitle').innerText = title;
+            videoEngine.src({ src: url, type: 'application/x-mpegURL' });
+            videoEngine.play().catch(e => console.log("Play interrupted: ", e));
             
-            switchTab('homeWindow', document.querySelectorAll('.nav-item')[0]);
+            // हमेशा होम स्क्रीन पर ले आएं प्लेयर देखने के लिए
+            switchWindowTab('homeWindow', document.querySelectorAll('.nav-item')[0]);
         }
 
-        database.forEach((item, index) => {
+        // गेम्स चालू करने का फंक्शन
+        function launchGame(title, webLink) {
+            // प्लेयर बॉक्स को गेम स्क्रीन में बदल दें
+            const playerBox = document.querySelector('.video-box');
+            playerBox.innerHTML = `<iframe src="${webLink}" style="width:100%; height:100%; aspect-ratio:16/9; border:none; border-radius:12px;"></iframe>`;
+            document.getElementById('activeContentTitle').innerText = `Playing Game: ${title}`;
+            switchWindowTab('homeWindow', document.querySelectorAll('.nav-item')[0]);
+        }
+
+        // 🎬 मूवीज रेंडर करना
+        const movieRow = document.getElementById('moviesRowContainer');
+        movieDatabase.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'movie-card';
+            card.onclick = () => loadContentToPlayer(item.name, item.url);
+            card.innerHTML = `
+                <div class="poster-img">
+                    <i class="fas fa-play-circle"></i>
+                    <i class="fas ${item.icon}"></i>
+                </div>
+                <div class="movie-title">${item.name}</div>
+            `;
+            movieRow.appendChild(card);
+        });
+
+        // 📡 लाइव टीवी रेंडर करना
+        const tvRow = document.getElementById('liveTvRowContainer');
+        liveTvDatabase.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'movie-card';
+            card.onclick = () => loadContentToPlayer(item.name, item.url);
+            card.innerHTML = `
+                <div class="poster-img" style="background:#14141f; height:100px;">
+                    <i class="fas fa-tv" style="opacity:1; color:#e50914; font-size:1.5rem;"></i>
+                </div>
+                <div class="movie-title">${item.name}</div>
+            `;
+            tvRow.appendChild(card);
+        });
+
+        // 🎮 गेम्स ग्रिड रेंडर करना
+        const gameGrid = document.getElementById('gamesGridBox');
+        gamesDatabase.forEach(game => {
             const el = document.createElement('div');
-            el.className = 'grid-item';
-            if(index === 0) el.classList.add('active');
-            el.onclick = () => selectAndPlay(index);
-            el.innerHTML = `<i class="fas fa-play-circle"></i><span>${item.name}</span>`;
-            gridBox.appendChild(el);
+            el.className = 'game-card';
+            el.onclick = () => launchGame(game.name, game.link);
+            el.innerHTML = `<i class="fas fa-gamepad"></i><span>${game.name}</span>`;
+            gameGrid.appendChild(el);
         });
 
-        player.ready(function() {
-            if(database.length > 0) selectAndPlay(0);
+        // डिफ़ॉल्ट लोडिंग
+        videoEngine.ready(function() {
+            if(movieDatabase.length > 0) loadContentToPlayer(movieDatabase[0].name, movieDatabase[0].url);
         });
 
-        function switchTab(windowId, buttonEl) {
+        // 📱 टैब चेंज हैंडलर
+        function switchWindowTab(windowId, buttonEl) {
             document.querySelectorAll('.app-window').forEach(win => win.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
             document.getElementById(windowId).classList.add('active');
             buttonEl.classList.add('active');
         }
 
-        // 🖥️ पूरी वेबसाइट को फुल स्क्रीन / नार्मल स्क्रीन करने का मास्टर लॉजिक
-        function toggleWebsiteFullScreen() {
+        // 🖥️ मास्टर फुल स्क्रीन टॉगल (पूरी वेबसाइट ऐप जैसी दिखेगी)
+        function toggleMasterFullScreen() {
             const doc = document.documentElement;
             const icon = document.getElementById('fsIcon');
             const text = document.getElementById('fsText');
 
-            if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
-                // फुल स्क्रीन एक्टिवेट करना
-                if (doc.requestFullscreen) {
-                    doc.requestFullscreen();
-                } else if (doc.webkitRequestFullscreen) { /* Safari */
-                    doc.webkitRequestFullscreen();
-                } else if (doc.msRequestFullscreen) { /* IE11 */
-                    doc.msRequestFullscreen();
-                }
+            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                if (doc.requestFullscreen) doc.requestFullscreen();
+                else if (doc.webkitRequestFullscreen) doc.webkitRequestFullscreen();
                 icon.className = "fas fa-compress";
-                text.innerText = "Exit Full";
+                text.innerText = "Exit App";
             } else {
-                // फुल स्क्रीन से बाहर आना
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                } else if (document.msExitFullscreen) {
-                    document.msExitFullscreen();
-                }
+                if (document.exitFullscreen) document.exitFullscreen();
+                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
                 icon.className = "fas fa-expand";
-                text.innerText = "Full Screen";
+                text.innerText = "App Mode";
             }
         }
     </script>
