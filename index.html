@@ -4,14 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RaceDrive - Movies & Games Galaxy</title>
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://vjs.zencdn.net/8.3.0/video-js.css" rel="stylesheet" />
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="navbar-placeholder"></div>
+    <div class="navbar">
+        <a href="#" class="brand">Race<span>Drive</span> Hub</a>
+        <button class="web-fs-btn" onclick="toggleMasterFullScreen()">
+            <i id="fsIcon" class="fas fa-expand"></i> <span id="fsText">App Mode</span>
+        </button>
+    </div>
 
     <div id="homeWindow" class="app-window active">
         <div class="player-card">
@@ -20,7 +24,6 @@
             </div>
             <div class="stream-title" id="activeContentTitle">RaceDrive Premium Media Hub</div>
         </div>
-
         <div class="row-section">
             <div class="section-title"><i class="fas fa-film"></i> Blockbuster Movies</div>
             <div class="content-scroll-box" id="moviesContainer"></div>
@@ -34,17 +37,21 @@
         </div>
     </div>
 
-    <div id="game-popup-placeholder"></div>
+    <div class="game-popup" id="masterGamePopup">
+        <div class="popup-content">
+            <button class="close-popup-btn" onclick="closeGamePopup()">Close Game</button>
+            <div id="gameIframeContainer" style="width: 100%; height: 100%;"></div>
+        </div>
+    </div>
 
-    <div id="bottom-nav-placeholder"></div>
+    <div class="bottom-nav">
+        <button class="nav-item active" onclick="switchWindowTab('homeWindow', this)"><i class="fas fa-film"></i>Movies</button>
+        <button class="nav-item" onclick="switchWindowTab('gamesWindow', this)"><i class="fas fa-gamepad"></i>Games Galaxy</button>
+    </div>
 
     <script src="https://vjs.zencdn.net/8.3.0/video.min.js"></script>
-    <script src="movies-data.js"></script>
-    <script src="games-data.js"></script>
-    <script src="player-core.js"></script>
-    <script src="games-core.js"></script>
-    <script src="ui-control.js"></script>
-    <script src="components.js"></script>
+    <script src="data.js"></script>
+    <script src="controls.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
